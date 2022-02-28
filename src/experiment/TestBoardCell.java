@@ -1,3 +1,7 @@
+/*
+ * Authors: David Young, Isabelle Neckel
+ */
+
 package experiment;
 
 import java.util.*;
