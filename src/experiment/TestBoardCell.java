@@ -7,6 +7,13 @@ package experiment;
 import java.util.*;
 
 public class TestBoardCell {
+	/*
+	 * C14A-1 Requirements:
+	 * Correct adjacency list calculation (tests pass) [15pts]
+	 * Correct target calculations (tests pass) [25pts]
+	 * Code meets coding standards [5pts]
+	 */
+	
 	private int row, column;
 	private Set<TestBoardCell> adjList = new HashSet<TestBoardCell>();
 	private boolean room = false;
@@ -17,13 +24,25 @@ public class TestBoardCell {
 		this.column = column;
 	}
 	
-	public void addAdjacency(TestBoardCell cell) {
-		cell = new TestBoardCell(row, column);
+	public void addAdjacency(TestBoardCell cell) {		
+		adjList.add(cell);
+		// System.out.println("\tAdding (" + cell.row + ", " + cell.column + ")");
+		// printAdjList();
 	}
 	
-	public Set<TestBoardCell> getAdjList() {
+	public Set<TestBoardCell> getAdjList() { 
+		// printAdjList();
 		return adjList;
 	}
+
+	public void printAdjList() { 
+		System.out.println("\tprintAdjList()");
+		System.out.print("\t\t");
+		for (TestBoardCell cell : adjList) {
+			System.out.print("(" + cell.row + "," + cell.column + ") ");
+		}
+		System.out.println("");
+	} 	
 	
 	public boolean isRoom() {
 		return room;
