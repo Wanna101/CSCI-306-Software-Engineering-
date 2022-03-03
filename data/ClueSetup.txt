@@ -1,0 +1,13 @@
+// Rooms and room cards 
+Room, CoorsTek, C
+Room, Marquez, M
+Room, Alderson, A
+Room, Hill Hall, H
+Room, Berthoud, B
+Room, Guggenheim, G
+Room, Friedhoff, F
+Room, Student Center, S
+Room, Rec Center, R
+// other spaces on the board 
+Space, Unused, X 
+Space, Walkway, W
