@@ -88,12 +88,12 @@ public class TestBoard {
 		// need to iterate through adjacency list
 		for (TestBoardCell adjCell : thisCell.getAdjList()) {
 			// needs to also test if the space is occupied by a person
-			if (visited.contains(adjCell)) {
+			if (visited.contains(adjCell) || adjCell.getOccupied()) {
 				continue;
 			}			
 			visited.add(adjCell);
 			// needs to also test if the space is a room therefore adding it as a potential target
-			if (numSteps == 1) {
+			if (numSteps == 1 || adjCell.isRoom()) {
 				targets.add(adjCell);
 			} else {
 				findAllTargets(adjCell, numSteps - 1);
