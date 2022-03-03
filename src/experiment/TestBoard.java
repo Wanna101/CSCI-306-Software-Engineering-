@@ -74,11 +74,32 @@ public class TestBoard {
 	}
 	
 	public void calcTargets(TestBoardCell startCell, int pathlength) {
-		// TODO
+		// clear previous memory
+		visited.clear();
+		targets.clear();
+		// add starting location to visited list 
+		visited.add(startCell);
+		// call recursive function findAllTargets
+		findAllTargets(startCell, pathlength);
 	}
 	
 	public void findAllTargets(TestBoardCell thisCell, int numSteps) {
-		// TODO
+		// get adjacency list of current cell
+		// need to iterate through adjacency list
+		for (TestBoardCell adjCell : thisCell.getAdjList()) {
+			// needs to also test if the space is occupied by a person
+			if (visited.contains(adjCell)) {
+				continue;
+			}			
+			visited.add(adjCell);
+			// needs to also test if the space is a room therefore adding it as a potential target
+			if (numSteps == 1) {
+				targets.add(adjCell);
+			} else {
+				findAllTargets(adjCell, numSteps - 1);
+			}
+			visited.remove(adjCell);
+		}
 	}
 	
 	public Set<TestBoardCell> getTargets() {
