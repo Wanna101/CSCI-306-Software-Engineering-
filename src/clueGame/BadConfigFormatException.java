@@ -1,19 +1,45 @@
 package clueGame;
 
+import java.util.*;
+import java.io.*;
+import java.time.Instant;
+
 public class BadConfigFormatException extends Exception {
 
 	/*
-	 * TODO: need to look up how to "append" (add on) to a file
+	 * Appends a meaningful message to the user on the console and also to a separate .txt file
+	 * in the src/ directory.
+	 * 
+	 * Also records time the error message was printed in GMT.
+	 * 
+	 * File is written to the tests package.
 	 */
 	
+	private void appendMessage(String string) {
+		try {
+			File log = new File("src\\tests\\ExceptionMessages.txt");
+			if (log.exists() == false) {
+				System.out.println("Creating new file for error messages...");
+				log.createNewFile();
+				System.out.println("File created successfully");
+			}
+			PrintWriter printWriter = new PrintWriter(new FileWriter(log, true));
+			printWriter.append(Instant.now().toString() + " GMT: " + string + "\n");
+			
+			printWriter.close();
+		} catch (FileNotFoundException e) {
+			System.err.println("Could not find file");
+		} catch (IOException e) {
+			System.err.println("Could not append message to file");
+		}
+		System.err.println(string);
+	}
+	
 	public BadConfigFormatException() {
-		// TODO: append a default meaningful message
-		super("Bad config file format in file");
+		appendMessage("Bad config file format in file");
 	}
 	
 	public BadConfigFormatException(String string) {
-		// TODO: append what you pass in
-		super("Problem was: " + string);
+		appendMessage("BadConfigFormatException(): " + string);
 	}
-	
 }
