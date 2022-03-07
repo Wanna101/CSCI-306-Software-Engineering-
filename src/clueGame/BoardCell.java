@@ -31,7 +31,6 @@ public class BoardCell {
 		return initial;
 	}
 	
-	/*
 	public void addAdjacency(TestBoardCell cell) {		
 		adjList.add(cell);
 		// System.out.println("\tAdding (" + cell.row + ", " + cell.column + ")");
@@ -51,7 +50,6 @@ public class BoardCell {
 		}
 		System.out.println("");
 	} 	
-	*/
 
 	public boolean isDoorway() {
 		return doorway;

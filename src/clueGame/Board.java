@@ -12,7 +12,9 @@ public class Board {
     private int numRows; 
     private int numColumns; 
     private String layoutConfigFile; 
-    private String setupConfigFile; 
+    private String setupConfigFile;
+    private Set<BoardCell> targets = new HashSet<BoardCell>();
+	private Set<BoardCell> visited = new HashSet<BoardCell>();
     private Map<Character, Room> roomMap = new HashMap<Character, Room>(); 
     private static Board theInstance = new Board();	
     
@@ -178,7 +180,7 @@ public class Board {
 			}
 		}
 		
-		// calcAdj();
+		calcAdj();
     }
     
     // After reading setup file, if you find a character on board not on setup file, throw
@@ -202,7 +204,6 @@ public class Board {
     	return chars;
     }
     
-    /*
     // calculate adjacency list somewhere after the constructor
  	public void calcAdj() {
  		for (int row = 0; row < ROWS; row++) {			
@@ -261,7 +262,6 @@ public class Board {
  	public Set<TestBoardCell> getTargets() {
  		return targets;
  	}
-    */
     
     public Room getRoom(char c) {
 		return roomMap.get(c);
