@@ -9,10 +9,11 @@ public class BoardCell {
 	private char initial;
 	private DoorDirection doorDirection;
 	private boolean doorway = false;
-	private boolean roomLabel;
-	private boolean roomCenter;
+	private boolean roomLabel = false;
+	private boolean roomCenter = false;
 	private char secretPassage;
-	private Set<BoardCell> adjList;
+	private boolean occupied = false;
+	private Set<BoardCell> adjList = new HashSet<BoardCell>();
 	
 	public BoardCell(int row, int col) {
 		this.row = row;
@@ -20,7 +21,8 @@ public class BoardCell {
 	}
 	
 	public void addAdj(BoardCell adj) {
-		// TODO
+		adjList.add(adj);
+		// printAdjList();
 	}
 	
 	public void setInitial(char initial) {
@@ -31,13 +33,7 @@ public class BoardCell {
 		return initial;
 	}
 	
-	public void addAdjacency(TestBoardCell cell) {		
-		adjList.add(cell);
-		// System.out.println("\tAdding (" + cell.row + ", " + cell.column + ")");
-		// printAdjList();
-	}
-	
-	public Set<TestBoardCell> getAdjList() { 
+	public Set<BoardCell> getAdjList() { 
 		// printAdjList();
 		return adjList;
 	}
@@ -45,12 +41,20 @@ public class BoardCell {
 	public void printAdjList() { 
 		System.out.println("\tprintAdjList()");
 		System.out.print("\t\t");
-		for (TestBoardCell cell : adjList) {
-			System.out.print("(" + cell.row + "," + cell.column + ") ");
+		for (BoardCell cell : adjList) {
+			System.out.print("(" + cell.row + "," + cell.col + ") ");
 		}
 		System.out.println("");
 	} 	
-
+	
+	public boolean getOccupied() {
+		return occupied;
+	}
+	
+	public void setOccupied(boolean bool) {
+		this.occupied = bool;
+	}
+	
 	public boolean isDoorway() {
 		return doorway;
 	}
@@ -88,6 +92,10 @@ public class BoardCell {
 	
 	public char getSecretPassage() {
 		return secretPassage;
+	}
+	
+	public boolean isRoom() {
+		return this.initial != 'W' && this.initial != 'X';
 	}
 }
 
