@@ -1,0 +1,47 @@
+testAdjacenciesRooms():
+	- we want to test a couple of different rooms.
+	- First, Hill Hall that only has a single door but a secret room
+	- test the Student Center (note not marked since multiple test here)
+	- one more room, Berthoud
+
+testAdjacencyDoor():
+	- testing the adjacencies of doors at cells : (3, 23), (7, 23), (12, 17)
+
+testAdjacencyWalkways():
+	- Test on bottom edge of board, just one walkway piece
+	- Test near a door but not adjacent
+	- Test adjacent to walkways
+	- Test next to closet
+
+testTargetsInRecCenter():
+	- test a roll of 1
+	- test a roll of 3
+	- test a roll of 4
+
+testTargetsInBerthoud():
+	- test a roll of 1
+	- test a roll of 3
+	- test a roll of 4
+	
+testTargetsAtDoor():
+	- tests a doorway of Marquez
+	- test a roll of 1, at door
+	- test a roll of 3
+	- test a roll of 4
+	
+testTargetsInWalkway1():
+	- tests cell (13, 5)
+	- test a roll of 1
+	- test a roll of 3
+	- test a roll of 4
+	
+testTargetsInWalkway2():
+	- tests cell (18, 7)
+	- test a roll of 1
+	- test a roll of 3
+	- test a roll of 4
+
+testTargetsOccupied(): 
+	- test a roll of 4 blocked 1 down
+	- we want to make sure we can get into a room, even if flagged as occupied
+	- check leaving a room with a blocked doorway

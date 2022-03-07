@@ -54,7 +54,7 @@ public class BoardAdjTargetTest306 {
 	
 	// Ensure door locations include their rooms and also additional walkways
 	// These cells are LIGHT ORANGE on the planning spreadsheet
-	// @Test
+	@Test
 	public void testAdjacencyDoor()
 	{
 		Set<BoardCell> testList = board.getAdjList(11, 1);
@@ -78,7 +78,7 @@ public class BoardAdjTargetTest306 {
 	
 	// Test a variety of walkway scenarios
 	// These tests are Dark Orange on the planning spreadsheet
-	// @Test
+	@Test
 	public void testAdjacencyWalkways()
 	{
 		// Test on bottom edge of board, just one walkway piece
@@ -113,7 +113,7 @@ public class BoardAdjTargetTest306 {
 	
 	// Tests out of room center, 1, 3 and 4
 	// These are LIGHT BLUE on the planning spreadsheet
-	// @Test
+	@Test
 	public void testTargetsInDiningRoom() {
 		// test a roll of 1
 		board.calcTargets(board.getCell(12, 20), 1);
@@ -141,7 +141,7 @@ public class BoardAdjTargetTest306 {
 		assertTrue(targets.contains(board.getCell(15, 15)));	
 	}
 	
-	// @Test
+	@Test
 	public void testTargetsInKitchen() {
 		// test a roll of 1
 		board.calcTargets(board.getCell(20, 19), 1);
@@ -171,7 +171,7 @@ public class BoardAdjTargetTest306 {
 
 	// Tests out of room center, 1, 3 and 4
 	// These are LIGHT BLUE on the planning spreadsheet
-	// @Test
+	@Test
 	public void testTargetsAtDoor() {
 		// test a roll of 1, at door
 		board.calcTargets(board.getCell(8, 17), 1);
@@ -202,7 +202,7 @@ public class BoardAdjTargetTest306 {
 		assertTrue(targets.contains(board.getCell(5, 16)));	
 	}
 
-	// @Test
+	@Test
 	public void testTargetsInWalkway1() {
 		// test a roll of 1
 		board.calcTargets(board.getCell(11, 2), 1);
@@ -228,7 +228,7 @@ public class BoardAdjTargetTest306 {
 		assertTrue(targets.contains(board.getCell(11, 6)));	
 	}
 
-	// @Test
+	@Test
 	public void testTargetsInWalkway2() {
 		// test a roll of 1
 		board.calcTargets(board.getCell(13, 7), 1);
@@ -254,7 +254,7 @@ public class BoardAdjTargetTest306 {
 		assertTrue(targets.contains(board.getCell(11, 5)));	
 	}
 
-	// @Test
+	@Test
 	// test to make sure occupied locations do not cause problems
 	public void testTargetsOccupied() {
 		// test a roll of 4 blocked 2 down
