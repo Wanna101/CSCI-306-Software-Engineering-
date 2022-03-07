@@ -59,4 +59,5 @@ public class TestBoardCell {
 	public void setOccupied(boolean bool) {
 		this.occupied = bool;
 	}
+
 }

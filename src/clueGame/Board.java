@@ -13,7 +13,7 @@ public class Board {
     private static Board theInstance = new Board();	
     
     private Board() {
-        super() ;
+        super();
     }
     
     // this method returns the only Board
@@ -28,17 +28,9 @@ public class Board {
     	// TODO
     }
     
-    public void setConfigFiles(String string, String string2) {
-		// TODO Auto-generated method stub
-		
-		/*
-		grid = new BoardCell[][];
-		for (int row = 0; row < ROWS; row++) {
-			for (int col = 0; col < COLS; col++) {
-				grid[row][col] = new TestBoardCell(row, col);
-			}
-		}
-		*/
+    public void setConfigFiles(String layoutConfigFile, String setupConfigFile) {
+    	this.layoutConfigFile = layoutConfigFile;
+		this.setupConfigFile = setupConfigFile;
 	}
     
     public void loadSetupConfig() {
