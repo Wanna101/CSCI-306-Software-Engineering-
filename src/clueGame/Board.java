@@ -13,7 +13,7 @@ public class Board {
     private int numColumns; 
     private String layoutConfigFile; 
     private String setupConfigFile; 
-    private Map<Character, Room> roomMap; 
+    private Map<Character, Room> roomMap = new HashMap<Character, Room>(); 
     private static Board theInstance = new Board();	
     
     private Board() {
