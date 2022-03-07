@@ -34,10 +34,8 @@ public class Board {
     		loadLayoutConfig();
     	} catch(BadConfigFormatException e) {
     		System.err.println(e.getMessage());
-    		// System.out.println(e.getMessage());
     	} catch(FileNotFoundException e) {
     		System.err.println("File not found: " + e.getMessage());
-    		// System.out.println("File not found: " + e.getMessage());
     	}
     }
     
