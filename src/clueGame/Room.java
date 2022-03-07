@@ -1,11 +1,10 @@
 package clueGame;
 
 public class Room {
+	// this class holds info on the rooms
 	private String name;
 	private BoardCell centerCell;
 	private BoardCell labelCell;
-	
-	// this class holds info on the rooms
 	
 	public Room() {
 		// TODO

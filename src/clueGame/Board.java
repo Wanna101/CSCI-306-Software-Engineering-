@@ -220,7 +220,55 @@ public class Board {
  	}
  	
  	public void handleWalkways(BoardCell cell, int row, int col) {
- 		// TODO
+ 		// TODO: need to refactor this code because it is quite lengthy and repetitive
+ 		
+ 		// this will handle the adjacent walkways and the walkways
+ 		// with doors that connect to the room center
+ 		
+ 		// ** will this also handle the adjacencies of the room center at the 
+ 		// same time? such as the relationship of the room center to the doorways? **
+ 		
+ 		// check above
+		if ((row - 1) >= 0) {
+			if (grid[row - 1][col].getInitial() == 'W') {
+				cell.addAdj(grid[row - 1][col]);
+			} else if (cell.isDoorway() && grid[row - 1][col].getInitial() != 'X' && cell.getDoorDirection() == DoorDirection.UP) {
+				BoardCell b = roomMap.get(grid[row - 1][col].getInitial()).getCenterCell();
+				cell.addAdj(b);
+				// handles the rooms relationship with the door for the adjancencies
+				b.addAdj(cell);
+			}
+		}
+		// check below
+		if ((row + 1) < numRows) {
+			if (grid[row + 1][col].getInitial() == 'W') {
+				cell.addAdj(grid[row + 1][col]);
+			} else if (cell.isDoorway() && grid[row + 1][col].getInitial() != 'X' && cell.getDoorDirection() == DoorDirection.DOWN) {
+				BoardCell b = roomMap.get(grid[row + 1][col].getInitial()).getCenterCell();
+				cell.addAdj(b);
+				b.addAdj(cell);
+			}
+		}
+		// check left
+		if ((col - 1) >= 0) {
+			if (grid[row][col - 1].getInitial() == 'W') {
+				cell.addAdj(grid[row][col - 1]);
+			} else if (cell.isDoorway() && grid[row][col - 1].getInitial() != 'X' && cell.getDoorDirection() == DoorDirection.LEFT) {
+				BoardCell b = roomMap.get(grid[row][col - 1].getInitial()).getCenterCell();
+				cell.addAdj(b);
+				b.addAdj(cell);
+			}
+		}
+		// check right
+		if ((col + 1) < numColumns) {
+			if (grid[row][col + 1].getInitial() == 'W') {
+				cell.addAdj(grid[row][col + 1]);
+			} else if (cell.isDoorway() && grid[row][col + 1].getInitial() != 'X' && cell.getDoorDirection() == DoorDirection.RIGHT) {
+				BoardCell b = roomMap.get(grid[row][col + 1].getInitial()).getCenterCell();
+				cell.addAdj(b);
+				b.addAdj(cell);
+			}
+		}
  	}
  	
  	public void handleRooms(BoardCell currCell) {
