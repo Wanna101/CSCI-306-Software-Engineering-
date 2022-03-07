@@ -206,31 +206,32 @@ public class Board {
     
     // calculate adjacency list somewhere after the constructor
  	public void calcAdj() {
- 		for (int row = 0; row < ROWS; row++) {			
- 			for (int col = 0; col < COLS; col++) {
- 				TestBoardCell currCell = grid[row][col];
- 				// System.out.println("Current Cell (" + row + ", " + col + ")");
+ 		for (int row = 0; row < numRows; row++) {			
+ 			for (int col = 0; col < numColumns; col++) {
+ 				BoardCell currCell = grid[row][col];
+ 				// need to check what kind of cell it is (i.e. W, X, R, C, etc.)
+ 				
  				// check above
  				if ((row - 1) >= 0) {
- 					currCell.addAdjacency(grid[row - 1][col]);
+ 					currCell.addAdj(grid[row - 1][col]);
  				}	
  				// check below
- 				if ((row + 1) < ROWS) {
- 					currCell.addAdjacency(grid[row + 1][col]);
+ 				if ((row + 1) < numRows) {
+ 					currCell.addAdj(grid[row + 1][col]);
  				}
  				// check left
  				if ((col - 1) >= 0) {
- 					currCell.addAdjacency(grid[row][col - 1]);
+ 					currCell.addAdj(grid[row][col - 1]);
  				}
  				// check right
- 				if ((col + 1) < COLS) {
- 					currCell.addAdjacency(grid[row][col + 1]);
+ 				if ((col + 1) < numColumns) {
+ 					currCell.addAdj(grid[row][col + 1]);
  				}
  			}
  		}
  	}
  	
- 	public void calcTargets(TestBoardCell startCell, int pathlength) {
+ 	public void calcTargets(BoardCell startCell, int pathlength) {
  		// clear previous memory
  		visited.clear();
  		targets.clear();
@@ -240,10 +241,10 @@ public class Board {
  		findAllTargets(startCell, pathlength);
  	}
  	
- 	public void findAllTargets(TestBoardCell thisCell, int numSteps) {
+ 	public void findAllTargets(BoardCell thisCell, int numSteps) {
  		// get adjacency list of current cell
  		// need to iterate through adjacency list
- 		for (TestBoardCell adjCell : thisCell.getAdjList()) {
+ 		for (BoardCell adjCell : thisCell.getAdjList()) {
  			// needs to also test if the space is occupied by a person
  			if (visited.contains(adjCell) || adjCell.getOccupied()) {
  				continue;
@@ -259,7 +260,7 @@ public class Board {
  		}
  	}
  	
- 	public Set<TestBoardCell> getTargets() {
+ 	public Set<BoardCell> getTargets() {
  		return targets;
  	}
     
