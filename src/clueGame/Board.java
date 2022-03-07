@@ -210,25 +210,21 @@ public class Board {
  			for (int col = 0; col < numColumns; col++) {
  				BoardCell currCell = grid[row][col];
  				// need to check what kind of cell it is (i.e. W, X, R, C, etc.)
- 				
- 				// check above
- 				if ((row - 1) >= 0) {
- 					currCell.addAdj(grid[row - 1][col]);
- 				}	
- 				// check below
- 				if ((row + 1) < numRows) {
- 					currCell.addAdj(grid[row + 1][col]);
- 				}
- 				// check left
- 				if ((col - 1) >= 0) {
- 					currCell.addAdj(grid[row][col - 1]);
- 				}
- 				// check right
- 				if ((col + 1) < numColumns) {
- 					currCell.addAdj(grid[row][col + 1]);
+ 				if (currCell.getInitial() == 'W') {
+ 					handleWalkways(currCell, row, col);
+ 				} else if (currCell.getInitial() != 'W' && currCell.getInitial() != 'X') {
+ 					handleRooms(currCell);
  				}
  			}
  		}
+ 	}
+ 	
+ 	public void handleWalkways(BoardCell cell, int row, int col) {
+ 		// TODO
+ 	}
+ 	
+ 	public void handleRooms(BoardCell currCell) {
+ 		// TODO
  	}
  	
  	public void calcTargets(BoardCell startCell, int pathlength) {
