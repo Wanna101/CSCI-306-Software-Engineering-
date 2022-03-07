@@ -271,8 +271,14 @@ public class Board {
 		}
  	}
  	
- 	public void handleRooms(BoardCell currCell) {
- 		// TODO
+ 	public void handleRooms(BoardCell cell) {
+ 		// needs to handle secret passages
+ 		if (cell.getSecretPassage() != '!') {
+ 			BoardCell b = roomMap.get(cell.getSecretPassage()).getCenterCell();
+ 			BoardCell c = roomMap.get(cell.getInitial()).getCenterCell();
+ 			c.addAdj(b);
+ 			b.addAdj(c);
+ 		}
  	}
  	
  	public void calcTargets(BoardCell startCell, int pathlength) {

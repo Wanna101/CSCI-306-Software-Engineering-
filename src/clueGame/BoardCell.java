@@ -11,7 +11,7 @@ public class BoardCell {
 	private boolean doorway = false;
 	private boolean roomLabel = false;
 	private boolean roomCenter = false;
-	private char secretPassage;
+	private char secretPassage = '!';
 	private boolean occupied = false;
 	private Set<BoardCell> adjList = new HashSet<BoardCell>();
 	
