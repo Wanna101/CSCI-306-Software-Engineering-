@@ -296,7 +296,7 @@ public class Board {
  		// need to iterate through adjacency list
  		for (BoardCell adjCell : thisCell.getAdjList()) {
  			// needs to also test if the space is occupied by a person
- 			if (visited.contains(adjCell) || adjCell.getOccupied()) {
+ 			if (visited.contains(adjCell) || (adjCell.getOccupied() && adjCell.getInitial() == 'W')) {
  				continue;
  			}			
  			visited.add(adjCell);
