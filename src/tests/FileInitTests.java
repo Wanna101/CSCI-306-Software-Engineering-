@@ -15,7 +15,7 @@ public class FileInitTests {
 	// Constants that I will use to test whether the file was loaded correctly
 	public static final int LEGEND_SIZE = 11;
 	public static final int NUM_ROWS = 25;
-	public static final int NUM_COLUMNS = 24;
+	public static final int NUM_COLUMNS = 25;
 
 	// NOTE: I made Board static because I only want to set it up one
 	// time (using @BeforeAll), no need to do setup before each test.
@@ -57,7 +57,7 @@ public class FileInitTests {
 		BoardCell cell = board.getCell(6, 5);
 		assertTrue(cell.isDoorway());
 		assertEquals(DoorDirection.LEFT, cell.getDoorDirection());
-		cell = board.getCell(3, 24);
+		cell = board.getCell(3, 23);
 		assertTrue(cell.isDoorway());
 		assertEquals(DoorDirection.UP, cell.getDoorDirection());
 		cell = board.getCell(4, 7);
@@ -82,7 +82,7 @@ public class FileInitTests {
 				if (cell.isDoorway())
 					numDoors++;
 			}
-		Assert.assertEquals(16, numDoors);
+		Assert.assertEquals(17, numDoors);
 	}
 
 	// Test a few room cells to ensure the room initial is correct.
@@ -118,7 +118,7 @@ public class FileInitTests {
 		room = board.getRoom( cell ) ;
 		assertTrue( room != null );
 		assertEquals( room.getName(), "Hill Hall" ) ;
-		assertTrue( cell.getSecretPassage() == 'K' );
+		assertTrue( cell.getSecretPassage() == 'G' );
 		
 		// test a walkway
 		cell = board.getCell(4, 5);
