@@ -211,8 +211,10 @@ public class Board {
  				BoardCell currCell = grid[row][col];
  				// need to check what kind of cell it is (i.e. W, X, R, C, etc.)
  				if (currCell.getInitial() == 'W') {
+ 					// created function to handle the adjacent walkways (including the relationship of the room center to the doors)
  					handleWalkways(currCell, row, col);
  				} else if (currCell.getInitial() != 'W' && currCell.getInitial() != 'X') {
+ 					// created function to handle the rooms (specifically the room adjacency when dealing with secret passages)
  					handleRooms(currCell);
  				}
  			}
