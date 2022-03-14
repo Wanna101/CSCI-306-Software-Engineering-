@@ -9,10 +9,8 @@ import experiment.TestBoardCell;
 public class Board {
 	
 	private BoardCell[][] grid; 
-    private int numRows; 
-    private int numColumns; 
-    private String layoutConfigFile; 
-    private String setupConfigFile;
+    private int numRows, numColumns; 
+    private String layoutConfigFile, setupConfigFile; 
     private Set<BoardCell> targets = new HashSet<BoardCell>();
 	private Set<BoardCell> visited = new HashSet<BoardCell>();
     private Map<Character, Room> roomMap = new HashMap<Character, Room>(); 

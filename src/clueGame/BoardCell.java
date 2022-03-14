@@ -4,27 +4,71 @@ import java.util.*;
 import experiment.TestBoardCell;
 
 public class BoardCell {
-	private int row;
-	private int col;
-	private char initial;
+	private int row, col;
+	private char initial, secretPassage = '!';
 	private DoorDirection doorDirection;
-	private boolean doorway = false;
-	private boolean roomLabel = false;
-	private boolean roomCenter = false;
-	private char secretPassage = '!';
-	private boolean occupied = false;
+	private boolean doorway, roomLabel, roomCenter, occupied;
 	private Set<BoardCell> adjList = new HashSet<BoardCell>();
 	
+	
+	/*
+	 * Constructor: initialize variables
+	 */
 	public BoardCell(int row, int col) {
 		this.row = row;
 		this.col = col;
+		this.doorway = false;
+		this.roomLabel = false;
+		this.roomCenter = false;
+		this.occupied = false;
 	}
 	
+	
+	/*
+	 * addAdj: adds cells into adjacency list
+	 */
 	public void addAdj(BoardCell adj) {
 		adjList.add(adj);
 		// printAdjList();
 	}
 	
+	
+	/*
+	 * printAdjList: used for debugging purposes
+	 */
+	public void printAdjList() { 
+		System.out.println("\tprintAdjList()");
+		System.out.print("\t\t");
+		for (BoardCell cell : adjList) {
+			System.out.print("(" + cell.row + "," + cell.col + ") ");
+		}
+		System.out.println("");
+	} 	
+	
+	
+	
+	/*
+	 * Setters:
+	 * - setInitial
+	 * - setOccupied
+	 * - setDoorDirection
+	 * - setIsLabelCell
+	 * - setIsCenterCell
+	 * - setSecretPassage
+	 * 
+	 * Getters:
+	 * - getAdjList
+	 * - getInitial
+	 * - getOccupied
+	 * - getDoorDirection
+	 * - getSecretPassage
+	 * 
+	 * Booleans:
+	 * - isDoorway
+	 * - isRoom
+	 * - isLabel
+	 * - isRoomCenter
+	 */
 	public void setInitial(char initial) {
 		this.initial = initial;
 	}
@@ -37,15 +81,6 @@ public class BoardCell {
 		// printAdjList();
 		return adjList;
 	}
-
-	public void printAdjList() { 
-		System.out.println("\tprintAdjList()");
-		System.out.print("\t\t");
-		for (BoardCell cell : adjList) {
-			System.out.print("(" + cell.row + "," + cell.col + ") ");
-		}
-		System.out.println("");
-	} 	
 	
 	public boolean getOccupied() {
 		return occupied;
