@@ -97,36 +97,51 @@ public class Board {
     		else if (values.length != numColumns) {
     			throw new BadConfigFormatException("In layout file, Config has incorrect number of values at line: " + numRows);
     		}
-			int col = 0;
-    		for (String s : values) {    			
-    						 
-    			int row = numRows - 1;
-    			String key = String.valueOf(row) + "," + String.valueOf(col);
-    			coordinates.put(key, s);
-    			col++;
-    			
-    			if (s.length() == 1) {
-    				if (characterIsValid(s) == false) {
-    	    			throw new BadConfigFormatException("In layout file, Single character '" + s + "' is not a valid room at line: " + numRows);
-    	    		}    				
-    			}
-    			else if (s.length() == 2) {
-    				if (characterIsValid(s.substring(0, 1)) == false) {
-    	    			throw new BadConfigFormatException("In layout file, Single character '" + s + "' is not a valid room at line: " + numRows);
-    	    		}
-    				if (characterIsValid(s.substring(1, 2)) == false) {
-    					throw new BadConfigFormatException("In layout file, Symbol character '" + s + "' is not a symbol at line: " + numRows);
-    				}
-    			} else {
-    				throw new BadConfigFormatException("In layout file, Room / symbol '" + s + "' needs to be 1 or 2 characters at line: " + numRows);
-    			}
-    		}
-    		numRows++;
+			
+			validateLayout(numRows++, values, coordinates);
     	}
-    	
-    	numRows--;
+    	createBoard(--numRows, numColumns, coordinates);
+		calcAdj();
+    }
+    
+    /*
+     * validateLayout:
+     * - will throw exceptions for wrong formatting in the layout file
+     * - specifically if certain characters are not correct such as an incorrect symbol or letter
+     */
+    public void validateLayout(int numRows, String[] values, Map<String, String> coordinates) throws BadConfigFormatException {
+    	int col = 0;
+		for (String s : values) {    			
+						 
+			int row = numRows - 1;
+			String key = String.valueOf(row) + "," + String.valueOf(col);
+			coordinates.put(key, s);
+			col++;
+			
+			if (s.length() == 1) {
+				if (characterIsValid(s) == false) {
+	    			throw new BadConfigFormatException("In layout file, Single character '" + s + "' is not a valid room at line: " + numRows);
+	    		}    				
+			}
+			else if (s.length() == 2) {
+				if (characterIsValid(s.substring(0, 1)) == false) {
+	    			throw new BadConfigFormatException("In layout file, Single character '" + s + "' is not a valid room at line: " + numRows);
+	    		}
+				if (characterIsValid(s.substring(1, 2)) == false) {
+					throw new BadConfigFormatException("In layout file, Symbol character '" + s + "' is not a symbol at line: " + numRows);
+				}
+			} else {
+				throw new BadConfigFormatException("In layout file, Room / symbol '" + s + "' needs to be 1 or 2 characters at line: " + numRows);
+			}
+		}
+    }
+    
+    /*
+     * createBoard:
+     * - sets up the board by calling all the setters from BoardCell
+     */
+    public void createBoard(int numRows, int numColumns, Map<String, String> coordinates) {
 		grid = new BoardCell[numRows][numColumns];
-		
 		for (int row = 0; row < numRows; row++) {
 			for (int col = 0; col < numColumns; col++) {
 				BoardCell currentCell = new BoardCell(row, col);
@@ -137,38 +152,37 @@ public class Board {
 				currentCell.setInitial(room.charAt(0));
 				
 				if (roomAndSymbol.length() == 2) {
-					String symbol = roomAndSymbol.substring(1, 2);
-					if (symbol.equals("<")) {
-						currentCell.setDoorDirection(DoorDirection.LEFT);
-					}
-					else if (symbol.equals(">")) {
-						currentCell.setDoorDirection(DoorDirection.RIGHT);
-					}
-					else if (symbol.equals("^")) {
-						currentCell.setDoorDirection(DoorDirection.UP);
-					}
-					else if (symbol.equals("v")) {
-						currentCell.setDoorDirection(DoorDirection.DOWN);
-					} 
-					else if (symbol.equals("*")) {
-						currentCell.setDoorDirection(DoorDirection.NONE);
-			    		roomMap.get(room.charAt(0)).setCenterCell(currentCell);
-			    		currentCell.setIsCenterCell();
-					}
-					else if (symbol.equals("#")) { 
-						currentCell.setDoorDirection(DoorDirection.NONE);
-			    		roomMap.get(room.charAt(0)).setLabelCell(currentCell);
-			    		currentCell.setIsLabelCell();
-					}
-					else {
-						currentCell.setDoorDirection(DoorDirection.NONE);
-						currentCell.setSecretPassage(symbol.charAt(0));						
-					}
-				}
+                    String symbol = roomAndSymbol.substring(1, 2);
+                    switch(symbol) {
+                    case "<":
+                        currentCell.setDoorDirection(DoorDirection.LEFT);
+                        break; 
+                    case ">":
+                        currentCell.setDoorDirection(DoorDirection.RIGHT); 
+                        break; 
+                    case "^":
+                        currentCell.setDoorDirection(DoorDirection.UP);
+                        break; 
+                    case "v":
+                        currentCell.setDoorDirection(DoorDirection.DOWN);
+                        break; 
+                    case "*":
+                        currentCell.setDoorDirection(DoorDirection.NONE);
+                        roomMap.get(room.charAt(0)).setCenterCell(currentCell);
+                        currentCell.setIsCenterCell();
+                        break; 
+                    case "#":
+                        currentCell.setDoorDirection(DoorDirection.NONE);
+                        roomMap.get(room.charAt(0)).setLabelCell(currentCell);
+                        currentCell.setIsLabelCell(); 
+                        break; 
+                    default: 
+                        currentCell.setDoorDirection(DoorDirection.NONE);
+                        currentCell.setSecretPassage(symbol.charAt(0));
+                    }
+                }
 			}
 		}
-		
-		calcAdj();
     }
     
     /*
