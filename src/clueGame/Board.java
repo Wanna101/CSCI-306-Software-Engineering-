@@ -14,14 +14,11 @@ public class Board {
     private Map<Character, Room> roomMap = new HashMap<Character, Room>(); 
     private static Board theInstance = new Board();	
     
-    // Constructor
+    /*
+     * Constructor
+     */
     private Board() {
         super();
-    }
-    
-    // getInstance: this method returns the only Board
-    public static Board getInstance() {
-        return theInstance;
     }
     
     /*
@@ -39,10 +36,6 @@ public class Board {
     	}
     }
     
-    public void setConfigFiles(String layoutConfigFile, String setupConfigFile) {
-    	this.layoutConfigFile = layoutConfigFile;
-		this.setupConfigFile = setupConfigFile;
-	}
     
     
     /*
@@ -77,6 +70,7 @@ public class Board {
     		roomMap.put(character, r);
     	}
     }
+    
     
     
     /*
@@ -193,7 +187,9 @@ public class Board {
         return boardChar.matches(regex);
 	}
     
-    // getRoomChars: check characters associated with the room
+    /*
+     * getRoomChars: check characters associated with the room
+     */
     private String getRoomChars() {
     	String chars = "";
     	for (Map.Entry<Character, Room> entry : roomMap.entrySet()) {
@@ -202,6 +198,7 @@ public class Board {
     	}
     	return chars;
     }
+    
     
     
     /*
@@ -222,7 +219,6 @@ public class Board {
  		}
  	}
  	
-    
     /*
  	 * handleWalkways:
  	 * - handles adjacent walkways and the walkways with doors that connect to the center
@@ -268,8 +264,9 @@ public class Board {
 		}
  	}
  	
- 	
- 	// handleRooms handles the adjacency with the secret passages
+ 	/*
+ 	 * handleRooms handles the adjacency with the secret passages
+ 	 */
  	public void handleRooms(BoardCell cell) {
  		if (cell.getSecretPassage() != '!') {
  			BoardCell b = roomMap.get(cell.getSecretPassage()).getCenterCell();
@@ -278,6 +275,7 @@ public class Board {
  			b.addAdj(c);
  		}
  	}
+ 	
  	
  	
  	/*
@@ -292,7 +290,6 @@ public class Board {
  		visited.add(startCell);
  		findAllTargets(startCell, pathlength);
  	}
- 	
  	
  	/*
  	 * findAllTargets:
@@ -331,6 +328,18 @@ public class Board {
  	 * - getCell
  	 * - getAdjList
  	 */
+ 	
+ 	// Setters
+ 	public void setConfigFiles(String layoutConfigFile, String setupConfigFile) {
+    	this.layoutConfigFile = layoutConfigFile;
+		this.setupConfigFile = setupConfigFile;
+	}
+ 	
+
+ 	// Getters
+ 	public static Board getInstance() {
+        return theInstance;
+    }
  	
  	public Set<BoardCell> getTargets() {
  		return targets;

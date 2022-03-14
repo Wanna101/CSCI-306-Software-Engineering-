@@ -1,7 +1,6 @@
 package clueGame;
 
 public enum DoorDirection {
-	UP, DOWN, LEFT, RIGHT, NONE;
 	
 	/*
 	 * UP: ^
@@ -9,5 +8,5 @@ public enum DoorDirection {
 	 * LEFT: >
 	 * RIGHT: <
 	 */
-	
+	UP, DOWN, LEFT, RIGHT, NONE;
 }

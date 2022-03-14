@@ -1,14 +1,38 @@
 package clueGame;
 
 public class Room {
-	// this class holds info on the rooms
 	private String name;
 	private BoardCell centerCell, labelCell;
 	
+	/*
+	 * Constructor
+	 */
 	public Room(String name) {
 		this.name = name;
 	}
+	
+	/*
+	 * Setters:
+	 * - setLabelCell
+	 * - setCenterCell
+	 * 
+	 * Getters:
+	 * - getName
+	 * - getLabelCell
+	 * - getCenterCell
+	 */
+	
+	// Setters
+	public void setLabelCell(BoardCell labelCell) {
+		this.labelCell = labelCell;
+	}
 
+	public void setCenterCell(BoardCell centerCell) {
+		this.centerCell = centerCell;
+	}
+	
+	
+	// Getters
 	public String getName() {
 		return name;
 	}
@@ -19,13 +43,5 @@ public class Room {
 	
 	public BoardCell getCenterCell() {
 		return centerCell;
-	}
-
-	public void setLabelCell(BoardCell labelCell) {
-		this.labelCell = labelCell;
-	}
-
-	public void setCenterCell(BoardCell centerCell) {
-		this.centerCell = centerCell;
 	}
 }
