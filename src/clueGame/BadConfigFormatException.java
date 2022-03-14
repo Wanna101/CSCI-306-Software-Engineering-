@@ -4,6 +4,7 @@ import java.util.*;
 import java.io.*;
 import java.time.Instant;
 
+@SuppressWarnings({ "unused", "serial" })
 public class BadConfigFormatException extends Exception {
 
 	/*

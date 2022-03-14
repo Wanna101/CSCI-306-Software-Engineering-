@@ -2,7 +2,6 @@ package clueGame;
 
 import java.util.*;
 import java.io.*;
-import java.util.regex.*;
 
 public class Board {
 	
@@ -43,10 +42,10 @@ public class Board {
      * - will read Setup file
      * - skips line with "//"
      * - skips lines that are either blank or have empty spaces
-     * - uses ltrim and rtrim to remove all leading spaces after splitting the line
      * - throws BadConfigFormatException if the setup file is not formatted properly
      */
-    public void loadSetupConfig() throws BadConfigFormatException, FileNotFoundException {
+    @SuppressWarnings("resource")
+	public void loadSetupConfig() throws BadConfigFormatException, FileNotFoundException {
     	FileReader setupConfig = new FileReader("data\\" + setupConfigFile);
     	Scanner fileScanner = new Scanner(setupConfig);
     	String nextLine;
@@ -80,52 +79,52 @@ public class Board {
      * - throws BadConfigFormatException if character value is not valid
      * - sets up the board by setting the door directions, secret passages, etc.
      */
-    public void loadLayoutConfig() throws BadConfigFormatException, FileNotFoundException {
+    @SuppressWarnings("resource")
+	public void loadLayoutConfig() throws BadConfigFormatException, FileNotFoundException {
     	Map<String, String> coordinates = new HashMap<String, String>();
     	FileReader layoutConfig = new FileReader("data\\" + layoutConfigFile);
     	Scanner fileScanner = new Scanner(layoutConfig);
     	String nextLine;
-    	int columnCount = 0;
-    	int lineNumber = 1;
+    	numColumns = 0;
+    	numRows = 1;
     	while(fileScanner.hasNext()) {
     		nextLine = fileScanner.nextLine();    		
     		String[] values = nextLine.split(",");
 
-			if (columnCount == 0) {
-    			columnCount = values.length;
+			if (numColumns == 0) {
+    			numColumns = values.length;
     		}
-    		else if (values.length != columnCount) {
-    			throw new BadConfigFormatException("In layout file, Config has incorrect number of values at line: " + lineNumber);
+    		else if (values.length != numColumns) {
+    			throw new BadConfigFormatException("In layout file, Config has incorrect number of values at line: " + numRows);
     		}
 			int col = 0;
     		for (String s : values) {    			
     						 
-    			int row = lineNumber - 1;
+    			int row = numRows - 1;
     			String key = String.valueOf(row) + "," + String.valueOf(col);
     			coordinates.put(key, s);
     			col++;
     			
     			if (s.length() == 1) {
     				if (characterIsValid(s) == false) {
-    	    			throw new BadConfigFormatException("In layout file, Single character '" + s + "' is not a valid room at line: " + lineNumber);
+    	    			throw new BadConfigFormatException("In layout file, Single character '" + s + "' is not a valid room at line: " + numRows);
     	    		}    				
     			}
     			else if (s.length() == 2) {
     				if (characterIsValid(s.substring(0, 1)) == false) {
-    	    			throw new BadConfigFormatException("In layout file, Single character '" + s + "' is not a valid room at line: " + lineNumber);
+    	    			throw new BadConfigFormatException("In layout file, Single character '" + s + "' is not a valid room at line: " + numRows);
     	    		}
     				if (characterIsValid(s.substring(1, 2)) == false) {
-    					throw new BadConfigFormatException("In layout file, Symbol character '" + s + "' is not a symbol at line: " + lineNumber);
+    					throw new BadConfigFormatException("In layout file, Symbol character '" + s + "' is not a symbol at line: " + numRows);
     				}
     			} else {
-    				throw new BadConfigFormatException("In layout file, Room / symbol '" + s + "' needs to be 1 or 2 characters at line: " + lineNumber);
+    				throw new BadConfigFormatException("In layout file, Room / symbol '" + s + "' needs to be 1 or 2 characters at line: " + numRows);
     			}
     		}
-    		lineNumber++;
+    		numRows++;
     	}
     	
-    	numRows = lineNumber - 1;
-    	numColumns = columnCount;
+    	numRows--;
 		grid = new BoardCell[numRows][numColumns];
 		
 		for (int row = 0; row < numRows; row++) {
@@ -183,7 +182,6 @@ public class Board {
 		String validSymbols = "><v^*#";
         String validLetters = this.getRoomChars();
         String regex = "[" + validLetters + validSymbols + "]";
-        Pattern pattern = Pattern.compile(regex);
         return boardChar.matches(regex);
 	}
     
@@ -224,6 +222,15 @@ public class Board {
  	 * - handles adjacent walkways and the walkways with doors that connect to the center
  	 * - it also handles the adjacencies of the room center relative to the doorway
  	 * - will check above, below, left, and right for the specific adjacencies
+ 	 * 
+ 	 * Note:
+ 	 * - else if statement tests to see if the cell is a doorway AND it checks to see if
+ 	 * the adjacent cell it is testing is an unused space ('X') AND it checks if the enum
+ 	 * type is the direction it says it is (whether it is UP, DOWN, LEFT, or RIGHT)
+ 	 * - inside the else if statement, it gets the center cell of the adjacent room
+ 	 * - to make things simpler, this function has the walkway add the center as an
+ 	 * adjacency on the adjacency list and simultaneously has the center cell of the room
+ 	 * add the walkway as an adjacency
  	 */
  	public void handleWalkways(BoardCell cell, int row, int col) {
 		if ((row - 1) >= 0) {
