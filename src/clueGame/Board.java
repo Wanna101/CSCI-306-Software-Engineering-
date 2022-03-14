@@ -2,9 +2,7 @@ package clueGame;
 
 import java.util.*;
 import java.io.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import experiment.TestBoardCell;
+import java.util.regex.*;
 
 public class Board {
 	
@@ -56,7 +54,6 @@ public class Board {
      * - throws BadConfigFormatException if the setup file is not formatted properly
      */
     public void loadSetupConfig() throws BadConfigFormatException, FileNotFoundException {
-    	// create FileReader and Scanner to read the file
     	FileReader setupConfig = new FileReader("data\\" + setupConfigFile);
     	Scanner fileScanner = new Scanner(setupConfig);
     	String nextLine;
@@ -72,7 +69,7 @@ public class Board {
     		String[] values = nextLine.split(",");
     		String type = values[0].replaceAll("\\s", "");
     		if (!type.equals("Room") && !type.equals("Space")) {
-    			throw new BadConfigFormatException("Type is not equal to 'Room' or 'Space' (loadSetupConfig() in Board.java)");    		
+    			throw new BadConfigFormatException("In setup file, Type is not equal to 'Room' or 'Space'");    		
     		}
     		String label = values[1].replaceAll("^\\s+", "").replaceAll("\\s+$", "");     		
     		char character = values[2].replaceAll("\\s", "").charAt(0);
@@ -104,7 +101,7 @@ public class Board {
     			columnCount = values.length;
     		}
     		else if (values.length != columnCount) {
-    			throw new BadConfigFormatException("Config has incorrect number of values at line: " + lineNumber + " (loadLayoutConfig() in Board.java)");
+    			throw new BadConfigFormatException("In layout file, Config has incorrect number of values at line: " + lineNumber);
     		}
 			int col = 0;
     		for (String s : values) {    			
@@ -116,18 +113,18 @@ public class Board {
     			
     			if (s.length() == 1) {
     				if (characterIsValid(s) == false) {
-    	    			throw new BadConfigFormatException("Single character '" + s + "' is not a valid room at line: " + lineNumber + " (loadLayoutConfig() in Board.java)");
+    	    			throw new BadConfigFormatException("In layout file, Single character '" + s + "' is not a valid room at line: " + lineNumber);
     	    		}    				
     			}
     			else if (s.length() == 2) {
     				if (characterIsValid(s.substring(0, 1)) == false) {
-    	    			throw new BadConfigFormatException("Single character '" + s + "' is not a valid room at line: " + lineNumber + " (loadLayoutConfig() in Board.java)");
+    	    			throw new BadConfigFormatException("In layout file, Single character '" + s + "' is not a valid room at line: " + lineNumber);
     	    		}
     				if (characterIsValid(s.substring(1, 2)) == false) {
-    					throw new BadConfigFormatException("Symbol character '" + s + "' is not a symbol at line: " + lineNumber + " (loadLayoutConfig() in Board.java)");
+    					throw new BadConfigFormatException("In layout file, Symbol character '" + s + "' is not a symbol at line: " + lineNumber);
     				}
     			} else {
-    				throw new BadConfigFormatException("Room / symbol '" + s + "' needs to be 1 or 2 characters at line: " + lineNumber + " (loadLayoutConfig() in Board.java)");
+    				throw new BadConfigFormatException("In layout file, Room / symbol '" + s + "' needs to be 1 or 2 characters at line: " + lineNumber);
     			}
     		}
     		lineNumber++;
@@ -170,7 +167,6 @@ public class Board {
 			    		roomMap.get(room.charAt(0)).setLabelCell(currentCell);
 			    		currentCell.setIsLabelCell();
 					}
-					// secret passage letter
 					else {
 						currentCell.setDoorDirection(DoorDirection.NONE);
 						currentCell.setSecretPassage(symbol.charAt(0));						
@@ -217,12 +213,9 @@ public class Board {
  		for (int row = 0; row < numRows; row++) {			
  			for (int col = 0; col < numColumns; col++) {
  				BoardCell currCell = grid[row][col];
- 				// need to check what kind of cell it is (i.e. W, X, R, C, etc.)
  				if (currCell.getInitial() == 'W') {
- 					// created function to handle the adjacent walkways (including the relationship of the room center to the doors)
  					handleWalkways(currCell, row, col);
  				} else if (currCell.getInitial() != 'W' && currCell.getInitial() != 'X') {
- 					// created function to handle the rooms (specifically the room adjacency when dealing with secret passages)
  					handleRooms(currCell);
  				}
  			}

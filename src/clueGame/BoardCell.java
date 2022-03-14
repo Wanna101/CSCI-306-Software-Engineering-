@@ -1,7 +1,6 @@
 package clueGame;
 
 import java.util.*;
-import experiment.TestBoardCell;
 
 public class BoardCell {
 	private int row, col;

@@ -28,9 +28,9 @@ public class BadConfigFormatException extends Exception {
 			
 			printWriter.close();
 		} catch (FileNotFoundException e) {
-			System.err.println("Could not find file");
+			System.err.println("FileNotFoundException(): Could not find file");
 		} catch (IOException e) {
-			System.err.println("Could not append message to file");
+			System.err.println("IOException(): Could not append message to file");
 		}
 		System.err.println(string);
 	}
