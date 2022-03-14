@@ -18,17 +18,19 @@ public class Board {
     private Map<Character, Room> roomMap = new HashMap<Character, Room>(); 
     private static Board theInstance = new Board();	
     
+    // Constructor
     private Board() {
         super();
     }
     
-    // this method returns the only Board
+    // getInstance: this method returns the only Board
     public static Board getInstance() {
         return theInstance;
     }
     
     /*
-     * initialize the board (since we are using singleton pattern)
+     * initialize:
+     * - initialize the board (since we are using singleton pattern)
      */
     public void initialize() {
     	try {
@@ -46,29 +48,31 @@ public class Board {
 		this.setupConfigFile = setupConfigFile;
 	}
     
+    
+    /*
+     * loadSetupConfig:
+     * - will read Setup file
+     * - skips line with "//"
+     * - skips lines that are either blank or have empty spaces
+     * - uses ltrim and rtrim to remove all leading spaces after splitting the line
+     * - throws BadConfigFormatException if the setup file is not formatted properly
+     */
     public void loadSetupConfig() throws BadConfigFormatException, FileNotFoundException {
     	// create FileReader and Scanner to read the file
     	FileReader setupConfig = new FileReader("data\\" + setupConfigFile);
     	Scanner fileScanner = new Scanner(setupConfig);
-    	
     	String nextLine;
     	
-    	// while there is something still in the file, goto next line
     	while(fileScanner.hasNext()) {
     		nextLine = fileScanner.nextLine();
-    		
-    		// skip lines with //
     		if (nextLine.contains("//")) {
     			continue;
     		}
-    		
     		String[] values = nextLine.split(",");
     		String type = values[0].replaceAll("\\s", "");
     		if (!type.equals("Room") && !type.equals("Space")) {
     			throw new BadConfigFormatException("Type is not equal to 'Room' or 'Space' (loadSetupConfig() in Board.java)");    		
     		}
-    		
-    		// ltrim rtim
     		String label = values[1].replaceAll("^\\s+", "").replaceAll("\\s+$", "");     		
     		char character = values[2].replaceAll("\\s", "").charAt(0);
     		Room r = new Room();
@@ -77,20 +81,21 @@ public class Board {
     	}
     }
     
+    
+    /*
+     * loadLayoutConfig:
+     * - will read Layout file
+     * - uses a map to store the cell as the key and the character of the room as the value
+     * - throws BadConfigFormatException if character value is not valid
+     * - sets up the board by setting the door directions, secret passages, etc.
+     */
     public void loadLayoutConfig() throws BadConfigFormatException, FileNotFoundException {
-    	// map <string, string> 
-    	// map["0,0"] = "X"
     	Map<String, String> coordinates = new HashMap<String, String>();
-    	
-    	// create FileReader and Scanner to read the file
     	FileReader layoutConfig = new FileReader("data\\" + layoutConfigFile);
     	Scanner fileScanner = new Scanner(layoutConfig);
-    	
     	String nextLine;
     	int columnCount = 0;
     	int lineNumber = 1;
-    	
-    	// while there is something still in the file, goto next line
     	while(fileScanner.hasNext()) {
     		nextLine = fileScanner.nextLine();    		
     		String[] values = nextLine.split(",");
@@ -101,13 +106,9 @@ public class Board {
     		else if (values.length != columnCount) {
     			throw new BadConfigFormatException("Config has incorrect number of values at line: " + lineNumber + " (loadLayoutConfig() in Board.java)");
     		}
-    		
-    		// throws exception if character value is not valid
 			int col = 0;
     		for (String s : values) {    			
-    			// storing "row, col" as a string for the key to the map
-    			// row == lineNumber - 1
-    			// col == col    			 
+    						 
     			int row = lineNumber - 1;
     			String key = String.valueOf(row) + "," + String.valueOf(col);
     			coordinates.put(key, s);
@@ -141,12 +142,10 @@ public class Board {
 				BoardCell currentCell = new BoardCell(row, col);
 				grid[row][col] = currentCell;
 				String key = String.valueOf(row) + "," + String.valueOf(col);
-				// get character(s) value of row, col
 				String roomAndSymbol = coordinates.get(key);			
 				String room = roomAndSymbol.substring(0, 1);
 				currentCell.setInitial(room.charAt(0));
 				
-				// we have a symbol
 				if (roomAndSymbol.length() == 2) {
 					String symbol = roomAndSymbol.substring(1, 2);
 					if (symbol.equals("<")) {
@@ -183,11 +182,14 @@ public class Board {
 		calcAdj();
     }
     
-    // After reading setup file, if you find a character on board not on setup file, throw
-    // >, <, ^, v, *, #, or simply a character, it is not the correct format and should be thrown
+    /*
+     * characterIsValid:
+     * - After reading setup file, if there is a character on board not on setup file, throw
+     * >, <, ^, v, *, #, or simply a character, it is not the correct format and should be thrown
+     * - check for valid character by putting all valid symbols and characters into a regex
+     * - Citation Source: https://www.tutorialspoint.com/java-regular-expression-to-check-if-a-string-contains-alphabet
+     */
     private boolean characterIsValid(String boardChar) {
-    	// check for valid character by putting all valid symbols and characters into a regex
-        // https://www.tutorialspoint.com/java-regular-expression-to-check-if-a-string-contains-alphabet
 		String validSymbols = "><v^*#";
         String validLetters = this.getRoomChars();
         String regex = "[" + validLetters + validSymbols + "]";
@@ -195,6 +197,7 @@ public class Board {
         return boardChar.matches(regex);
 	}
     
+    // getRoomChars: check characters associated with the room
     private String getRoomChars() {
     	String chars = "";
     	for (Map.Entry<Character, Room> entry : roomMap.entrySet()) {
@@ -204,8 +207,13 @@ public class Board {
     	return chars;
     }
     
-    // calculate adjacency list somewhere after the constructor
- 	public void calcAdj() {
+    
+    /*
+     * calcAdj:
+     * - calculates adjacency list
+     * - checks what kind of cell it is (i.e. W, X, R, C, etc.
+     */
+    public void calcAdj() {
  		for (int row = 0; row < numRows; row++) {			
  			for (int col = 0; col < numColumns; col++) {
  				BoardCell currCell = grid[row][col];
@@ -221,27 +229,23 @@ public class Board {
  		}
  	}
  	
+    
+    /*
+ 	 * handleWalkways:
+ 	 * - handles adjacent walkways and the walkways with doors that connect to the center
+ 	 * - it also handles the adjacencies of the room center relative to the doorway
+ 	 * - will check above, below, left, and right for the specific adjacencies
+ 	 */
  	public void handleWalkways(BoardCell cell, int row, int col) {
- 		// TODO: need to refactor this code because it is quite lengthy and repetitive
- 		
- 		// this will handle the adjacent walkways and the walkways
- 		// with doors that connect to the room center
- 		
- 		// ** will this also handle the adjacencies of the room center at the 
- 		// same time? such as the relationship of the room center to the doorways? **
- 		
- 		// check above
 		if ((row - 1) >= 0) {
 			if (grid[row - 1][col].getInitial() == 'W') {
 				cell.addAdj(grid[row - 1][col]);
 			} else if (cell.isDoorway() && grid[row - 1][col].getInitial() != 'X' && cell.getDoorDirection() == DoorDirection.UP) {
 				BoardCell b = roomMap.get(grid[row - 1][col].getInitial()).getCenterCell();
 				cell.addAdj(b);
-				// handles the rooms relationship with the door for the adjancencies
 				b.addAdj(cell);
 			}
 		}
-		// check below
 		if ((row + 1) < numRows) {
 			if (grid[row + 1][col].getInitial() == 'W') {
 				cell.addAdj(grid[row + 1][col]);
@@ -251,7 +255,6 @@ public class Board {
 				b.addAdj(cell);
 			}
 		}
-		// check left
 		if ((col - 1) >= 0) {
 			if (grid[row][col - 1].getInitial() == 'W') {
 				cell.addAdj(grid[row][col - 1]);
@@ -261,7 +264,6 @@ public class Board {
 				b.addAdj(cell);
 			}
 		}
-		// check right
 		if ((col + 1) < numColumns) {
 			if (grid[row][col + 1].getInitial() == 'W') {
 				cell.addAdj(grid[row][col + 1]);
@@ -273,8 +275,9 @@ public class Board {
 		}
  	}
  	
+ 	
+ 	// handleRooms handles the adjacency with the secret passages
  	public void handleRooms(BoardCell cell) {
- 		// needs to handle secret passages
  		if (cell.getSecretPassage() != '!') {
  			BoardCell b = roomMap.get(cell.getSecretPassage()).getCenterCell();
  			BoardCell c = roomMap.get(cell.getInitial()).getCenterCell();
@@ -283,26 +286,33 @@ public class Board {
  		}
  	}
  	
+ 	
+ 	/*
+ 	 * calcTargets:
+ 	 * - clears previous memory of visited and targets
+ 	 * - adds starting location to visited list
+ 	 * - calls recursive function findAllTargets
+ 	 */
  	public void calcTargets(BoardCell startCell, int pathlength) {
- 		// clear previous memory
  		visited.clear();
  		targets.clear();
- 		// add starting location to visited list 
  		visited.add(startCell);
- 		// call recursive function findAllTargets
  		findAllTargets(startCell, pathlength);
  	}
  	
+ 	
+ 	/*
+ 	 * findAllTargets:
+ 	 * - gets adjacency list of current cell
+ 	 * - will iterate through adjacency list
+ 	 * - will test if the space is a room therefore adding it as a potential target
+ 	 */
  	public void findAllTargets(BoardCell thisCell, int numSteps) {
- 		// get adjacency list of current cell
- 		// need to iterate through adjacency list
  		for (BoardCell adjCell : thisCell.getAdjList()) {
- 			// needs to also test if the space is occupied by a person
  			if (visited.contains(adjCell) || (adjCell.getOccupied() && adjCell.getInitial() == 'W')) {
  				continue;
  			}			
  			visited.add(adjCell);
- 			// needs to also test if the space is a room therefore adding it as a potential target
  			if (numSteps == 1 || adjCell.isRoom()) {
  				targets.add(adjCell);
  			} else {
@@ -311,6 +321,23 @@ public class Board {
  			visited.remove(adjCell);
  		}
  	}
+ 	
+ 	
+ 	
+ 	/*
+ 	 * Setters:
+ 	 * - setConfigFiles
+ 	 * 
+ 	 * Getters:
+ 	 * - getInstance (this method returns only the Board)
+ 	 * - getTargets
+ 	 * - getRoom (for character)
+ 	 * - getRoom (for cell)
+ 	 * - getNumRows
+ 	 * - getNumColumns
+ 	 * - getCell
+ 	 * - getAdjList
+ 	 */
  	
  	public Set<BoardCell> getTargets() {
  		return targets;

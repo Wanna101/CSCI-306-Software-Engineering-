@@ -28,3 +28,6 @@
 2022-03-08T19:40:19.250999500Z GMT: BadConfigFormatException(): Config has incorrect number of values at line: 3 (loadLayoutConfig() in Board.java)
 2022-03-08T19:40:19.550750800Z GMT: BadConfigFormatException(): Single character 'Y' is not a valid room at line: 1 (loadLayoutConfig() in Board.java)
 2022-03-08T19:40:19.641353700Z GMT: BadConfigFormatException(): Type is not equal to 'Room' or 'Space' (loadSetupConfig() in Board.java)
+2022-03-10T17:22:15.636872700Z GMT: BadConfigFormatException(): Config has incorrect number of values at line: 3 (loadLayoutConfig() in Board.java)
+2022-03-10T17:22:15.852541200Z GMT: BadConfigFormatException(): Single character 'Y' is not a valid room at line: 1 (loadLayoutConfig() in Board.java)
+2022-03-10T17:22:15.918302100Z GMT: BadConfigFormatException(): Type is not equal to 'Room' or 'Space' (loadSetupConfig() in Board.java)
