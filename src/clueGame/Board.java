@@ -66,6 +66,9 @@ public class Board {
     		if (nextLine.contains("//")) {
     			continue;
     		}
+    		if (nextLine.trim().isEmpty()) {
+    			continue;
+    		}
     		String[] values = nextLine.split(",");
     		String type = values[0].replaceAll("\\s", "");
     		if (!type.equals("Room") && !type.equals("Space")) {
@@ -73,8 +76,7 @@ public class Board {
     		}
     		String label = values[1].replaceAll("^\\s+", "").replaceAll("\\s+$", "");     		
     		char character = values[2].replaceAll("\\s", "").charAt(0);
-    		Room r = new Room();
-    		r.setName(label);
+    		Room r = new Room(label);
     		roomMap.put(character, r);
     	}
     }

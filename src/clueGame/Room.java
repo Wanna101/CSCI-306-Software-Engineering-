@@ -5,22 +5,18 @@ public class Room {
 	private String name;
 	private BoardCell centerCell, labelCell;
 	
-	public Room() {
-		// TODO
-	}
-	
-	public void setName(String name) {
+	public Room(String name) {
 		this.name = name;
 	}
-	
+
 	public String getName() {
 		return name;
 	}
-
+	
 	public BoardCell getLabelCell() {
 		return labelCell;
 	}
-
+	
 	public BoardCell getCenterCell() {
 		return centerCell;
 	}
