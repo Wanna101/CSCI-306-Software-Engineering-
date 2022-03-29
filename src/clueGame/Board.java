@@ -13,6 +13,10 @@ public class Board {
     private Map<Character, Room> roomMap = new HashMap<Character, Room>(); 
     private static Board theInstance = new Board();	
     
+    private Set<Card> deck;
+    private ArrayList<Player> players;
+    private ArrayList<Solution> theAnswer;
+    
     /*
      * Constructor
      */
@@ -211,6 +215,18 @@ public class Board {
     	return chars;
     }
     
+    
+    /*
+     * C20A-1:
+     */
+    void deal() {
+    	/*
+    	 * Hints:
+    	 * - deal cards to the Solution class and the players (this meaning
+    	 *   that all cards are dealt and players have roughly same # of cards
+    	 *    and no card is dealt twice)
+    	 */
+    }
     
     
     /*
