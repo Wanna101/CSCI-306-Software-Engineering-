@@ -2,6 +2,9 @@ package clueGame;
 
 import java.util.*;
 import java.io.*;
+import java.awt.*;
+
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Board {
 	
@@ -13,9 +16,9 @@ public class Board {
     private Map<Character, Room> roomMap = new HashMap<Character, Room>(); 
     private static Board theInstance = new Board();	
     
-    private Set<Card> deck;
-    private ArrayList<Player> players;
-    private ArrayList<Solution> theAnswer;
+    private ArrayList<Card> deck = new ArrayList<Card>();
+    private ArrayList<Player> players = new ArrayList<Player>();
+    private Solution theAnswer = new Solution();
     
     /*
      * Constructor
@@ -47,6 +50,7 @@ public class Board {
      * - skips line with "//"
      * - skips lines that are either blank or have empty spaces
      * - throws BadConfigFormatException if the setup file is not formatted properly
+     * - creates deck of Cards and writes information into players ArrayList
      */
     @SuppressWarnings("resource")
 	public void loadSetupConfig() throws BadConfigFormatException, FileNotFoundException {
@@ -56,22 +60,50 @@ public class Board {
     	
     	while(fileScanner.hasNext()) {
     		nextLine = fileScanner.nextLine();
-    		if (nextLine.contains("//")) {
-    			continue;
-    		}
-    		if (nextLine.trim().isEmpty()) {
+    		if (nextLine.contains("//") || nextLine.trim().isEmpty()) {
     			continue;
     		}
     		String[] values = nextLine.split(",");
-    		String type = values[0].replaceAll("\\s", "");
-    		if (!type.equals("Room") && !type.equals("Space")) {
-    			throw new BadConfigFormatException("In setup file, Type is not equal to 'Room' or 'Space'");    		
+    		String type = values[0].trim();
+    		if (!type.equals("Room") && !type.equals("Space") && !type.equals("Person") && !type.equals("Weapon")) {
+    			throw new BadConfigFormatException("In setup file, Type is not equal to 'Room' or 'Space' or 'Person' or 'Weapon'");    		
     		}
-    		String label = values[1].replaceAll("^\\s+", "").replaceAll("\\s+$", "");     		
-    		char character = values[2].replaceAll("\\s", "").charAt(0);
-    		Room r = new Room(label);
-    		roomMap.put(character, r);
+    		
+    		if (type.equals("Room") || type.equals("Person") || type.equals("Weapon")) { 
+	    		Card card = new Card();
+				card.setCardName(values[1].trim());
+				
+				if (type.equals("Room")) {
+					card.setCardType(CardType.ROOM);
+				} else if (type.equals("Person")) {
+					card.setCardType(CardType.PERSON);
+					if (values[1].trim().equals("Blaster")) {
+						HumanPlayer human = new HumanPlayer();
+						human.setPlayerName(values[1].trim());
+						human.setColor(Color.decode(values[2].trim()));
+						players.add(human);
+					} else {
+						ComputerPlayer pc = new ComputerPlayer();
+						pc.setPlayerName(values[1].trim());
+    					pc.setColor(Color.decode(values[2].trim()));
+    					players.add(pc);
+					}
+				} else if (type.equals("Weapon")) {
+					card.setCardType(CardType.WEAPON);
+				}	
+				deck.add(card);
+    		} 
+    		
+    		if (type.equals("Room") || type.equals("Space")) {
+    			String label = values[1].trim();     		
+        		char character = values[2].trim().charAt(0);
+        		Room r = new Room();
+        		r.setName(label);
+        		roomMap.put(character, r);
+    		}
     	}
+    	
+    	fileScanner.close();
     }
     
     
@@ -106,6 +138,10 @@ public class Board {
     	}
     	createBoard(--numRows, numColumns, coordinates);
 		calcAdj();
+		placePlayers();
+		deal();
+		
+		fileScanner.close();
     }
     
     /*
@@ -213,19 +249,6 @@ public class Board {
     		chars += key.toString();
     	}
     	return chars;
-    }
-    
-    
-    /*
-     * C20A-1:
-     */
-    void deal() {
-    	/*
-    	 * Hints:
-    	 * - deal cards to the Solution class and the players (this meaning
-    	 *   that all cards are dealt and players have roughly same # of cards
-    	 *    and no card is dealt twice)
-    	 */
     }
     
     
@@ -349,8 +372,83 @@ public class Board {
  		}
  	}
  	
+ 	 /*
+     * placePlayers:
+     * - set the players' location after instantiating
+     */
+    public void placePlayers() {
+    	for (int i = 0; i < players.size(); i++) {
+    		if (i == 0) {
+    			players.get(i).setLocation(24, 7);
+    		} else if (i == 1) {
+    			players.get(i).setLocation(19, 0);
+    		} else if (i == 2) {
+    			players.get(i).setLocation(0, 16);
+    		} else if (i == 3) {
+    			players.get(i).setLocation(6, 24);
+    		} else if (i == 4) {
+    			players.get(i).setLocation(16, 24);
+    		} else {
+    			players.get(i).setLocation(24, 17);
+    		}
+    	}
+    }
  	
+    
+    /*
+	 * deal:
+	 * - deal cards to the Solution class and the players (this meaning
+	 *   that all cards are dealt and players have roughly same # of cards
+	 *    and no card is dealt twice)
+	 */
+    void deal() {
+    	int numCards = 1;
+ 		int currPerson = 0;
+ 		
+ 		boolean roomAssign = false;
+ 		boolean personAssign = false;
+ 		boolean weaponAssign = false;
+ 		
+ 		shuffleArray(deck);
+ 		
+ 		for (int i = 0; i < deck.size(); i++) {
+ 			Card c = deck.get(i);
+ 			if (c.getCardType() == CardType.ROOM && !roomAssign) {
+ 				theAnswer.setRoom(c);
+ 				roomAssign = true;
+ 			} else if (c.getCardType() == CardType.PERSON && !personAssign) {
+ 				theAnswer.setPerson(c);
+ 				personAssign = true;
+ 			} else if (c.getCardType() == CardType.WEAPON && !weaponAssign) {
+ 				theAnswer.setWeapon(c);
+ 				weaponAssign = true;
+ 			} else {
+ 				if (c == theAnswer.getRoom() || (c == theAnswer.getPerson() || (c == theAnswer.getWeapon()) {
+ 					continue;
+ 				}
+ 				players.get(currPerson).updateHand(c);
+ 				if (numCards % 3 == 0) {
+ 					numCards = 0;
+ 		 			currPerson++;
+ 				}
+ 				numCards++;
+ 			}
+ 		}
+ 		deck.clear();
+    }
  	
+    // https://www.jdoodle.com/online-java-compiler/
+  	// Implementing Fisher Yates shuffle
+  	private void shuffleArray(ArrayList<Card> ar) {
+ 	    Random rnd = ThreadLocalRandom.current();
+ 	    for (int i = ar.size() - 1; i > 0; i--) {
+ 		    int index = rnd.nextInt(i + 1);
+ 		    Card c = ar.get(index);
+ 		    ar.set(index, ar.get(i));
+ 		    ar.set(i, c);
+ 	    }
+  	}
+    
  	/*
  	 * Setters:
  	 * - setConfigFiles

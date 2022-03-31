@@ -1,0 +1,27 @@
+// Rooms and room cards 
+Room, CoorsTek, C
+Room, Marquez, M
+Room, Alderson, A
+Room, Hill Hall, H
+Room, Berthoud, B
+Room, Guggenheim, G
+Room, Friedhoff, F
+Room, Student Center, S
+Room, Rec Center, R
+// other spaces on the board 
+Space, Unused, X 
+Space, Walkway, W
+// 6 people 
+Person, Blaster, FF0000
+Person, Marvin, FF8000
+Person, PCJ, FFFF00
+Person, Mark Baldwin, 00FF00
+Person, Florence Caldwell, 0000FF
+Person, Iris Bahar, 800080
+// 6 weapons 
+Weapon, Dynamite 
+Weapon, Blaster Blaster
+Weapon, Orecart 
+Weapon, Cardboard Boat 
+Weapon, Fireworks 
+Weapon, Physics Homework
