@@ -3,7 +3,7 @@ package clueGame;
 public enum CardType {
 	
 	/*
-	 * Card Types:
+	 * Use for when creating the deck...
 	 */
 	
 	ROOM, PERSON, WEAPON;
