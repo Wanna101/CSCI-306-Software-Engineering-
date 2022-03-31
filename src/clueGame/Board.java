@@ -8,6 +8,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class Board {
 	
+	// variables needed for instantiating and setting up board
 	private BoardCell[][] grid; 
     private int numRows, numColumns; 
     private String layoutConfigFile, setupConfigFile; 
@@ -16,6 +17,7 @@ public class Board {
     private Map<Character, Room> roomMap = new HashMap<Character, Room>(); 
     private static Board theInstance = new Board();	
     
+    // variables need for instantiating and setting up deck/players
     private ArrayList<Card> deck = new ArrayList<Card>();
     private ArrayList<Player> players = new ArrayList<Player>();
     private Solution theAnswer = new Solution();
@@ -57,6 +59,9 @@ public class Board {
     	FileReader setupConfig = new FileReader("data\\" + setupConfigFile);
     	Scanner fileScanner = new Scanner(setupConfig);
     	String nextLine;
+    	
+    	deck.clear();
+    	players.clear();
     	
     	while(fileScanner.hasNext()) {
     		nextLine = fileScanner.nextLine();
@@ -375,22 +380,28 @@ public class Board {
      * placePlayers:
      * - set the players' location after instantiating
      */
-    public void placePlayers() {
-    	for (int i = 0; i < players.size(); i++) {
-    		if (i == 0) {
-    			players.get(i).setLocation(24, 7);
-    		} else if (i == 1) {
-    			players.get(i).setLocation(19, 0);
-    		} else if (i == 2) {
-    			players.get(i).setLocation(0, 16);
-    		} else if (i == 3) {
-    			players.get(i).setLocation(6, 24);
-    		} else if (i == 4) {
-    			players.get(i).setLocation(16, 24);
-    		} else {
-    			players.get(i).setLocation(24, 17);
-    		}
-    	}
+ 	public void placePlayers() {
+        for (int i = 0; i < players.size(); i++) {
+            switch(i) {
+            case 0: 
+                players.get(i).setLocation(24, 7);
+                break; 
+            case 1: 
+                players.get(i).setLocation(19, 0);
+                break; 
+            case 2: 
+                players.get(i).setLocation(0, 16);
+                break; 
+            case 3: 
+                players.get(i).setLocation(6, 24);
+                break; 
+            case 4: 
+                players.get(i).setLocation(16, 24);
+                break; 
+            default: 
+                players.get(i).setLocation(24, 17);
+            }
+        }
     }
  	
     
@@ -400,7 +411,7 @@ public class Board {
 	 *   that all cards are dealt and players have roughly same # of cards
 	 *    and no card is dealt twice)
 	 */
-    void deal() {
+    public void deal() {
     	int numCards = 1;
  		int currPerson = 0;
  		
@@ -433,7 +444,6 @@ public class Board {
  				numCards++;
  			}
  		}
- 		deck.clear();
     }
  	
     // https://www.jdoodle.com/online-java-compiler/
@@ -502,4 +512,16 @@ public class Board {
     public Set<BoardCell> getAdjList(int row, int col) {
 		return grid[row][col].getAdjList();
 	}
+    
+    public ArrayList<Card> getDeck() {
+    	return this.deck;
+    }
+    
+    public ArrayList<Player> getPlayers() {
+    	return this.players;
+    }
+    
+    public Solution getSolution() {
+    	return this.theAnswer;
+    }
 }

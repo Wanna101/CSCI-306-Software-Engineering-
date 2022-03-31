@@ -51,4 +51,18 @@ public abstract class Player {
 	public Color getColor() {
 		return color;
 	}
+	
+	public int getRow() {
+		return row;
+	}
+	
+	public int getColumn() {
+		return column;
+	}
+	
+	public Set<Card> getHand() {
+		return hand;
+	}
+	
+	public abstract boolean isHuman();
 }
