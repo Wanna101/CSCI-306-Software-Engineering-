@@ -11,3 +11,17 @@ Room, Rec Center, R
 // other spaces on the board 
 Space, Unused, X 
 Space, Walkway, W
+// 6 people 
+Person, Blaster, #FF0000
+Person, Marvin, #FF8000
+Person, PCJ, #FFFF00
+Person, Mark Baldwin, #00FF00
+Person, Florence Caldwell, #0000FF
+Person, Iris Bahar, #800080
+// 6 weapons 
+Weapon, Dynamite, N/A
+Weapon, Blaster Blaster, N/A
+Weapon, Orecart, N/A
+Weapon, Cardboard Boat, N/A 
+Weapon, Fireworks, N/A
+Weapon, Physics Homework, N/A

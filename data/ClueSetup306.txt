@@ -11,3 +11,17 @@ Room, Hall, H
 // other spaces on board
 Space, Unused, X
 Space, Walkway, W
+// 6 people
+Person, Scarlet, #FF0000
+Person, Plum, #FF8000
+Person, Peacock, #FFFF00
+Person, Mustard, #00FF00
+Person, White, #0000FF
+Person, Green, #800080
+// 6 weapons 
+Weapon, Wrench, N/A
+Weapon, Candlestick, N/A
+Weapon, Revolver, N/A
+Weapon, Rope, N/A
+Weapon, Lead Pipe, N/A
+Weapon, Dagger, N/A
