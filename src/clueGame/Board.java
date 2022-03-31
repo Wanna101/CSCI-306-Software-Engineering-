@@ -97,8 +97,7 @@ public class Board {
     		if (type.equals("Room") || type.equals("Space")) {
     			String label = values[1].trim();     		
         		char character = values[2].trim().charAt(0);
-        		Room r = new Room();
-        		r.setName(label);
+        		Room r = new Room(label);
         		roomMap.put(character, r);
     		}
     	}
@@ -423,7 +422,7 @@ public class Board {
  				theAnswer.setWeapon(c);
  				weaponAssign = true;
  			} else {
- 				if (c == theAnswer.getRoom() || (c == theAnswer.getPerson() || (c == theAnswer.getWeapon()) {
+ 				if (c == theAnswer.getRoom() || c == theAnswer.getPerson() || c == theAnswer.getWeapon()) {
  					continue;
  				}
  				players.get(currPerson).updateHand(c);
