@@ -27,6 +27,10 @@ public class GameSetupTest {
 	}
 	
 	
+	/*
+	 * 
+	 */
+	
 	@Test 
 	public void testSetup(){
 		// make sure files are loaded and set up 
