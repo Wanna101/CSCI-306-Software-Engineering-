@@ -463,10 +463,7 @@ public class Board {
   	 * C21A
   	 */
   	public boolean checkAccusation(Solution accusation) {
-  		/*
-  		 * TODO: return true if ACCUSATION matches theAnswer
-  		 */
-  		return true;
+  		return accusation.getPerson() == theAnswer.getPerson() && accusation.getRoom() == theAnswer.getRoom() && accusation.getWeapon() == theAnswer.getWeapon();
   	}
   	
 	public Card handleSuggestion(Solution suggestion) {
