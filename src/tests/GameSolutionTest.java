@@ -57,5 +57,24 @@ public class GameSolutionTest {
 		pc.updateHand(new Card("Blaster Blaster", CardType.WEAPON));
 	}
 	
-	
+	@Test
+	public void testCheckAccusation() {
+		/*
+		 * TODO:
+		 * - solution that is correct
+		 * - solution w/ wrong person
+		 * - solution w/ wrong weapon
+		 * - solution w/ wrong room
+		 */
+		
+		Card r = board.getSolution().getRoom();
+		Card w = board.getSolution().getWeapon();
+		Card p = board.getSolution().getPerson();
+		
+		assertTrue(board.checkAccusation(suggestion));
+		assertFalse(board.checkAccusation(suggestion2));
+		assertFalse(board.checkAccusation(suggestion3));
+		assertFalse(board.checkAccusation(suggestion4));
+	}
+		
 }
