@@ -88,5 +88,9 @@ public abstract class Player {
 		return hand;
 	}
 	
+	public Set<Card> getSeenCards() {
+		return seenCards;
+	}
+	
 	public abstract boolean isHuman();
 }

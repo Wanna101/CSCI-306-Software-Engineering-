@@ -534,6 +534,10 @@ public class Board {
 		return grid[row][col].getAdjList();
 	}
     
+    public Map<Character, Room> getRoomMap() {
+    	return this.roomMap;
+    }
+    
     public ArrayList<Card> getDeck() {
     	return this.deck;
     }
