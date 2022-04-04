@@ -478,7 +478,11 @@ public class Board {
 		return null;
 	}
   	
-  	
+	// used for the sake of tests
+	public void overwriteSolution(Solution newAnswer) {
+  		theAnswer = newAnswer;
+  	}
+	
  	/*
  	 * Setters:
  	 * - setConfigFiles
@@ -548,5 +552,26 @@ public class Board {
     
     public Solution getSolution() {
     	return this.theAnswer;
+    }
+    
+    public Card getCardFromDeck(String cardName) {
+    	for (Card card: deck) {
+    		if (cardName.equals(card.getCardName())) return card;
+    	}
+    	return null;
+    }
+    
+    public Card getRandomItem(Player p, CardType ct) {
+    	// return the item requested (ie. WEAPON or PERSON)
+		for (Card item: deck) {
+			if (p.getHand().contains(item) || p.getSeenCards().contains(item)) {
+				continue;
+			} else {
+				if (item.getCardType() == ct) {
+					return item;
+				}
+			}
+		}
+		return null;
     }
 }

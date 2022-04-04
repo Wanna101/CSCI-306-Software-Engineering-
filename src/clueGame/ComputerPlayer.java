@@ -1,5 +1,7 @@
 package clueGame;
 
+import java.util.*;
+
 public class ComputerPlayer extends Player {
 
 	public ComputerPlayer() {
@@ -25,6 +27,22 @@ public class ComputerPlayer extends Player {
 		 * - need to add to hand and seenCards sets
 		 */
 		
+		if (board.getCell(getRow(), getColumn()).isRoom()) {
+			int x = getRow();
+			int y =getColumn();			
+			Map<Character, Room> roomMap = board.getRoomMap();
+			Character initial = board.getCell(getRow(), getColumn()).getInitial();
+			String room = roomMap.get(initial).getName();
+			
+			// room
+			Card r = board.getCardFromDeck(room);
+			Card w = board.getRandomItem(this, CardType.WEAPON);
+			Card p = board.getRandomItem(this, CardType.PERSON);
+			if (r == null || w == null || p == null) {
+				return null;
+			}
+			return new Solution(r, w, p);
+		} 
 		return null;
 	}
 	
