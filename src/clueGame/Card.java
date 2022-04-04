@@ -14,14 +14,22 @@ public class Card {
 	 *   variable from CardType
 	 */
 	
-	public Card() {
-		// TODO
+	public Card(String cardName, CardType cardType) {
+		this.cardName = cardName;
+		this.cardType = cardType;
 	}
+	
+	public Card() {};
 	
 	public boolean equals(Card target) {
 		return cardName == target.cardName;
 	}
 	
+	
+	
+	/*
+	 * Setters and Getters
+	 */
 	public void setCardName(String cardName) {
 		this.cardName = cardName;
 	}

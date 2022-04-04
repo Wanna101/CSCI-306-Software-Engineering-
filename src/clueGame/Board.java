@@ -448,7 +448,7 @@ public class Board {
  	
     // https://www.jdoodle.com/online-java-compiler/
   	// Implementing Fisher Yates shuffle
-  	private void shuffleArray(ArrayList<Card> ar) {
+  	public void shuffleArray(ArrayList<Card> ar) {
  	    Random rnd = ThreadLocalRandom.current();
  	    for (int i = ar.size() - 1; i > 0; i--) {
  		    int index = rnd.nextInt(i + 1);
@@ -458,6 +458,27 @@ public class Board {
  	    }
   	}
     
+  	
+  	/*
+  	 * C21A
+  	 */
+  	public boolean checkAccusation(Solution accusation) {
+  		/*
+  		 * TODO: return true if ACCUSATION matches theAnswer
+  		 */
+  		return true;
+  	}
+  	
+	public Card handleSuggestion(Solution suggestion) {
+  		/*
+  		 * TODO: process all the players in the turn to see if any of them can dispute the
+  		 * suggestion. If no player can dispute the suggestion, return null. Otherwise, return 
+  		 * the first card that disputed the suggestion.
+  		 */
+		return null;
+	}
+  	
+  	
  	/*
  	 * Setters:
  	 * - setConfigFiles

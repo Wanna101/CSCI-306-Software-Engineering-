@@ -3,10 +3,18 @@ package clueGame;
 public class Solution {
 	private Card room, person, weapon;
 	
-	public Solution() {
-		// TODO
+	public Solution(Card room, Card person, Card weapon) {
+		this.room = room;
+		this.person = person;
+		this.weapon = weapon;
 	}
+	
+	public Solution() {};
 		
+	
+	/*
+	 * Setters and Getters
+	 */
 	public void setRoom(Card room) {
 		this.room = room;
 	}
