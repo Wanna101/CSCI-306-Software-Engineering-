@@ -73,7 +73,24 @@ public class ComputerAITest {
 		 */
 		
 		ComputerPlayer pc = (ComputerPlayer) board.getPlayers().get(1);
+		
 		// no rooms
 		pc.selectTarget(board, 1);
+		assertTrue(pc.getSeenCards().isEmpty());
+		assertEquals(board.getCell(19, 1), pc.selectTarget(board, 1));
+		
+		// if room in list that has not been seen, select it 
+		board.calcTargets(board.getCell(19, 0), 4);
+		Set<BoardCell> possibleTargets = board.getTargets();	
+		assertTrue(possibleTargets.contains(pc.selectTarget(board, 4)));
+		
+		assertEquals(board.getCell(16, 2), pc.selectTarget(board, 5));
+		
+		// if room is in list that is seen, target including room is selected randomly
+		board.calcTargets(board.getCell(19, 0), 6);
+		pc.updateHand(new Card("Guggenheim", CardType.ROOM));
+		assertEquals(board.getCell(22, 2), pc.selectTarget(board, 6));
+		assertFalse(board.getCell(16, 2).equals(pc.selectTarget(board, 5)));
+		
 	}
 }

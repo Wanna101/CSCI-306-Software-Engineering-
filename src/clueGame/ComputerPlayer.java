@@ -10,7 +10,7 @@ public class ComputerPlayer extends Player {
 	
 	public Solution createSuggestion(Board board) {
 		/*
-		 * TODO: AI routine - given a room, the computer player creates a suggestion composed
+		 * AI routine - given a room, the computer player creates a suggestion composed
 		 * of the room, a weapon, and a player from those cards the computer player has not 
 		 * seen
 		 */
@@ -46,7 +46,7 @@ public class ComputerPlayer extends Player {
 	
 	public BoardCell selectTarget(Board board, int pathlength) {
 		/*
-		 * TODO: AI routine - computer player selects the location he or she wishes to move to
+		 * AI routine - computer player selects the location he or she wishes to move to
 		 * from the target list.
 		 * 
 		 * Guidelines:
@@ -55,19 +55,39 @@ public class ComputerPlayer extends Player {
 		 * - otherwise, select target randomly from target list
 		 */
 		
+		ArrayList<BoardCell> possibleTargets = new ArrayList<BoardCell>(); 
 		board.calcTargets(board.getCell(getRow(), getColumn()), pathlength);
 		
 		for (BoardCell target: board.getTargets()) {
-			BoardCell b = board.getRoomMap().get(target.getInitial()).getLabelCell();
-			// if (target.isRoom() && );
+			boolean seenTarget = false; 
+			// Check if target is a room 
+			if(target.isRoom()) {
+				String roomName = board.getRoomMap().get(target.getInitial()).getName(); 
+				for(Card c : this.getHand()) {
+					if(c.getCardName().equals(roomName)) {
+						seenTarget = true; 
+					}
+				}
+				for(Card c : this.getSeenCards()) {
+					if(c.getCardName().equals(roomName)) {
+						seenTarget = true; 
+					}
+				}
+				if(seenTarget) {
+					continue; 
+				}
+				return target; 
+				
+			}
+			possibleTargets.add(target);
 			
 			/*
 			 * Add each room to arraylist and add randomization
 			 */
 		}
-		
-		
-		return null;
+		Random rand = new Random(); 
+		int selection = rand.nextInt(possibleTargets.size());
+		return possibleTargets.get(selection);
 	}
 	
 	public boolean isHuman() {
