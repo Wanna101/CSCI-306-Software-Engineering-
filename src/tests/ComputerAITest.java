@@ -25,19 +25,8 @@ public class ComputerAITest {
 	}
 	
 	@Test
-	public void testSelectTargets() {
-		/*
-		 * TODO:
-		 * - if no rooms in list, select randomly
-		 * - if room in list that has not been seen, select it
-		 * - if room in list that has been seen, each target (including room) selected randomly
-		 */
-	}
-	
-	@Test
 	public void testCreateSuggestion() {
 		/*
-		 * TODO:
 		 * - room matches current location
 		 * - if only one weapon not seen, it's selected
 		 * - if only person not seen, it's selected (similar to weapon test)
@@ -72,5 +61,19 @@ public class ComputerAITest {
 		} else {
 			assertFalse(board.getCell(pc.getRow(), pc.getColumn()).isRoom());
 		}
+	}
+	
+	@Test
+	public void testSelectTargets() {
+		/*
+		 * TODO:
+		 * - if no rooms in list, select randomly
+		 * - if room in list that has not been seen, select it
+		 * - if room in list that has been seen, each target (including room) selected randomly
+		 */
+		
+		ComputerPlayer pc = (ComputerPlayer) board.getPlayers().get(1);
+		// no rooms
+		pc.selectTarget(board, 1);
 	}
 }

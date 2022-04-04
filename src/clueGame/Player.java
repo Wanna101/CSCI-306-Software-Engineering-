@@ -49,7 +49,27 @@ public abstract class Player {
 		 * Note: if more than one card can dispute the suggestion (multiple card matches suggestion,
 		 * one is randomly chosen)
 		 */
-		return null;
+		ArrayList<Card> matches = new ArrayList<Card>();
+		
+		for (Card c: hand) {
+			if (c.equals(suggestion.getPerson())) {
+				matches.add(c);
+			}
+			if (c.equals(suggestion.getRoom())) {
+				matches.add(c);
+			}
+			if (c.equals(suggestion.getWeapon())) {
+				matches.add(c);
+			}
+		}
+		if (matches.size() == 0) {
+			return null;
+		} else if (matches.size() == 1) {
+			return matches.get(0);
+		} else {
+			board.shuffleArray(matches);
+			return matches.get(0);
+		}
 	}
 	
 	/*

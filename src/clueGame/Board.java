@@ -466,19 +466,33 @@ public class Board {
   		return accusation.getPerson() == theAnswer.getPerson() && accusation.getRoom() == theAnswer.getRoom() && accusation.getWeapon() == theAnswer.getWeapon();
   	}
   	
-	public Card handleSuggestion(Solution suggestion) {
-  		/*
-  		 * TODO: process all the players in the turn to see if any of them can dispute the
-  		 * suggestion. If no player can dispute the suggestion, return null. Otherwise, return 
-  		 * the first card that disputed the suggestion.
-  		 */
-		return null;
+	public Card handleSuggestion(Solution suggestion, Player current) {
+		for (Player p: players) {
+			if (p.equals(current)) {
+				continue;
+			}
+  			if (p.getHand().contains(suggestion.getPerson())) {
+  				return suggestion.getPerson();
+  			}
+  			if (p.getHand().contains(suggestion.getRoom())) {
+  				return suggestion.getRoom();
+  			}
+  			if (p.getHand().contains(suggestion.getWeapon())) {
+  				return suggestion.getWeapon();
+  			}
+  		}
+  		return null;
 	}
   	
-	// used for the sake of tests
+	// used for testing purposes only
 	public void overwriteSolution(Solution newAnswer) {
   		theAnswer = newAnswer;
   	}
+	
+	// used for testing purposes only
+	public void addPlayers(Player p) {
+		players.add(p);
+	}
 	
  	/*
  	 * Setters:

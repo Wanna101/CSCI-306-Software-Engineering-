@@ -27,9 +27,7 @@ public class ComputerPlayer extends Player {
 		 * - need to add to hand and seenCards sets
 		 */
 		
-		if (board.getCell(getRow(), getColumn()).isRoom()) {
-			int x = getRow();
-			int y =getColumn();			
+		if (board.getCell(getRow(), getColumn()).isRoom()) {		
 			Map<Character, Room> roomMap = board.getRoomMap();
 			Character initial = board.getCell(getRow(), getColumn()).getInitial();
 			String room = roomMap.get(initial).getName();
@@ -56,6 +54,18 @@ public class ComputerPlayer extends Player {
 		 * multiple rooms choose randomly)
 		 * - otherwise, select target randomly from target list
 		 */
+		
+		board.calcTargets(board.getCell(getRow(), getColumn()), pathlength);
+		
+		for (BoardCell target: board.getTargets()) {
+			BoardCell b = board.getRoomMap().get(target.getInitial()).getLabelCell();
+			// if (target.isRoom() && );
+			
+			/*
+			 * Add each room to arraylist and add randomization
+			 */
+		}
+		
 		
 		return null;
 	}

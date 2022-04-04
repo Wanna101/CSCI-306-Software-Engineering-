@@ -26,7 +26,6 @@ public class Card {
 	}
 	
 	
-	
 	/*
 	 * Setters and Getters
 	 */
