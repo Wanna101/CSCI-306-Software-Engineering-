@@ -41,14 +41,15 @@ public abstract class Player {
 		seenCards.add(seenCard);
 	}
 	
+	
+	/*
+	 * Note: a player tries to dispute a suggestion with the cards in their hand,
+	 * if the player cannot, null is returned. If a player can, the card is returned
+	 * 
+	 * Note: if more than one card can dispute the suggestion (multiple card matches suggestion,
+	 * one is randomly chosen)
+	 */
 	public Card disproveSuggestion(Board board, Solution suggestion) {
-		/*
-		 * TODO: a player tries to dispute a suggestion with the cards in their hand,
-		 * if the player cannot, null is returned. If a player can, the card is returned
-		 * 
-		 * Note: if more than one card can dispute the suggestion (multiple card matches suggestion,
-		 * one is randomly chosen)
-		 */
 		ArrayList<Card> matches = new ArrayList<Card>();
 		
 		for (Card c: hand) {
@@ -71,6 +72,7 @@ public abstract class Player {
 			return matches.get(0);
 		}
 	}
+	
 	
 	/*
 	 * Setters and Getters

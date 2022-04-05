@@ -28,9 +28,9 @@ public class GameSetupTest {
 	
 	
 	/*
-	 * 
+	 * - Testing in setup for right number of players, cards, etc.
+	 * - Testing names and locations
 	 */
-	
 	@Test 
 	public void testSetup(){
 		// make sure files are loaded and set up 

@@ -8,25 +8,25 @@ public class ComputerPlayer extends Player {
 		super();
 	}
 	
+	
+	/*
+	 * AI routine - given a room, the computer player creates a suggestion composed
+	 * of the room, a weapon, and a player from those cards the computer player has not 
+	 * seen
+	 */
+	
+	/*
+	 * Pseudocode:
+	 * - if player is in room, it MUST make a suggestion (Room, Weapon, Person)
+	 * - when making a suggestion, the suggestion must be a choice that is in the deck ArrayList, but
+	 * not in the seenCards Set.
+	 * 		- weapon is chosen randomly from those not seen
+	 * 		- person is chosen from that is not seen
+	 * 		- room MUST be the room the computer player has entered
+	 * 
+	 * - need to add to hand and seenCards sets
+	 */
 	public Solution createSuggestion(Board board) {
-		/*
-		 * AI routine - given a room, the computer player creates a suggestion composed
-		 * of the room, a weapon, and a player from those cards the computer player has not 
-		 * seen
-		 */
-		
-		/*
-		 * Pseudocode:
-		 * - if player is in room, it MUST make a suggestion (Room, Weapon, Person)
-		 * - when making a suggestion, the suggestion must be a choice that is in the deck ArrayList, but
-		 * not in the seenCards Set.
-		 * 		- weapon is chosen randomly from those not seen
-		 * 		- person is chosen from that is not seen
-		 * 		- room MUST be the room the computer player has entered
-		 * 
-		 * - need to add to hand and seenCards sets
-		 */
-		
 		if (board.getCell(getRow(), getColumn()).isRoom()) {		
 			Map<Character, Room> roomMap = board.getRoomMap();
 			Character initial = board.getCell(getRow(), getColumn()).getInitial();
@@ -44,17 +44,17 @@ public class ComputerPlayer extends Player {
 		return null;
 	}
 	
+	
+	/*
+	 * AI routine - computer player selects the location he or she wishes to move to
+	 * from the target list.
+	 * 
+	 * Guidelines:
+	 * - if target is in room and room is not in player's seen list, select room (or if 
+	 * multiple rooms choose randomly)
+	 * - otherwise, select target randomly from target list
+	 */
 	public BoardCell selectTarget(Board board, int pathlength) {
-		/*
-		 * AI routine - computer player selects the location he or she wishes to move to
-		 * from the target list.
-		 * 
-		 * Guidelines:
-		 * - if target is in room and room is not in player's seen list, select room (or if 
-		 * multiple rooms choose randomly)
-		 * - otherwise, select target randomly from target list
-		 */
-		
 		ArrayList<BoardCell> possibleTargets = new ArrayList<BoardCell>(); 
 		board.calcTargets(board.getCell(getRow(), getColumn()), pathlength);
 		
@@ -80,10 +80,6 @@ public class ComputerPlayer extends Player {
 				
 			}
 			possibleTargets.add(target);
-			
-			/*
-			 * Add each room to arraylist and add randomization
-			 */
 		}
 		Random rand = new Random(); 
 		int selection = rand.nextInt(possibleTargets.size());

@@ -460,7 +460,7 @@ public class Board {
     
   	
   	/*
-  	 * C21A
+  	 * 
   	 */
   	public boolean checkAccusation(Solution accusation) {
   		return accusation.getPerson() == theAnswer.getPerson() && accusation.getRoom() == theAnswer.getRoom() && accusation.getWeapon() == theAnswer.getWeapon();
