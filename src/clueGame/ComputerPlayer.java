@@ -8,13 +8,14 @@ public class ComputerPlayer extends Player {
 		super();
 	}
 	
+
 	
 	/*
 	 * AI routine - given a room, the computer player creates a suggestion composed
 	 * of the room, a weapon, and a player from those cards the computer player has not 
 	 * seen
 	 */
-	
+
 	/*
 	 * Pseudocode:
 	 * - if player is in room, it MUST make a suggestion (Room, Weapon, Person)
