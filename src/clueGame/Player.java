@@ -72,7 +72,7 @@ public abstract class Player {
 			return matches.get(0);
 		}
 	}
-	
+
 	
 	/*
 	 * Setters and Getters

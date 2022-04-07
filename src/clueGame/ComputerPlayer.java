@@ -1,6 +1,7 @@
 package clueGame;
 
 import java.util.*;
+import java.awt.*;
 
 public class ComputerPlayer extends Player {
 
@@ -8,6 +9,9 @@ public class ComputerPlayer extends Player {
 		super();
 	}
 	
+	public ComputerPlayer(String name, Color color, int row, int column) {
+		super(name, color, row, column);
+	}
 
 	
 	/*

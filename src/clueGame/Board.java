@@ -404,7 +404,7 @@ public class Board {
         }
     }
  	
-    
+  
     /*
 	 * deal:
 	 * - deal cards to the Solution class and the players (this meaning

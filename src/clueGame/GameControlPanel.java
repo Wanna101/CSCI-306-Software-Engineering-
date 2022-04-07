@@ -6,7 +6,13 @@ import javax.swing.border.*;
 
 @SuppressWarnings("serial")
 public class GameControlPanel extends JPanel {
-
+	
+	private JLabel guessLabel; 
+	private JLabel guessResultLabel; 
+	private JTextField rollNumber; 
+	private JTextField turn; 
+	
+	
 	public GameControlPanel() {
 		// 2 rows
 		setLayout(new GridLayout(2, 0));
@@ -14,103 +20,146 @@ public class GameControlPanel extends JPanel {
 		// top panel (1 row, 4 columns)
         JPanel topPanel = new JPanel();
         topPanel.setLayout(new GridLayout(1, 4));
-        
-        // first panel in the top panel (3 rows)
-        JPanel turnPanel = new JPanel(new GridLayout(3, 0));
-        
-        // first sub-panel in the first panel
-        JLabel turnLabel = new JLabel("Whose turn?", SwingConstants.CENTER);
-        turnPanel.add(turnLabel);
-        
-        // second sub-panel in the first panel
-        JTextField turn = new JTextField();
-        turnPanel.add(turn);
-        
-        // third sub-panel in the first panel
-        JPanel turnBlank = new JPanel();
-        JLabel blankOne = new JLabel(" ");
-        turnBlank.add(blankOne);
-        turnPanel.add(turnBlank);
-        
+
         // this adds the first panel to the top panel
+        JPanel turnPanel = createTurnPanel();
         topPanel.add(turnPanel);
 
-        // second panel in the top panel 
-        JPanel rollPanel = new JPanel(new GridLayout(2, 0)); 
-        
-        // first sub-panel in the second panel
-        JPanel topRollPanel = new JPanel();
-        JLabel rollLabel = new JLabel("Roll:", SwingConstants.RIGHT);
-        topRollPanel.add(rollLabel);
-        
-        JTextField rollNumber = new JTextField(10);
-        topRollPanel.add(rollNumber);
-        rollPanel.add(topRollPanel);
-        
-        // second sub-panel in the second panel
-        JPanel rollBlank = new JPanel();
-        JLabel blankTwo = new JLabel(" ");
-        rollBlank.add(blankTwo);
-        rollPanel.add(rollBlank);
-
         // adds the second panel to the top panel
+        JPanel rollPanel = createRollPanel();
         topPanel.add(rollPanel); 
 
-        // third panel in the top panel
-        JButton	accusation = new JButton("Make Accusation");
-        JPanel buttonOne = new JPanel();
-        buttonOne.setLayout(new BorderLayout(0, 0));
-        buttonOne.add(accusation);
-        
         // adds third panel to top panel
-    	topPanel.add(buttonOne);
+        JPanel button1 = createButton1();
+    	topPanel.add(button1);
         
-    	// fourth panel in the top panel
-        JButton next = new JButton("NEXT!");
-        JPanel buttonTwo = new JPanel();
-        buttonTwo.setLayout(new BorderLayout(0, 0));
-    	buttonTwo.add(next);
-    	
-    	// adds fourth panel to the top panel
-    	topPanel.add(buttonTwo);
-
+        // adds fourth panel to the top panel
+        JPanel button2 = createButton2();
+    	topPanel.add(button2);
+        
         // adds top panel to the Layout
         add(topPanel);
         
-        // bottom panel
+        
+        // bottom panel (2 columns)
         JPanel bottomPanel = new JPanel();
         bottomPanel.setLayout(new GridLayout(0, 2));
         
-        // first panel in the bottom panel
-        JPanel borderOne = new JPanel(new GridLayout(1, 0));
-        JLabel guessLabel = new JLabel("PLACEHOLDER");
-        borderOne.add(guessLabel);
-        borderOne.setBorder(new TitledBorder (new EtchedBorder(), "Guess"));
-        
         // adds first panel to bottom panel
-        bottomPanel.add(borderOne);
-        
-        // second panel in the bottom panel
-        JPanel borderTwo = new JPanel(new GridLayout(1, 0));
-        JLabel guessResultLabel = new JLabel("PLACEHOLDER");
-        borderTwo.add(guessResultLabel);	
-        borderTwo.setBorder(new TitledBorder(new EtchedBorder(), "Guess Result"));
+        JPanel border1 = createBorder1();
+        bottomPanel.add(border1);
         
         // adds second panel to the bottom panel
-        bottomPanel.add(borderTwo);
+        JPanel border2 = createBorder2();
+        bottomPanel.add(border2);
         
         // adds bottom panel to the Layout
         add(bottomPanel);
 	}
 	
+	private JPanel createTurnPanel() {
+		// first panel in the top panel (2 rows)
+        JPanel turnPanel = new JPanel(new GridLayout(2, 0));
+        
+        // first sub-panel in the turn panel
+        JLabel label = new JLabel("Whose turn?", SwingConstants.CENTER);
+        turnPanel.add(label);
+        
+        // second sub-panel in the turn panel
+        turn = new JTextField();
+        turn.setEditable(false);
+        turnPanel.add(turn);
+        return turnPanel;
+	}
+	
+	private JPanel createRollPanel() {
+		// second panel in the top panel 
+        JPanel rollPanel = new JPanel(new GridLayout(2, 0)); 
+		
+		// first sub-panel in the roll panel
+        JPanel topRoll = new JPanel();
+        JLabel roll = new JLabel("Roll:", SwingConstants.RIGHT);
+        topRoll.add(roll);
+        
+        rollNumber = new JTextField(10);
+        rollNumber.setEditable(false);
+        topRoll.add(rollNumber);
+        rollPanel.add(topRoll);
+        
+        // second sub-panel in the roll panel
+        JPanel blanks = new JPanel();
+        JLabel blank1 = new JLabel(" ");
+        blanks.add(blank1);
+        rollPanel.add(blanks);
+        return rollPanel;
+	}
+	
+	private JPanel createButton1() {
+		// third panel in the top panel
+        JPanel button1 = new JPanel();
+
+        JButton	accusation = new JButton("Make accusation");
+        button1.setLayout(new BorderLayout(0, 0));
+        button1.add(accusation);
+    	return button1;
+	}
+	
+	private JPanel createButton2() {
+		// fourth panel in the top panel
+        JPanel button2 = new JPanel();
+		
+        JButton next = new JButton("NEXT!");
+        button2.setLayout(new BorderLayout(0, 0));
+    	button2.add(next);
+    	return button2;
+	}
+	
+	private JPanel createBorder1() {
+		// first panel in the bottom panel
+        JPanel border1 = new JPanel(new GridLayout(1, 0));
+        
+        this.guessLabel = new JLabel();
+        border1.add(guessLabel);
+        border1.setBorder(new TitledBorder (new EtchedBorder(), "Guess"));
+        return border1;
+	}
+	
+	private JPanel createBorder2() {
+		 // second panel in the bottom panel
+        JPanel border2 = new JPanel(new GridLayout(1, 0));
+        
+        this.guessResultLabel = new JLabel("");
+        border2.add(guessResultLabel);	
+        border2.setBorder(new TitledBorder(new EtchedBorder(), "Guess Result"));
+		return border2;
+	}
+	
+	public void setTurn(Player p, int roll) {
+		turn.setText(p.getPlayerName());
+		turn.setBackground(p.getColor());
+		rollNumber.setText(String.valueOf(roll));
+	}
+	
+	public void setGuess(String s) {
+		guessLabel.setText(s);
+	}
+	
+	public void setGuessResult(String s) {
+		guessResultLabel.setText(s);
+	}
+	
 	public static void main(String[] args) {
-		// Create a JFrame with all the normal funct	ionality
+		// Create a JFrame with all the normal functionality
 		JFrame frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(800, 200);
+		frame.setTitle("GameControlPanel");
+		frame.setSize(825, 125);
 		GameControlPanel gui = new GameControlPanel();
 		frame.add(gui, BorderLayout.CENTER);
 		frame.setVisible(true);
+	
+		gui.setTurn(new ComputerPlayer("Marvin", Color.decode("#FF8000"), 19, 0), 5);
+		gui.setGuess("I have no guess!");
+		gui.setGuessResult("So you have nothing?");
 	}
-
 }
