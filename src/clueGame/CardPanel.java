@@ -105,9 +105,9 @@ public class CardPanel extends JPanel {
 		add(inside);
 	}
 	
-	public void addSeen(Card card, Color col) {
+	public void addSeen(Card card) {
 		JTextField newCard = new JTextField(card.getCardName()); 
-		newCard.setBackground(col);
+		newCard.setBackground(card.getColor());
 		newCard.setEditable(false);
 		if(card.getCardType() == CardType.PERSON) {
 			seenPeople.add(newCard); 
@@ -132,12 +132,12 @@ public class CardPanel extends JPanel {
 		blaster.updateHand(new Card("Student Center", CardType.ROOM));
 		CardPanel gui = new CardPanel(blaster);
 		
-		gui.addSeen(new Card("PCJ",CardType.PERSON), Color.decode("#80FF80"));
-		gui.addSeen(new Card("Dynamite", CardType.WEAPON), Color.decode("#FFE040"));
-		gui.addSeen(new Card("Hill Hall", CardType.ROOM), Color.decode("#FFC080"));
-		gui.addSeen(new Card("Mark Baldwin", CardType.PERSON), Color.decode("#C080C0"));
-		gui.addSeen(new Card("Blaster Blaster", CardType.WEAPON), Color.decode("#8080FF"));
-		gui.addSeen(new Card("Marquez Hall", CardType.ROOM), Color.decode("#FFC080"));
+		gui.addSeen(new Card("PCJ",CardType.PERSON));
+		gui.addSeen(new Card("Dynamite", CardType.WEAPON));
+		gui.addSeen(new Card("Hill Hall", CardType.ROOM));
+		gui.addSeen(new Card("Mark Baldwin", CardType.PERSON));
+		gui.addSeen(new Card("Blaster Blaster", CardType.WEAPON));
+		gui.addSeen(new Card("Marquez Hall", CardType.ROOM));
 		
 		frame.add(gui, BorderLayout.CENTER);
 		frame.setVisible(true);

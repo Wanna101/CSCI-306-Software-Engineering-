@@ -38,7 +38,7 @@ public class GameSetupTest {
 		assertEquals(24, board.getPlayers().get(0).getRow());
 		assertEquals(7, board.getPlayers().get(0).getColumn());
 		assertEquals("Blaster",board.getPlayers().get(0).getPlayerName());
-		Color playerColor = new Color(255,0,0); 
+		Color playerColor = new Color(255,128,128); 
 		assertEquals(playerColor,board.getPlayers().get(0).getColor());
 		assertTrue(board.getPlayers().get(0).isHuman());
 		for(int i = 1; i < 6; i++) {

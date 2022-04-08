@@ -437,6 +437,7 @@ public class Board {
  					continue;
  				}
  				players.get(currPerson).updateHand(c);
+ 				c.setColor(players.get(currPerson).getColor());
  				if (numCards % 3 == 0) {
  					numCards = 0;
  		 			currPerson++;
