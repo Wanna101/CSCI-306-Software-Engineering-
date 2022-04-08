@@ -12,12 +12,12 @@ Room, Rec Center, R
 Space, Unused, X 
 Space, Walkway, W
 // 6 people 
-Person, Blaster, #FF0000
-Person, Marvin, #FF8000
-Person, PCJ, #FFFF00
-Person, Mark Baldwin, #00FF00
-Person, Florence Caldwell, #0000FF
-Person, Iris Bahar, #800080
+Person, Blaster, #FF8080
+Person, Marvin, #FFC080
+Person, PCJ, #FFE040
+Person, Mark Baldwin, #80FF80
+Person, Florence Caldwell, #8080FF
+Person, Iris Bahar, #C080C0
 // 6 weapons 
 Weapon, Dynamite, N/A
 Weapon, Blaster Blaster, N/A

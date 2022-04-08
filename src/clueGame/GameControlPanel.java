@@ -7,8 +7,8 @@ import javax.swing.border.*;
 @SuppressWarnings("serial")
 public class GameControlPanel extends JPanel {
 	
-	private JLabel guessLabel; 
-	private JLabel guessResultLabel; 
+	private JTextField guessLabel; 
+	private JTextField guessResultLabel; 
 	private JTextField rollNumber; 
 	private JTextField turn; 
 	
@@ -118,7 +118,7 @@ public class GameControlPanel extends JPanel {
 		// first panel in the bottom panel
         JPanel border1 = new JPanel(new GridLayout(1, 0));
         
-        this.guessLabel = new JLabel();
+        this.guessLabel = new JTextField();
         border1.add(guessLabel);
         border1.setBorder(new TitledBorder (new EtchedBorder(), "Guess"));
         return border1;
@@ -128,7 +128,7 @@ public class GameControlPanel extends JPanel {
 		 // second panel in the bottom panel
         JPanel border2 = new JPanel(new GridLayout(1, 0));
         
-        this.guessResultLabel = new JLabel("");
+        this.guessResultLabel = new JTextField();
         border2.add(guessResultLabel);	
         border2.setBorder(new TitledBorder(new EtchedBorder(), "Guess Result"));
 		return border2;
@@ -140,12 +140,14 @@ public class GameControlPanel extends JPanel {
 		rollNumber.setText(String.valueOf(roll));
 	}
 	
-	public void setGuess(String s) {
+	public void setGuess(Player p, String s) {
 		guessLabel.setText(s);
+		guessLabel.setBackground(p.getColor());
 	}
 	
-	public void setGuessResult(String s) {
+	public void setGuessResult(Player p, String s) {
 		guessResultLabel.setText(s);
+		guessResultLabel.setBackground(p.getColor());
 	}
 	
 	public static void main(String[] args) {
@@ -155,11 +157,13 @@ public class GameControlPanel extends JPanel {
 		frame.setTitle("GameControlPanel");
 		frame.setSize(825, 125);
 		GameControlPanel gui = new GameControlPanel();
+		
+		ComputerPlayer p = new ComputerPlayer("Marvin", Color.decode("#FFC080"), 19, 0);
+		gui.setTurn(p, 5);
+		gui.setGuess(p, "I have no guess!");
+		gui.setGuessResult(p, "So you have nothing?");
+		
 		frame.add(gui, BorderLayout.CENTER);
 		frame.setVisible(true);
-	
-		gui.setTurn(new ComputerPlayer("Marvin", Color.decode("#FF8000"), 19, 0), 5);
-		gui.setGuess("I have no guess!");
-		gui.setGuessResult("So you have nothing?");
 	}
 }
