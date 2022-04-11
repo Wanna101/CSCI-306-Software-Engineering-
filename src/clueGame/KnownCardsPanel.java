@@ -6,7 +6,7 @@ import javax.swing.*;
 import javax.swing.border.*;
 
 @SuppressWarnings("serial")
-public class CardPanel extends JPanel {
+public class KnownCardsPanel extends JPanel {
 
 	private Set<JTextField> handPeople = new HashSet<JTextField>(); 
 	private Set<JTextField> handRooms = new HashSet<JTextField>(); 
@@ -19,7 +19,7 @@ public class CardPanel extends JPanel {
 	private JPanel rooms; 
 	private JPanel weapons; 
 	
-	public CardPanel(Player p) {
+	public KnownCardsPanel(Player p) {
 		
 		for(Card c:p.getHand()) {
 			JTextField temp = new JTextField(c.getCardName()); 
@@ -130,7 +130,7 @@ public class CardPanel extends JPanel {
 		blaster.updateHand(new Card("Marvin", CardType.PERSON));
 		blaster.updateHand(new Card("Alderson Hall", CardType.ROOM));
 		blaster.updateHand(new Card("Student Center", CardType.ROOM));
-		CardPanel gui = new CardPanel(blaster);
+		KnownCardsPanel gui = new KnownCardsPanel(blaster);
 		
 		gui.addSeen(new Card("PCJ",CardType.PERSON));
 		gui.addSeen(new Card("Dynamite", CardType.WEAPON));
