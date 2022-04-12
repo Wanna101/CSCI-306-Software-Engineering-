@@ -1,5 +1,7 @@
 package clueGame;
 
+import java.awt.Color;
+import java.awt.Graphics;
 import java.util.*;
 
 public class BoardCell {
@@ -48,8 +50,25 @@ public class BoardCell {
 	/*
 	 * C23A
 	 */
-	public void draw() {
-		// TODO
+	public void draw(Graphics g, int width, int height, int xOffset, int yOffset) {
+		g.drawRect(this.col * width, this.row * height, width, height);
+		if (this.isRoom()) {
+			g.setColor(Color.GRAY);
+			g.fillRect(this.col * width, this.row * height, width, height);
+		}
+		
+		if (this.isWalkway()) {
+			g.setColor(Color.YELLOW);
+			g.fillRect(this.col * width, this.row * height, width, height);
+			g.setColor(Color.GRAY);
+			g.drawRect(this.col * width, this.row * height, width, height);
+		}
+		
+		if (this.isSpace()) {
+			g.setColor(Color.BLACK);
+			g.fillRect(this.col * width, this.row * height, width, height);
+		}
+		
 	}
 	
 	
@@ -143,6 +162,14 @@ public class BoardCell {
 	
 	public boolean isRoomCenter() {
 		return roomCenter;
+	}
+	
+	public boolean isWalkway() {
+		return this.initial == 'W';
+	}
+	
+	public boolean isSpace() {
+		return this.initial == 'X';
 	}
 }
 

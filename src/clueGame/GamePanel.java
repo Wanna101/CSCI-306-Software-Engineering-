@@ -29,14 +29,12 @@ public class GamePanel extends JPanel {
 		
 		gameControl.setPreferredSize(new Dimension(800, 110));
 		knownCards.setPreferredSize(new Dimension(125, 730));
-		
+		board.setPreferredSize(new Dimension(675, 730));
 		
 		clueGame.add(gameControl, BorderLayout.SOUTH);
 		clueGame.add(knownCards, BorderLayout.EAST);
 		clueGame.add(board, BorderLayout.CENTER);
 		clueGame.setVisible(true);
-
-
 	}
 
 }

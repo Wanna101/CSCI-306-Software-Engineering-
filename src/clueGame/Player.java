@@ -41,6 +41,13 @@ public abstract class Player {
 		seenCards.add(seenCard);
 	}
 	
+	public void drawPlayer(Graphics g, Player p, int x, int y, int height, int width) {
+		g.setColor(p.getColor());
+		g.drawOval(y, x, width, height);
+		g.fillOval(y, x, width, height);
+		g.setColor(Color.BLACK);
+		g.drawOval(y, x, width, height);
+	}
 	
 	/*
 	 * Note: a player tries to dispute a suggestion with the cards in their hand,

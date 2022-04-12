@@ -386,7 +386,7 @@ public class Board extends JPanel {
         for (int i = 0; i < players.size(); i++) {
             switch(i) {
             case 0: 
-                players.get(i).setLocation(24, 7);
+                players.get(i).setLocation(24, 8);
                 break; 
             case 1: 
                 players.get(i).setLocation(19, 0);
@@ -501,9 +501,84 @@ public class Board extends JPanel {
 	/*
 	 * C23A
 	 */
-	public void paintComponent() {
-		// TODO
-		super.paintComponent(getGraphics());
+	@Override
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		int width = this.getWidth() / numColumns;
+		int height = this.getHeight() / numRows;
+		
+		int xOffset = (this.getWidth() - numColumns * (width * height)) / 2;
+		int yOffset = (this.getHeight() - numRows * (width * height)) / 2;
+		for (int row = 0; row < numRows; row++) {
+			for (int col = 0; col < numColumns; col++) {
+				grid[row][col].draw(g, width, height, xOffset, yOffset);
+				
+				if (grid[row][col].isRoomCenter()) {
+					char r = grid[row][col].getInitial();
+					Room room = this.getRoomMap().get(r);
+					room.drawRoomName(g, col, row, height, width);
+				}
+				
+			}
+		}
+		
+		for (Player p: players) {
+			int row = p.getRow();
+			int col = p.getColumn();
+			p.drawPlayer(g, p, row * height, col * width, height, width);
+		}
+		drawRoom(g, width, height);
+		
+	}
+	
+	private void drawRoom(Graphics g, int width, int height) {
+		int pad;
+		
+		// drawing the doorways after because it will be overwritten in the GUI
+		for (int row = 0; row < numRows; row++) {
+			for (int col = 0; col < numColumns; col++) {				
+				// check for door below
+				if (row + 1 < numRows) {
+					BoardCell c = grid[row + 1][col];
+					if (c.isDoorway() && c.getDoorDirection() == DoorDirection.UP) {
+						g.setColor(Color.BLUE);
+			        	pad = (height / 8);
+			        	g.fillRect(col * width, (row * height) + height - pad, width, pad);
+			        	g.setColor(Color.GRAY);						
+					}
+				}
+				// check for door above
+				if (row - 1 >= 0) {
+					BoardCell c = grid[row - 1][col];
+					if (c.isDoorway() && c.getDoorDirection() == DoorDirection.DOWN) {
+						g.setColor(Color.BLUE);
+			        	pad = (height / 8);
+			        	g.fillRect(col * width, (row * height), width, pad);
+			        	g.setColor(Color.GRAY);
+					}
+				}
+				// check for door right
+				if (col + 1 < numColumns) {
+					BoardCell c = grid[row][col + 1];
+					if (c.isDoorway() && c.getDoorDirection() == DoorDirection.LEFT) {
+						g.setColor(Color.BLUE);
+			        	pad = (width / 8);
+			        	g.fillRect((col * width) + width - pad, (row * height), pad, height);
+			        	g.setColor(Color.GRAY);						
+					}
+				}
+				// check for door left
+				if (col - 1 >= 0) {
+					BoardCell c = grid[row][col - 1];
+					if (c.isDoorway() && c.getDoorDirection() == DoorDirection.RIGHT) {
+						g.setColor(Color.BLUE);
+			        	pad = (width / 8);
+			        	g.fillRect((col * width), (row * height), pad, height);
+			        	g.setColor(Color.GRAY);						
+					}
+				}
+			}
+		}
 	}
 	
 	

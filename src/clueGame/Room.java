@@ -1,5 +1,7 @@
 package clueGame;
 
+import java.awt.*;
+
 public class Room {
 	private String name;
 	private BoardCell centerCell, labelCell;
@@ -9,6 +11,11 @@ public class Room {
 	 */
 	public Room(String name) {
 		this.name = name;
+	}
+	
+	public void drawRoomName(Graphics g, int x, int y, int height, int width) {
+		g.setColor(Color.BLUE);
+		g.drawString(this.getName(), x * width, y * height);
 	}
 	
 	/*

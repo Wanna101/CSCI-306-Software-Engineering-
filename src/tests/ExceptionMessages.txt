@@ -129,3 +129,15 @@
 2022-04-11T17:38:37.990132600Z GMT: BadConfigFormatException(): In layout file, Config has incorrect number of values at line: 3
 2022-04-11T17:38:38.069919800Z GMT: BadConfigFormatException(): In layout file, Single character 'Y' is not a valid room at line: 1
 2022-04-11T17:38:38.166662300Z GMT: BadConfigFormatException(): In setup file, Type is not equal to 'Room' or 'Space' or 'Person' or 'Weapon'
+2022-04-12T16:52:12.912272700Z GMT: BadConfigFormatException(): In layout file, Config has incorrect number of values at line: 3
+2022-04-12T16:52:13.318406800Z GMT: BadConfigFormatException(): In layout file, Single character 'Y' is not a valid room at line: 1
+2022-04-12T16:52:13.585593100Z GMT: BadConfigFormatException(): In setup file, Type is not equal to 'Room' or 'Space' or 'Person' or 'Weapon'
+2022-04-12T16:53:00.646019700Z GMT: BadConfigFormatException(): In layout file, Config has incorrect number of values at line: 3
+2022-04-12T16:53:00.806233Z GMT: BadConfigFormatException(): In layout file, Single character 'Y' is not a valid room at line: 1
+2022-04-12T16:53:01.413654100Z GMT: BadConfigFormatException(): In setup file, Type is not equal to 'Room' or 'Space' or 'Person' or 'Weapon'
+2022-04-12T16:54:24.907070700Z GMT: BadConfigFormatException(): In layout file, Config has incorrect number of values at line: 3
+2022-04-12T16:54:24.953916800Z GMT: BadConfigFormatException(): In layout file, Single character 'Y' is not a valid room at line: 1
+2022-04-12T16:54:24.993778900Z GMT: BadConfigFormatException(): In setup file, Type is not equal to 'Room' or 'Space' or 'Person' or 'Weapon'
+2022-04-12T16:54:45.683495Z GMT: BadConfigFormatException(): In layout file, Config has incorrect number of values at line: 3
+2022-04-12T16:54:45.756373500Z GMT: BadConfigFormatException(): In layout file, Single character 'Y' is not a valid room at line: 1
+2022-04-12T16:54:45.861651800Z GMT: BadConfigFormatException(): In setup file, Type is not equal to 'Room' or 'Space' or 'Person' or 'Weapon'
