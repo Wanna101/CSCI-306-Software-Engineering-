@@ -45,6 +45,13 @@ public class BoardCell {
 	} 	
 	
 	
+	/*
+	 * C23A
+	 */
+	public void draw() {
+		// TODO
+	}
+	
 	
 	/*
 	 * Setters:

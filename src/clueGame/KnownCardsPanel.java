@@ -40,6 +40,15 @@ public class KnownCardsPanel extends JPanel {
 		if(handWeapons.isEmpty()) {
 			handWeapons.add(new JTextField("None"));
 		}
+		if(seenPeople.isEmpty()) {
+			seenPeople.add(new JTextField("None"));
+		}
+		if(seenRooms.isEmpty()) {
+			seenRooms.add(new JTextField("None"));
+		}
+		if(seenWeapons.isEmpty()) {
+			seenWeapons.add(new JTextField("None"));
+		}
 		// 3 rows
 		setLayout(new GridLayout(1, 0));
 		
@@ -125,7 +134,7 @@ public class KnownCardsPanel extends JPanel {
 		// Create a JFrame with all the normal functionality
 		JFrame frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(185, 695);
+		frame.setSize(150, 710);
 		HumanPlayer blaster = new HumanPlayer("Blaster", Color.decode("#FF8080"), 0, 0); 
 		blaster.updateHand(new Card("Marvin", CardType.PERSON));
 		blaster.updateHand(new Card("Alderson Hall", CardType.ROOM));

@@ -3,10 +3,12 @@ package clueGame;
 import java.util.*;
 import java.io.*;
 import java.awt.*;
+import javax.swing.*;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-public class Board {
+@SuppressWarnings("serial")
+public class Board extends JPanel {
 	
 	// variables needed for instantiating and setting up board
 	private BoardCell[][] grid; 
@@ -484,7 +486,7 @@ public class Board {
   		}
   		return null;
 	}
-  	
+	
 	// used for testing purposes only
 	public void overwriteSolution(Solution newAnswer) {
   		theAnswer = newAnswer;
@@ -494,6 +496,16 @@ public class Board {
 	public void addPlayers(Player p) {
 		players.add(p);
 	}
+	
+	
+	/*
+	 * C23A
+	 */
+	public void paintComponent() {
+		// TODO
+		super.paintComponent(getGraphics());
+	}
+	
 	
  	/*
  	 * Setters:

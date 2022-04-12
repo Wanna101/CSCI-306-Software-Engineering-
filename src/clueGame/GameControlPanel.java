@@ -155,7 +155,7 @@ public class GameControlPanel extends JPanel {
 		JFrame frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setTitle("GameControlPanel");
-		frame.setSize(825, 125);
+		frame.setSize(800, 130);
 		GameControlPanel gui = new GameControlPanel();
 		
 		ComputerPlayer p = new ComputerPlayer("Marvin", Color.decode("#FFC080"), 19, 0);
