@@ -14,7 +14,7 @@ public class Room {
 	}
 	
 	public void drawRoomName(Graphics g, int x, int y, int height, int width) {
-		g.setColor(Color.BLUE);
+		g.setColor(Color.decode("#202020"));
 		g.drawString(this.getName(), x * width, y * height);
 	}
 	

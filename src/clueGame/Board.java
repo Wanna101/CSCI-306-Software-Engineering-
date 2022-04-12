@@ -521,17 +521,21 @@ public class Board extends JPanel {
 				
 			}
 		}
+		drawPlayers(g, width, height);
+		drawDoorways(g, width, height);
 		
+	}
+	
+	
+	private void drawPlayers(Graphics g, int width, int height) {
 		for (Player p: players) {
 			int row = p.getRow();
 			int col = p.getColumn();
 			p.drawPlayer(g, p, row * height, col * width, height, width);
 		}
-		drawRoom(g, width, height);
-		
 	}
 	
-	private void drawRoom(Graphics g, int width, int height) {
+	private void drawDoorways(Graphics g, int width, int height) {
 		int pad;
 		
 		// drawing the doorways after because it will be overwritten in the GUI
@@ -541,40 +545,36 @@ public class Board extends JPanel {
 				if (row + 1 < numRows) {
 					BoardCell c = grid[row + 1][col];
 					if (c.isDoorway() && c.getDoorDirection() == DoorDirection.UP) {
-						g.setColor(Color.BLUE);
+						g.setColor(Color.decode("#202020"));
 			        	pad = (height / 8);
 			        	g.fillRect(col * width, (row * height) + height - pad, width, pad);
-			        	g.setColor(Color.GRAY);						
 					}
 				}
 				// check for door above
 				if (row - 1 >= 0) {
 					BoardCell c = grid[row - 1][col];
 					if (c.isDoorway() && c.getDoorDirection() == DoorDirection.DOWN) {
-						g.setColor(Color.BLUE);
+						g.setColor(Color.decode("#202020"));
 			        	pad = (height / 8);
 			        	g.fillRect(col * width, (row * height), width, pad);
-			        	g.setColor(Color.GRAY);
 					}
 				}
 				// check for door right
 				if (col + 1 < numColumns) {
 					BoardCell c = grid[row][col + 1];
 					if (c.isDoorway() && c.getDoorDirection() == DoorDirection.LEFT) {
-						g.setColor(Color.BLUE);
+						g.setColor(Color.decode("#202020"));
 			        	pad = (width / 8);
 			        	g.fillRect((col * width) + width - pad, (row * height), pad, height);
-			        	g.setColor(Color.GRAY);						
 					}
 				}
 				// check for door left
 				if (col - 1 >= 0) {
 					BoardCell c = grid[row][col - 1];
 					if (c.isDoorway() && c.getDoorDirection() == DoorDirection.RIGHT) {
-						g.setColor(Color.BLUE);
+						g.setColor(Color.decode("#202020"));
 			        	pad = (width / 8);
 			        	g.fillRect((col * width), (row * height), pad, height);
-			        	g.setColor(Color.GRAY);						
 					}
 				}
 			}

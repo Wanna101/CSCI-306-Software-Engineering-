@@ -98,7 +98,7 @@ public class GameControlPanel extends JPanel {
 		// third panel in the top panel
         JPanel button1 = new JPanel();
 
-        JButton	accusation = new JButton("Make accusation");
+        JButton	accusation = new JButton("Make Accusation");
         button1.setLayout(new BorderLayout(0, 0));
         button1.add(accusation);
     	return button1;

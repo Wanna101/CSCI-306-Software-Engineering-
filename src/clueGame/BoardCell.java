@@ -53,19 +53,19 @@ public class BoardCell {
 	public void draw(Graphics g, int width, int height, int xOffset, int yOffset) {
 		g.drawRect(this.col * width, this.row * height, width, height);
 		if (this.isRoom()) {
-			g.setColor(Color.GRAY);
+			g.setColor(Color.decode("#A0A0FF"));
 			g.fillRect(this.col * width, this.row * height, width, height);
 		}
 		
 		if (this.isWalkway()) {
-			g.setColor(Color.YELLOW);
+			g.setColor(Color.decode("#FFE699"));
 			g.fillRect(this.col * width, this.row * height, width, height);
-			g.setColor(Color.GRAY);
+			g.setColor(Color.BLACK);
 			g.drawRect(this.col * width, this.row * height, width, height);
 		}
 		
 		if (this.isSpace()) {
-			g.setColor(Color.BLACK);
+			g.setColor(Color.decode("#000040"));
 			g.fillRect(this.col * width, this.row * height, width, height);
 		}
 		
