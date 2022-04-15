@@ -1,19 +1,35 @@
 package clueGame;
 
 import java.awt.*;
+import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.*;
 
 @SuppressWarnings("serial")
-public class GameControlPanel extends JPanel {
+public class GameControlPanel extends JPanel implements ActionListener {
 	
 	private JTextField guessLabel; 
 	private JTextField guessResultLabel; 
 	private JTextField rollNumber; 
 	private JTextField turn; 
 	
+	private int roll, playerTurn;
+	
+	private static Board board = null;
 	
 	public GameControlPanel() {
+		super();
+		addMouseListener(board);
+        playerTurn = -1;
+		setUpObjects();
+	}
+	
+	public GameControlPanel(Board board) {
+		this.board = board;
+		setUpObjects();
+	}
+	
+	public void setUpObjects() {
 		// 2 rows
 		setLayout(new GridLayout(2, 0));
 		
@@ -143,11 +159,57 @@ public class GameControlPanel extends JPanel {
 	public void setGuess(Player p, String s) {
 		guessLabel.setText(s);
 		guessLabel.setBackground(p.getColor());
+		
 	}
 	
 	public void setGuessResult(Player p, String s) {
 		guessResultLabel.setText(s);
 		guessResultLabel.setBackground(p.getColor());
+	}
+	
+	public void rollDice() {
+    	int min = 1;
+    	int max = 6;
+    	roll = (int)Math.floor(Math.random() * (max - min + 1) + min);
+    }
+	
+	public void handleNextTurn() {
+    	playerTurn++;
+    	if (playerTurn > 5) {
+    		playerTurn = 0;
+    	}
+    	int row = board.getPlayers().get(playerTurn).getRow();
+    	int col = board.getPlayers().get(playerTurn).getColumn();
+    	
+    	rollDice();
+    	BoardCell c = board.getCell(row, col);
+    	board.calcTargets(c, roll);
+    	if (playerTurn != 0) {
+    		ComputerPlayer pc = (ComputerPlayer) board.getPlayers().get(playerTurn);
+    		BoardCell selected = pc.selectTarget(board, roll);
+    		row = selected.getRow();
+    		col = selected.getColumn();
+    		pc.setLocation(row, col);
+    		for (BoardCell target: board.getTargets()) {
+    			target.setMarkedTarget(false);
+    		}
+    		setTurn(pc, roll);
+    		setGuess(pc, "PLACEHOLDER");
+    		setGuessResult(pc, "PLACEHOLDER");
+    	}
+    	
+    }
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		String s = e.getActionCommand();
+		if (s.equals("NEXT!")) {
+			if (board != null) {
+				handleNextTurn();
+			}
+		}
+		repaint();
+		
 	}
 	
 	public static void main(String[] args) {

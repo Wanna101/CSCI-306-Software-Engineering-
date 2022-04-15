@@ -43,7 +43,6 @@ public abstract class Player {
 	
 	public void drawPlayer(Graphics g, Player p, int x, int y, int height, int width) {
 		g.setColor(p.getColor());
-		g.drawOval(y, x, width, height);
 		g.fillOval(y, x, width, height);
 		g.setColor(Color.BLACK);
 		g.drawOval(y, x, width, height);

@@ -8,7 +8,7 @@ public class BoardCell {
 	private int row, col;
 	private char initial, secretPassage = '!';
 	private DoorDirection doorDirection;
-	private boolean doorway, roomLabel, roomCenter, occupied;
+	private boolean doorway, roomLabel, roomCenter, occupied, markedTarget;
 	private Set<BoardCell> adjList = new HashSet<BoardCell>();
 	
 	
@@ -22,6 +22,7 @@ public class BoardCell {
 		this.roomLabel = false;
 		this.roomCenter = false;
 		this.occupied = false;
+		this.markedTarget = false;
 	}
 	
 	
@@ -68,7 +69,20 @@ public class BoardCell {
 			g.setColor(Color.decode("#000040"));
 			g.fillRect(this.col * width, this.row * height, width, height);
 		}
-		
+		if (this.getSecretPassage() == 'G' || this.getSecretPassage() == 'B' || this.getSecretPassage() == 'A' || this.getSecretPassage() == 'H') {
+			g.setColor(Color.decode("#FFE699"));
+			g.fillRect(this.col * width, this.row * height, width, height);
+			g.setColor(Color.BLACK);
+			g.drawString("S", this.col * width + (width / 2), this.row * height + height - (height / 2));
+			g.setColor(Color.BLACK);
+			g.drawRect(this.col * width, this.row * height, width, height);
+		}
+		if (this.markedTarget == true) {
+			g.setColor(Color.WHITE);
+			g.fillRect(this.col * width, this.row * height, width, height);
+			g.setColor(Color.BLACK);
+			g.drawRect(this.col * width, this.row * height, width, height);
+		}
 	}
 	
 	
@@ -123,6 +137,10 @@ public class BoardCell {
 		this.secretPassage = secretPassage;
 	}
 	
+	public void setMarkedTarget(boolean markedTarget) {
+		this.markedTarget = markedTarget;
+	}
+	
 	
 	// Getters
 	public Set<BoardCell> getAdjList() { 
@@ -144,6 +162,14 @@ public class BoardCell {
 	
 	public char getSecretPassage() {
 		return secretPassage;
+	}
+	
+	public int getRow() {
+		return row;
+	}
+	
+	public int getColumn() {
+		return col;
 	}
 	
 	
@@ -170,6 +196,10 @@ public class BoardCell {
 	
 	public boolean isSpace() {
 		return this.initial == 'X';
+	}
+	
+	public boolean isMarkedTarget() {
+		return markedTarget;
 	}
 }
 

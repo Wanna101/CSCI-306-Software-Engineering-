@@ -31,7 +31,7 @@ public class Board extends JPanel implements MouseListener {
     private Board() {
         super();
         addMouseListener(this);
-        playerTurn = -1;
+        // playerTurn = -1;
     }
     
     /*
@@ -153,9 +153,36 @@ public class Board extends JPanel implements MouseListener {
 		fileScanner.close();
     }
     
+    /*
+    public void handleNextTurn() {
+    	playerTurn++;
+    	if (playerTurn > 5) {
+    		playerTurn = 0;
+    	}
+    	int row = players.get(playerTurn).getRow();
+    	int col = players.get(playerTurn).getColumn();
+    	
+    	rollDice();
+    	BoardCell c = grid[row][col];
+    	calcTargets(c, roll);
+    	if (playerTurn != 0) {
+    		ComputerPlayer pc = (ComputerPlayer) players.get(playerTurn);
+    		BoardCell selected = pc.selectTarget(this, roll);
+    		row = selected.getRow();
+    		col = selected.getColumn();
+    		pc.setLocation(row, col);
+    		for (BoardCell target: targets) {
+    			target.setMarkedTarget(false);
+    		}
+    	}
+    }
     
-    
-    
+    public void rollDice() {
+    	int min = 1;
+    	int max = 6;
+    	roll = (int)Math.floor(Math.random() * (max - min + 1) + min);
+    }
+    */
     
     /*
      * validateLayout:
@@ -378,6 +405,7 @@ public class Board extends JPanel implements MouseListener {
  			visited.add(adjCell);
  			if (numSteps == 1 || adjCell.isRoom()) {
  				targets.add(adjCell);
+ 				adjCell.setMarkedTarget(true);
  			} else {
  				findAllTargets(adjCell, numSteps - 1);
  			}
@@ -683,7 +711,21 @@ public class Board extends JPanel implements MouseListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
+		int x = e.getX();
+		int y = e.getY();
+		int cellXSize = this.getWidth() / numRows;
+		int cellYSize = this.getHeight() / numColumns;
+		int col = (x / cellXSize);
+		int row = (y / cellYSize);
+		if (grid[row][col].isMarkedTarget()) {
+			players.get(0).setLocation(row, col);
+			for (BoardCell target: targets) {
+				target.setMarkedTarget(false);
+			}
+			this.repaint();
+		} else {
+			JOptionPane.showMessageDialog(null, "(" + y + ", " + x + "); (" + row + ", " + col + ")", "Not a Valid Target", JOptionPane.ERROR_MESSAGE);
+		}
 		
 	}
 
