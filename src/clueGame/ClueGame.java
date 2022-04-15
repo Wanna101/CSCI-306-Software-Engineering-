@@ -4,11 +4,11 @@ import java.awt.*;
 import javax.swing.*;
 
 @SuppressWarnings("serial")
-public class GamePanel extends JPanel {
+public class ClueGame extends JPanel {
 
 	private static Board board;
 	
-	public GamePanel() {
+	public ClueGame() {
 		// TODO
 	}
 	

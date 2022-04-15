@@ -4,15 +4,16 @@ import java.util.*;
 import java.io.*;
 import java.awt.*;
 import javax.swing.*;
+import java.awt.event.*;
 
 import java.util.concurrent.ThreadLocalRandom;
 
 @SuppressWarnings("serial")
-public class Board extends JPanel {
+public class Board extends JPanel implements MouseListener {
 	
 	// variables needed for instantiating and setting up board
 	private BoardCell[][] grid; 
-    private int numRows, numColumns; 
+    private int numRows, numColumns, playerTurn, roll; 
     private String layoutConfigFile, setupConfigFile; 
     private Set<BoardCell> targets = new HashSet<BoardCell>();
 	private Set<BoardCell> visited = new HashSet<BoardCell>();
@@ -29,6 +30,8 @@ public class Board extends JPanel {
      */
     private Board() {
         super();
+        addMouseListener(this);
+        playerTurn = -1;
     }
     
     /*
@@ -58,7 +61,7 @@ public class Board extends JPanel {
      */
     @SuppressWarnings("resource")
 	public void loadSetupConfig() throws BadConfigFormatException, FileNotFoundException {
-    	FileReader setupConfig = new FileReader("data\\" + setupConfigFile);
+    	FileReader setupConfig = new FileReader("data/" + setupConfigFile);
     	Scanner fileScanner = new Scanner(setupConfig);
     	String nextLine;
     	
@@ -124,7 +127,7 @@ public class Board extends JPanel {
     @SuppressWarnings("resource")
 	public void loadLayoutConfig() throws BadConfigFormatException, FileNotFoundException {
     	Map<String, String> coordinates = new HashMap<String, String>();
-    	FileReader layoutConfig = new FileReader("data\\" + layoutConfigFile);
+    	FileReader layoutConfig = new FileReader("data/" + layoutConfigFile);
     	Scanner fileScanner = new Scanner(layoutConfig);
     	String nextLine;
     	numColumns = 0;
@@ -149,6 +152,10 @@ public class Board extends JPanel {
 		
 		fileScanner.close();
     }
+    
+    
+    
+    
     
     /*
      * validateLayout:
@@ -673,4 +680,34 @@ public class Board extends JPanel {
 		}
 		return null;
     }
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
 }
