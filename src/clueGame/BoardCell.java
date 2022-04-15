@@ -11,7 +11,6 @@ public class BoardCell {
 	private boolean doorway, roomLabel, roomCenter, occupied, markedTarget;
 	private Set<BoardCell> adjList = new HashSet<BoardCell>();
 	
-	
 	/*
 	 * Constructor: initialize variables
 	 */
@@ -24,7 +23,6 @@ public class BoardCell {
 		this.occupied = false;
 		this.markedTarget = false;
 	}
-	
 	
 	/*
 	 * addAdj: adds cells into adjacency list
@@ -73,7 +71,7 @@ public class BoardCell {
 			g.setColor(Color.decode("#FFE699"));
 			g.fillRect(this.col * width, this.row * height, width, height);
 			g.setColor(Color.BLACK);
-			g.drawString("S", this.col * width + (width / 2), this.row * height + height - (height / 2));
+			g.drawString("S",this.col * width + (width / 2), this.row * height + height - (height / 2));
 			g.setColor(Color.BLACK);
 			g.drawRect(this.col * width, this.row * height, width, height);
 		}
@@ -114,8 +112,8 @@ public class BoardCell {
 		this.initial = initial;
 	}
 	
-	public void setOccupied(boolean bool) {
-		this.occupied = bool;
+	public void setOccupied(boolean occupied) {
+		this.occupied = occupied;
 	}
 	
 	public void setDoorDirection(DoorDirection doorDirection) {
@@ -140,7 +138,6 @@ public class BoardCell {
 	public void setMarkedTarget(boolean markedTarget) {
 		this.markedTarget = markedTarget;
 	}
-	
 	
 	// Getters
 	public Set<BoardCell> getAdjList() { 
@@ -171,7 +168,6 @@ public class BoardCell {
 	public int getColumn() {
 		return col;
 	}
-	
 	
 	// Booleans
 	public boolean isDoorway() {

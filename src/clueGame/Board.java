@@ -6,6 +6,7 @@ import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
 
+
 import java.util.concurrent.ThreadLocalRandom;
 
 @SuppressWarnings("serial")
@@ -31,7 +32,7 @@ public class Board extends JPanel implements MouseListener {
     private Board() {
         super();
         addMouseListener(this);
-        // playerTurn = -1;
+        playerTurn = -1;
     }
     
     /*
@@ -111,7 +112,36 @@ public class Board extends JPanel implements MouseListener {
         		roomMap.put(character, r);
     		}
     	}
-    	
+    	for(int i = 0; i < 6; i++) {
+    		switch(i) {
+    		case 0: 
+    			players.get(i).setXOffset(0); 
+    			players.get(i).setYOffset(0); 
+    			break; 
+    		case 1: 
+    			players.get(i).setXOffset(-1); 
+    			players.get(i).setYOffset(0); 
+    			break; 
+    		case 2: 
+    			players.get(i).setXOffset(-1); 
+    			players.get(i).setYOffset(1); 
+    			break; 
+    		case 3: 
+    			players.get(i).setXOffset(0); 
+    			players.get(i).setYOffset(1); 
+    			break; 
+    		case 4: 
+    			players.get(i).setXOffset(1); 
+    			players.get(i).setYOffset(1); 
+    			break; 
+    		case 5: 
+    			players.get(i).setXOffset(1); 
+    			players.get(i).setYOffset(0); 
+    			break; 
+    		default: 
+    			
+    		}
+    	}
     	fileScanner.close();
     }
     
@@ -150,10 +180,10 @@ public class Board extends JPanel implements MouseListener {
 		placePlayers();
 		deal();
 		
+		
 		fileScanner.close();
     }
     
-    /*
     public void handleNextTurn() {
     	playerTurn++;
     	if (playerTurn > 5) {
@@ -167,22 +197,19 @@ public class Board extends JPanel implements MouseListener {
     	calcTargets(c, roll);
     	if (playerTurn != 0) {
     		ComputerPlayer pc = (ComputerPlayer) players.get(playerTurn);
+    		getCell(pc.getRow(), pc.getColumn()).setOccupied(false); 
     		BoardCell selected = pc.selectTarget(this, roll);
     		row = selected.getRow();
     		col = selected.getColumn();
     		pc.setLocation(row, col);
+    		if(!getCell(row,col).isRoom()) {
+    			getCell(row, col).setOccupied(true);
+    		}
     		for (BoardCell target: targets) {
     			target.setMarkedTarget(false);
     		}
     	}
     }
-    
-    public void rollDice() {
-    	int min = 1;
-    	int max = 6;
-    	roll = (int)Math.floor(Math.random() * (max - min + 1) + min);
-    }
-    */
     
     /*
      * validateLayout:
@@ -403,7 +430,7 @@ public class Board extends JPanel implements MouseListener {
  				continue;
  			}			
  			visited.add(adjCell);
- 			if (numSteps == 1 || adjCell.isRoom()) {
+ 			if (numSteps == 1 || adjCell.isRoom() && adjCell.getOccupied() == false) {
  				targets.add(adjCell);
  				adjCell.setMarkedTarget(true);
  			} else {
@@ -566,7 +593,11 @@ public class Board extends JPanel implements MouseListener {
 		for (Player p: players) {
 			int row = p.getRow();
 			int col = p.getColumn();
-			p.drawPlayer(g, p, row * height, col * width, height, width);
+			if(p.inRoom()) {
+				p.drawPlayer(g, p, (row+p.getYOffset()) * height, (col+p.getXOffset()) * width, height, width);
+			}else {
+				p.drawPlayer(g, p, row * height, col * width, height, width);
+			}
 		}
 	}
 	
@@ -614,6 +645,12 @@ public class Board extends JPanel implements MouseListener {
 				}
 			}
 		}
+	}
+	
+	public void rollDice() {
+		int min = 1;
+		int max = 6;
+		roll = (int)Math.floor(Math.random() * (max - min + 1) + min);
 	}
 	
 	
@@ -709,23 +746,43 @@ public class Board extends JPanel implements MouseListener {
 		return null;
     }
 
+    public Integer getRoll() {
+    	return this.roll;
+    }
+   
+    public String getPlayerName() {
+    	return players.get(playerTurn).getPlayerName();
+    }
+    
+    public Color getPlayerColor() {
+    	return players.get(playerTurn).getColor();
+    }
+    
+    /*
+     * Mouse interactions
+     */
+    
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		int x = e.getX();
-		int y = e.getY();
-		int cellXSize = this.getWidth() / numRows;
-		int cellYSize = this.getHeight() / numColumns;
-		int col = (x / cellXSize);
-		int row = (y / cellYSize);
-		if (grid[row][col].isMarkedTarget()) {
-			players.get(0).setLocation(row, col);
-			for (BoardCell target: targets) {
-				target.setMarkedTarget(false);
-			}
-			this.repaint();
-		} else {
-			JOptionPane.showMessageDialog(null, "(" + y + ", " + x + "); (" + row + ", " + col + ")", "Not a Valid Target", JOptionPane.ERROR_MESSAGE);
-		}
+    	int x = e.getX();
+        int y = e.getY();
+        int cellXSize = this.getWidth() / numRows;
+        int cellYSize = this.getHeight() / numColumns;
+        int col = (x / cellXSize); 
+        int row = (y / cellYSize);
+        if (grid[row][col].isMarkedTarget()) {
+        	getCell(players.get(0).getRow(),players.get(0).getColumn()).setOccupied(false); 
+        	players.get(0).setLocation(row, col);
+        	players.get(0).setMoved(true); 
+        	getCell(row, col).setOccupied(true); 
+        	for (BoardCell target: targets) {
+        		target.setMarkedTarget(false);
+        	}
+        	this.repaint();
+        }
+        else {
+        	JOptionPane.showMessageDialog(null, "That is not a valid target.", "Message", JOptionPane.ERROR_MESSAGE);
+        }
 		
 	}
 

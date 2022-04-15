@@ -2,6 +2,7 @@ package clueGame;
 
 import java.awt.*;
 import java.awt.event.*;
+
 import javax.swing.*;
 import javax.swing.border.*;
 
@@ -12,15 +13,9 @@ public class GameControlPanel extends JPanel implements ActionListener {
 	private JTextField guessResultLabel; 
 	private JTextField rollNumber; 
 	private JTextField turn; 
-	
-	private int roll, playerTurn;
-	
 	private static Board board = null;
 	
 	public GameControlPanel() {
-		super();
-		addMouseListener(board);
-        playerTurn = -1;
 		setUpObjects();
 	}
 	
@@ -29,8 +24,9 @@ public class GameControlPanel extends JPanel implements ActionListener {
 		setUpObjects();
 	}
 	
-	public void setUpObjects() {
+	private void setUpObjects() {
 		// 2 rows
+		// setBoard(board);
 		setLayout(new GridLayout(2, 0));
 		
 		// top panel (1 row, 4 columns)
@@ -46,16 +42,15 @@ public class GameControlPanel extends JPanel implements ActionListener {
         topPanel.add(rollPanel); 
 
         // adds third panel to top panel
-        JPanel button1 = createButton1();
-    	topPanel.add(button1);
+        JPanel accuseButton = createAccuseButton();
+    	topPanel.add(accuseButton);
         
         // adds fourth panel to the top panel
-        JPanel button2 = createButton2();
-    	topPanel.add(button2);
+        JPanel nextButton = createNextButton();
+    	topPanel.add(nextButton);
         
-        // adds top panel to the Layout
+    	// adds top panel to the Layout
         add(topPanel);
-        
         
         // bottom panel (2 columns)
         JPanel bottomPanel = new JPanel();
@@ -71,8 +66,8 @@ public class GameControlPanel extends JPanel implements ActionListener {
         
         // adds bottom panel to the Layout
         add(bottomPanel);
+		
 	}
-	
 	private JPanel createTurnPanel() {
 		// first panel in the top panel (2 rows)
         JPanel turnPanel = new JPanel(new GridLayout(2, 0));
@@ -97,7 +92,7 @@ public class GameControlPanel extends JPanel implements ActionListener {
         JLabel roll = new JLabel("Roll:", SwingConstants.RIGHT);
         topRoll.add(roll);
         
-        rollNumber = new JTextField(10);
+        rollNumber = new JTextField();
         rollNumber.setEditable(false);
         topRoll.add(rollNumber);
         rollPanel.add(topRoll);
@@ -110,7 +105,7 @@ public class GameControlPanel extends JPanel implements ActionListener {
         return rollPanel;
 	}
 	
-	private JPanel createButton1() {
+	private JPanel createAccuseButton() {
 		// third panel in the top panel
         JPanel button1 = new JPanel();
 
@@ -120,11 +115,12 @@ public class GameControlPanel extends JPanel implements ActionListener {
     	return button1;
 	}
 	
-	private JPanel createButton2() {
+	private JPanel createNextButton() {
 		// fourth panel in the top panel
         JPanel button2 = new JPanel();
 		
         JButton next = new JButton("NEXT!");
+        next.addActionListener(this);
         button2.setLayout(new BorderLayout(0, 0));
     	button2.add(next);
     	return button2;
@@ -159,57 +155,40 @@ public class GameControlPanel extends JPanel implements ActionListener {
 	public void setGuess(Player p, String s) {
 		guessLabel.setText(s);
 		guessLabel.setBackground(p.getColor());
-		
 	}
 	
 	public void setGuessResult(Player p, String s) {
 		guessResultLabel.setText(s);
 		guessResultLabel.setBackground(p.getColor());
 	}
-	
-	public void rollDice() {
-    	int min = 1;
-    	int max = 6;
-    	roll = (int)Math.floor(Math.random() * (max - min + 1) + min);
-    }
-	
+
 	public void handleNextTurn() {
-    	playerTurn++;
-    	if (playerTurn > 5) {
-    		playerTurn = 0;
-    	}
-    	int row = board.getPlayers().get(playerTurn).getRow();
-    	int col = board.getPlayers().get(playerTurn).getColumn();
-    	
-    	rollDice();
-    	BoardCell c = board.getCell(row, col);
-    	board.calcTargets(c, roll);
-    	if (playerTurn != 0) {
-    		ComputerPlayer pc = (ComputerPlayer) board.getPlayers().get(playerTurn);
-    		BoardCell selected = pc.selectTarget(board, roll);
-    		row = selected.getRow();
-    		col = selected.getColumn();
-    		pc.setLocation(row, col);
-    		for (BoardCell target: board.getTargets()) {
-    			target.setMarkedTarget(false);
-    		}
-    		setTurn(pc, roll);
-    		setGuess(pc, "PLACEHOLDER");
-    		setGuessResult(pc, "PLACEHOLDER");
-    	}
-    	
-    }
+		// x dice roll
+		// text updates
+		// calling of the playerTurn() ???
+		board.handleNextTurn();
+		if(board.getPlayerName() == board.getPlayers().get(0).getPlayerName()) {
+			board.getPlayers().get(0).setMoved(false);
+		}
+		rollNumber.setText(board.getRoll().toString());
+		turn.setText(board.getPlayerName());
+		turn.setBackground(board.getPlayerColor());
+		board.repaint();
+	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String s = e.getActionCommand();
-		if (s.equals("NEXT!")) {
+		if (s.equals("NEXT!") && board.getPlayers().get(0).hasMoved() == true) {
 			if (board != null) {
-				handleNextTurn();
-			}
+				handleNextTurn();			
+			}			
 		}
 		repaint();
-		
+	}
+	
+	public void setBoard(Board board) {
+		this.board = board;
 	}
 	
 	public static void main(String[] args) {
@@ -224,6 +203,8 @@ public class GameControlPanel extends JPanel implements ActionListener {
 		gui.setTurn(p, 5);
 		gui.setGuess(p, "I have no guess!");
 		gui.setGuessResult(p, "So you have nothing?");
+		
+		
 		
 		frame.add(gui, BorderLayout.CENTER);
 		frame.setVisible(true);

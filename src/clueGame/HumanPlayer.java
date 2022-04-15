@@ -3,9 +3,9 @@ package clueGame;
 import java.awt.Color;
 
 public class HumanPlayer extends Player {
-
+		
 	public HumanPlayer() {
-		super();
+		super(); 
 	}
 	
 	public HumanPlayer(String name, Color color, int row, int column) {
@@ -13,6 +13,8 @@ public class HumanPlayer extends Player {
 	}
 	
 	public boolean isHuman() {
-		return true;
+		return true; 
 	}
+	
+
 }

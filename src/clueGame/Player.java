@@ -3,12 +3,16 @@ package clueGame;
 import java.awt.*;
 import java.util.*;
 
+
 public abstract class Player {
 	private String name;
 	private Color color;
 	private int row, column;
 	private Set<Card> hand = new HashSet<Card>();
 	private Set<Card> seenCards = new HashSet<Card>();
+	private boolean moved; 
+	private int xOffset; 
+	private int yOffset; 
 	
 	/*
 	 * Hints:
@@ -29,6 +33,7 @@ public abstract class Player {
 		this.color = color;
 		this.row = row;
 		this.column = column;
+		this.moved = true; 
 	}
 	
 	public Player() {};
@@ -43,6 +48,7 @@ public abstract class Player {
 	
 	public void drawPlayer(Graphics g, Player p, int x, int y, int height, int width) {
 		g.setColor(p.getColor());
+		g.drawOval(y, x, width, height);
 		g.fillOval(y, x, width, height);
 		g.setColor(Color.BLACK);
 		g.drawOval(y, x, width, height);
@@ -121,4 +127,32 @@ public abstract class Player {
 	}
 	
 	public abstract boolean isHuman();
+	
+	public boolean hasMoved() {
+		return this.moved; 
+	}
+	
+	public void setMoved(boolean moved) {
+		this.moved = moved; 
+	}
+	
+	public void setXOffset(int xOffset) {
+		this.xOffset = xOffset; 
+	}
+	
+	public void setYOffset(int yOffset) {
+		this.yOffset = yOffset; 
+	}
+	
+	public int getXOffset() {
+		return this.xOffset;
+	}
+	
+	public int getYOffset() {
+		return this.yOffset; 
+	}
+	
+	public boolean inRoom() {
+		return Board.getInstance().getCell(row, column).isRoom();
+	}
 }
