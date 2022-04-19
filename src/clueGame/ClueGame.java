@@ -2,7 +2,6 @@ package clueGame;
 
 import java.awt.*;
 import javax.swing.*;
-import java.awt.event.*;
 
 @SuppressWarnings("serial")
 public class ClueGame extends JPanel {

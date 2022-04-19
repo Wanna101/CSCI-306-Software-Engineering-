@@ -159,6 +159,13 @@ public class GameControlPanel extends JPanel implements ActionListener {
 	}
 
 	
+	
+	/*
+	 * handleNextTurn:
+	 * - x dice roll
+	 * - text updates
+	 * - calling of the playerTurn
+	 */
 	public void handleNextTurn() {
     	playerTurn++;
     	if (playerTurn > 5) {
@@ -187,12 +194,9 @@ public class GameControlPanel extends JPanel implements ActionListener {
     	if(Board.getInstance().getPlayers().get(playerTurn).getPlayerName() == Board.getInstance().getPlayers().get(0).getPlayerName()) {
 			Board.getInstance().getPlayers().get(0).setMoved(false);
 		}
-		rollNumber.setText(board.getRoll().toString());
-		turn.setText(board.getPlayerName());
-		turn.setBackground(board.getPlayerColor());
-		board.repaint();
+		setTurn(Board.getInstance().getPlayers().get(playerTurn), roll);
+		Board.getInstance().repaint();
     }
-	
 	
 	/*
 	 * rollDice:
@@ -202,25 +206,6 @@ public class GameControlPanel extends JPanel implements ActionListener {
 		int min = 1;
 		int max = 6;
 		roll = (int)Math.floor(Math.random() * (max - min + 1) + min);
-	}
-	
-	/*
-	 * handleNextTurn:
-	 * - x dice roll
-	 * - text updates
-	 * - calling of the playerTurn
-	 */
-	public void handleNextTurn() {
-		Board board = Board.getInstance();
-		
-		board.handleNextTurn();
-		if(board.getPlayerName() == board.getPlayers().get(0).getPlayerName()) {
-			board.getPlayers().get(0).setMoved(false);
-		}
-		rollNumber.setText(board.getRoll().toString());
-		turn.setText(board.getPlayerName());
-		turn.setBackground(board.getPlayerColor());
-		board.repaint();
 	}
 	
 	@Override
