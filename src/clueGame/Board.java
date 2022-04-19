@@ -716,7 +716,6 @@ public class Board extends JPanel implements MouseListener {
     /*
      * Mouse interactions
      */
-    
 	@Override
 	public void mouseClicked(MouseEvent e) {
     	int x = e.getX();
