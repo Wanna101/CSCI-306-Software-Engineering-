@@ -14,7 +14,7 @@ public class Board extends JPanel implements MouseListener {
 	
 	// variables needed for instantiating and setting up board
 	private BoardCell[][] grid; 
-    private int numRows, numColumns, playerTurn, roll; 
+    private int numRows, numColumns; 
     private String layoutConfigFile, setupConfigFile; 
     private Set<BoardCell> targets = new HashSet<BoardCell>();
 	private Set<BoardCell> visited = new HashSet<BoardCell>();
@@ -32,7 +32,6 @@ public class Board extends JPanel implements MouseListener {
     private Board() {
         super();
         addMouseListener(this);
-        playerTurn = -1;
     }
     
     /*
@@ -182,33 +181,6 @@ public class Board extends JPanel implements MouseListener {
 		
 		
 		fileScanner.close();
-    }
-    
-    public void handleNextTurn() {
-    	playerTurn++;
-    	if (playerTurn > 5) {
-    		playerTurn = 0;
-    	}
-    	int row = players.get(playerTurn).getRow();
-    	int col = players.get(playerTurn).getColumn();
-    	
-    	rollDice();
-    	BoardCell c = grid[row][col];
-    	calcTargets(c, roll);
-    	if (playerTurn != 0) {
-    		ComputerPlayer pc = (ComputerPlayer) players.get(playerTurn);
-    		getCell(pc.getRow(), pc.getColumn()).setOccupied(false); 
-    		BoardCell selected = pc.selectTarget(roll);
-    		row = selected.getRow();
-    		col = selected.getColumn();
-    		pc.setLocation(row, col);
-    		if(!getCell(row,col).isRoom()) {
-    			getCell(row, col).setOccupied(true);
-    		}
-    		for (BoardCell target: targets) {
-    			target.setMarkedTarget(false);
-    		}
-    	}
     }
     
     /*
@@ -648,16 +620,6 @@ public class Board extends JPanel implements MouseListener {
 		}
 	}
 	
-	/*
-	 * rollDice:
-	 * - small function used for randomizing the roll of the dice
-	 */
-	public void rollDice() {
-		int min = 1;
-		int max = 6;
-		roll = (int)Math.floor(Math.random() * (max - min + 1) + min);
-	}
-	
 	
  	/*
  	 * Setters:
@@ -749,18 +711,6 @@ public class Board extends JPanel implements MouseListener {
 			}
 		}
 		return null;
-    }
-
-    public Integer getRoll() {
-    	return this.roll;
-    }
-   
-    public String getPlayerName() {
-    	return players.get(playerTurn).getPlayerName();
-    }
-    
-    public Color getPlayerColor() {
-    	return players.get(playerTurn).getColor();
     }
     
     /*

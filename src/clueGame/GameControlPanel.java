@@ -13,9 +13,12 @@ public class GameControlPanel extends JPanel implements ActionListener {
 	private JTextField guessResultLabel; 
 	private JTextField rollNumber; 
 	private JTextField turn; 
+	private int roll, playerTurn;
 	
 	public GameControlPanel() {
+		super();
 		setUpObjects();
+		playerTurn = -1;
 	}
 	
 	private void setUpObjects() {
@@ -155,6 +158,51 @@ public class GameControlPanel extends JPanel implements ActionListener {
 		guessResultLabel.setBackground(p.getColor());
 	}
 
+	
+	public void handleNextTurn() {
+    	playerTurn++;
+    	if (playerTurn > 5) {
+    		playerTurn = 0;
+    	}
+    	int row = Board.getInstance().getPlayers().get(playerTurn).getRow();
+    	int col = Board.getInstance().getPlayers().get(playerTurn).getColumn();
+    	
+    	rollDice();
+    	BoardCell c = Board.getInstance().getCell(row, col);
+    	Board.getInstance().calcTargets(c, roll);
+    	if (playerTurn != 0) {
+    		ComputerPlayer pc = (ComputerPlayer) Board.getInstance().getPlayers().get(playerTurn);
+    		Board.getInstance().getCell(pc.getRow(), pc.getColumn()).setOccupied(false); 
+    		BoardCell selected = pc.selectTarget(roll);
+    		row = selected.getRow();
+    		col = selected.getColumn();
+    		pc.setLocation(row, col);
+    		if(!Board.getInstance().getCell(row,col).isRoom()) {
+    			Board.getInstance().getCell(row, col).setOccupied(true);
+    		}
+    		for (BoardCell target: Board.getInstance().getTargets()) {
+    			target.setMarkedTarget(false);
+    		}
+    	}
+    	if(Board.getInstance().getPlayers().get(playerTurn).getPlayerName() == Board.getInstance().getPlayers().get(0).getPlayerName()) {
+			Board.getInstance().getPlayers().get(0).setMoved(false);
+		}
+		rollNumber.setText(board.getRoll().toString());
+		turn.setText(board.getPlayerName());
+		turn.setBackground(board.getPlayerColor());
+		board.repaint();
+    }
+	
+	
+	/*
+	 * rollDice:
+	 * - small function used for randomizing the roll of the dice
+	 */
+	public void rollDice() {
+		int min = 1;
+		int max = 6;
+		roll = (int)Math.floor(Math.random() * (max - min + 1) + min);
+	}
 	
 	/*
 	 * handleNextTurn:
