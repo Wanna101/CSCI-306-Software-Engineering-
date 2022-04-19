@@ -13,20 +13,13 @@ public class GameControlPanel extends JPanel implements ActionListener {
 	private JTextField guessResultLabel; 
 	private JTextField rollNumber; 
 	private JTextField turn; 
-	private static Board board = null;
 	
 	public GameControlPanel() {
 		setUpObjects();
 	}
 	
-	public GameControlPanel(Board board) {
-		this.board = board;
-		setUpObjects();
-	}
-	
 	private void setUpObjects() {
 		// 2 rows
-		// setBoard(board);
 		setLayout(new GridLayout(2, 0));
 		
 		// top panel (1 row, 4 columns)
@@ -166,6 +159,8 @@ public class GameControlPanel extends JPanel implements ActionListener {
 		// x dice roll
 		// text updates
 		// calling of the playerTurn() ???
+		Board board = Board.getInstance();
+		
 		board.handleNextTurn();
 		if(board.getPlayerName() == board.getPlayers().get(0).getPlayerName()) {
 			board.getPlayers().get(0).setMoved(false);
@@ -179,16 +174,12 @@ public class GameControlPanel extends JPanel implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String s = e.getActionCommand();
-		if (s.equals("NEXT!") && board.getPlayers().get(0).hasMoved() == true) {
-			if (board != null) {
+		if (s.equals("NEXT!") && Board.getInstance().getPlayers().get(0).hasMoved() == true) {
+			if (Board.getInstance() != null) {
 				handleNextTurn();			
 			}			
 		}
 		repaint();
-	}
-	
-	public void setBoard(Board board) {
-		this.board = board;
 	}
 	
 	public static void main(String[] args) {

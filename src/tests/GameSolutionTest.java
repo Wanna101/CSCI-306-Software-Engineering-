@@ -95,13 +95,13 @@ public class GameSolutionTest {
 		 */
 		
 		// tests if one matching card
-		assertEquals(m, human.disproveSuggestion(board, suggestion3));
+		assertEquals(m, human.disproveSuggestion(suggestion3));
 		
 		// tests if multiple
-		assertTrue(human.getHand().contains(human.disproveSuggestion(board, suggestion4)));
+		assertTrue(human.getHand().contains(human.disproveSuggestion(suggestion4)));
 		
 		// tests if no matching card
-		assertNull(human.disproveSuggestion(board, suggestion2));
+		assertNull(human.disproveSuggestion(suggestion2));
 		
 	}
 	
@@ -129,7 +129,7 @@ public class GameSolutionTest {
 		players.add(pc2);
 		
 		for (Player p: players) {
-			assertNull(p.disproveSuggestion(board, suggestion));
+			assertNull(p.disproveSuggestion(suggestion));
 		}
 		
 		// only human can disprove

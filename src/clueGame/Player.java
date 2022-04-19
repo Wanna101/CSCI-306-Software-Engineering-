@@ -65,7 +65,7 @@ public abstract class Player {
 	 * Note: if more than one card can dispute the suggestion (multiple card matches suggestion,
 	 * one is randomly chosen)
 	 */
-	public Card disproveSuggestion(Board board, Solution suggestion) {
+	public Card disproveSuggestion(Solution suggestion) {
 		ArrayList<Card> matches = new ArrayList<Card>();
 		
 		for (Card c: hand) {
@@ -84,7 +84,7 @@ public abstract class Player {
 		} else if (matches.size() == 1) {
 			return matches.get(0);
 		} else {
-			board.shuffleArray(matches);
+			Board.getInstance().shuffleArray(matches);
 			return matches.get(0);
 		}
 	}

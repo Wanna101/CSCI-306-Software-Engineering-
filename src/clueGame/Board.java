@@ -198,7 +198,7 @@ public class Board extends JPanel implements MouseListener {
     	if (playerTurn != 0) {
     		ComputerPlayer pc = (ComputerPlayer) players.get(playerTurn);
     		getCell(pc.getRow(), pc.getColumn()).setOccupied(false); 
-    		BoardCell selected = pc.selectTarget(this, roll);
+    		BoardCell selected = pc.selectTarget(roll);
     		row = selected.getRow();
     		col = selected.getColumn();
     		pc.setLocation(row, col);

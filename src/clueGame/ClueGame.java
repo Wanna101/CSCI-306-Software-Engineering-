@@ -22,7 +22,7 @@ public class ClueGame extends JPanel {
 		board.setConfigFiles("ClueLayout.csv", "ClueSetup.txt");
 		board.initialize();
 		
-		GameControlPanel gameControl = new GameControlPanel(board);
+		GameControlPanel gameControl = new GameControlPanel();
 		HumanPlayer blaster = new HumanPlayer("Blaster", Color.decode("#FF8080"), 0, 0);
 		blaster.updateHand(new Card("Marvin", CardType.PERSON));
 		blaster.updateHand(new Card("Alderson Hall", CardType.ROOM));

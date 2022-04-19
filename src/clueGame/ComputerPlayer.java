@@ -17,7 +17,7 @@ public class ComputerPlayer extends Player {
 	/*
 	 * C21A
 	 */
-	public Solution createSuggestion(Board board) {
+	public Solution createSuggestion() {
 		/*
 		 * TODO: AI routine - given a room, the computer player creates a suggestion composed
 		 * of the room, a weapon, and a player from those cards the computer player has not 
@@ -35,6 +35,8 @@ public class ComputerPlayer extends Player {
 		 * 
 		 * - need to add to hand and seenCards sets
 		 */
+		
+		Board board = Board.getInstance();
 		
 		if (board.getCell(getRow(), getColumn()).isRoom()) {
 			int x = getRow();
@@ -55,7 +57,7 @@ public class ComputerPlayer extends Player {
 		return null;
 	}
 	
-	public BoardCell selectTarget(Board board, int pathlength) {
+	public BoardCell selectTarget(int pathlength) {
 		/*
 		 * TODO: AI routine - computer player selects the location he or she wishes to move to
 		 * from the target list.
@@ -65,6 +67,8 @@ public class ComputerPlayer extends Player {
 		 * multiple rooms choose randomly)
 		 * - otherwise, select target randomly from target list
 		 */
+		Board board = Board.getInstance();
+		
 		
 		board.calcTargets(board.getCell(getRow(), getColumn()), pathlength);
 		
