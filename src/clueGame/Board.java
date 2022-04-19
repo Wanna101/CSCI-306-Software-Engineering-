@@ -734,6 +734,15 @@ public class Board extends JPanel implements MouseListener {
         	}
         	this.repaint();
         }
+        else if(getRoom(grid[row][col].getInitial()).getCenterCell().isMarkedTarget()) {
+        	players.get(0).setLocation(getRoom(grid[row][col].getInitial()).getCenterCell().getRow(), getRoom(grid[row][col].getInitial()).getCenterCell().getColumn());
+        	players.get(0).setMoved(true); 
+        	getCell(row, col).setOccupied(true); 
+        	for (BoardCell target: targets) {
+        		target.setMarkedTarget(false);
+        	}
+        	this.repaint();
+        }
         else {
         	JOptionPane.showMessageDialog(null, "That is not a valid target.", "Message", JOptionPane.ERROR_MESSAGE);
         }

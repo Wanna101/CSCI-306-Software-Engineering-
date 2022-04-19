@@ -83,7 +83,6 @@ public class ComputerAITest {
 		board.calcTargets(board.getCell(19, 0), 4);
 		Set<BoardCell> possibleTargets = board.getTargets();	
 		assertTrue(possibleTargets.contains(pc.selectTarget(4)));
-		
 		assertEquals(board.getCell(16, 2), pc.selectTarget(5));
 		
 		// if room is in list that is seen, target including room is selected randomly
