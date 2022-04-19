@@ -47,7 +47,12 @@ public class BoardCell {
 	
 	
 	/*
-	 * C23A
+	 * draw:
+	 * - draws the room
+	 * - draw the walkways
+	 * - draws the empty spaces
+	 * - draws the secret passages
+	 * - draws the targets for the player
 	 */
 	public void draw(Graphics g, int width, int height, int xOffset, int yOffset) {
 		g.drawRect(this.col * width, this.row * height, width, height);

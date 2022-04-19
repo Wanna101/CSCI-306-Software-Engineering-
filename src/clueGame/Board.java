@@ -561,7 +561,8 @@ public class Board extends JPanel implements MouseListener {
 	
 	
 	/*
-	 * C23A
+	 * paintComponent:
+	 * - paints the players, board, rooms
 	 */
 	@Override
 	public void paintComponent(Graphics g) {
@@ -647,6 +648,10 @@ public class Board extends JPanel implements MouseListener {
 		}
 	}
 	
+	/*
+	 * rollDice:
+	 * - small function used for randomizing the roll of the dice
+	 */
 	public void rollDice() {
 		int min = 1;
 		int max = 6;

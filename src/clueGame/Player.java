@@ -46,6 +46,10 @@ public abstract class Player {
 		seenCards.add(seenCard);
 	}
 	
+	/*
+	 * drawPlayer:
+	 * - draws the player
+	 */
 	public void drawPlayer(Graphics g, Player p, int x, int y, int height, int width) {
 		g.setColor(p.getColor());
 		g.drawOval(y, x, width, height);
