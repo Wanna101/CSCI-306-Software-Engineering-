@@ -50,12 +50,12 @@ public class GameControlPanel extends JPanel implements ActionListener {
         bottomPanel.setLayout(new GridLayout(0, 2));
         
         // adds first panel to bottom panel
-        JPanel border1 = createBorder1();
-        bottomPanel.add(border1);
+        JPanel guessBorder = createGuessBorder();
+        bottomPanel.add(guessBorder);
         
         // adds second panel to the bottom panel
-        JPanel border2 = createBorder2();
-        bottomPanel.add(border2);
+        JPanel guessResultBorder = createGuessResultBorder();
+        bottomPanel.add(guessResultBorder);
         
         // adds bottom panel to the Layout
         add(bottomPanel);
@@ -100,43 +100,43 @@ public class GameControlPanel extends JPanel implements ActionListener {
 	
 	private JPanel createAccuseButton() {
 		// third panel in the top panel
-        JPanel button1 = new JPanel();
+        JPanel accusationButton = new JPanel();
 
         JButton	accusation = new JButton("Make Accusation");
-        button1.setLayout(new BorderLayout(0, 0));
-        button1.add(accusation);
-    	return button1;
+        accusationButton.setLayout(new BorderLayout(0, 0));
+        accusationButton.add(accusation);
+    	return accusationButton;
 	}
 	
 	private JPanel createNextButton() {
 		// fourth panel in the top panel
-        JPanel button2 = new JPanel();
+        JPanel nextButton = new JPanel();
 		
         JButton next = new JButton("NEXT!");
         next.addActionListener(this);
-        button2.setLayout(new BorderLayout(0, 0));
-    	button2.add(next);
-    	return button2;
+        nextButton.setLayout(new BorderLayout(0, 0));
+    	nextButton.add(next);
+    	return nextButton;
 	}
 	
-	private JPanel createBorder1() {
+	private JPanel createGuessBorder() {
 		// first panel in the bottom panel
-        JPanel border1 = new JPanel(new GridLayout(1, 0));
+        JPanel guessBorder = new JPanel(new GridLayout(1, 0));
         
         this.guessLabel = new JTextField();
-        border1.add(guessLabel);
-        border1.setBorder(new TitledBorder (new EtchedBorder(), "Guess"));
-        return border1;
+        guessBorder.add(guessLabel);
+        guessBorder.setBorder(new TitledBorder (new EtchedBorder(), "Guess"));
+        return guessBorder;
 	}
 	
-	private JPanel createBorder2() {
+	private JPanel createGuessResultBorder() {
 		 // second panel in the bottom panel
-        JPanel border2 = new JPanel(new GridLayout(1, 0));
+        JPanel guessResultBorder = new JPanel(new GridLayout(1, 0));
         
         this.guessResultLabel = new JTextField();
-        border2.add(guessResultLabel);	
-        border2.setBorder(new TitledBorder(new EtchedBorder(), "Guess Result"));
-		return border2;
+        guessResultBorder.add(guessResultLabel);	
+        guessResultBorder.setBorder(new TitledBorder(new EtchedBorder(), "Guess Result"));
+		return guessResultBorder;
 	}
 	
 	public void setTurn(Player p, int roll) {
@@ -155,10 +155,14 @@ public class GameControlPanel extends JPanel implements ActionListener {
 		guessResultLabel.setBackground(p.getColor());
 	}
 
+	
+	/*
+	 * handleNextTurn:
+	 * - x dice roll
+	 * - text updates
+	 * - calling of the playerTurn
+	 */
 	public void handleNextTurn() {
-		// x dice roll
-		// text updates
-		// calling of the playerTurn() ???
 		Board board = Board.getInstance();
 		
 		board.handleNextTurn();
