@@ -39,8 +39,8 @@ public class ComputerPlayer extends Player {
 		Board board = Board.getInstance();
 		
 		if (board.getCell(getRow(), getColumn()).isRoom()) {
-			int x = getRow();
-			int y =getColumn();			
+			// int x = getRow();
+			// int y =getColumn();			
 			Map<Character, Room> roomMap = board.getRoomMap();
 			Character initial = board.getCell(getRow(), getColumn()).getInitial();
 			String room = roomMap.get(initial).getName();
@@ -75,7 +75,7 @@ public class ComputerPlayer extends Player {
 		ArrayList<BoardCell> possibleTargets = new ArrayList<BoardCell>(); 
 		
 		for (BoardCell target: board.getTargets()) {
-			BoardCell b = board.getRoomMap().get(target.getInitial()).getLabelCell();
+			// BoardCell b = board.getRoomMap().get(target.getInitial()).getLabelCell();
 			boolean seenTarget = false; 
 			// Check if target is a room 
 			if(target.isRoom()) {
