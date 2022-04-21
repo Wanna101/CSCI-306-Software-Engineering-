@@ -39,8 +39,7 @@ public class ComputerPlayer extends Player {
 		Board board = Board.getInstance();
 		
 		if (board.getCell(getRow(), getColumn()).isRoom()) {
-			// int x = getRow();
-			// int y =getColumn();			
+			// System.out.println("ENTER?");
 			Map<Character, Room> roomMap = board.getRoomMap();
 			Character initial = board.getCell(getRow(), getColumn()).getInitial();
 			String room = roomMap.get(initial).getName();
@@ -50,10 +49,12 @@ public class ComputerPlayer extends Player {
 			Card w = board.getRandomItem(this, CardType.WEAPON);
 			Card p = board.getRandomItem(this, CardType.PERSON);
 			if (r == null || w == null || p == null) {
+				// System.out.println("HERE");
 				return null;
 			}
 			return new Solution(r, w, p);
 		} 
+		// System.out.println("HI?");
 		return null;
 	}
 	

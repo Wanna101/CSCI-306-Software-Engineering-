@@ -1,6 +1,7 @@
 package clueGame;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.util.*;
 
@@ -57,9 +58,9 @@ public class BoardCell {
 	public void draw(Graphics g, int width, int height, int xOffset, int yOffset) {
 		g.drawRect(this.col * width, this.row * height, width, height);
 		if (this.isRoom()) {
-			if(Board.getInstance().getRoom(this.initial).getCenterCell().isMarkedTarget()) {
-				g.setColor(Color.WHITE); 
-			}else {
+			if (Board.getInstance().getRoom(this.initial).getCenterCell().isMarkedTarget()) {
+				g.setColor(Color.WHITE);
+			} else {
 				g.setColor(Color.decode("#A0A0FF"));
 			}
 			g.fillRect(this.col * width, this.row * height, width, height);
@@ -80,6 +81,8 @@ public class BoardCell {
 			g.setColor(Color.decode("#FFE699"));
 			g.fillRect(this.col * width, this.row * height, width, height);
 			g.setColor(Color.BLACK);
+			// CHANGE
+			g.setFont(new Font("Helvetica Neue", Font.BOLD, 12));
 			g.drawString("S",this.col * width + (width / 2), this.row * height + height - (height / 2));
 			g.setColor(Color.BLACK);
 			g.drawRect(this.col * width, this.row * height, width, height);
@@ -87,7 +90,7 @@ public class BoardCell {
 		if (this.markedTarget == true) {
 			g.setColor(Color.WHITE);
 			g.fillRect(this.col * width, this.row * height, width, height);
-			if(!this.isRoom()) {
+			if (!this.isRoom()) {
 				g.setColor(Color.BLACK);
 			}
 			g.drawRect(this.col * width, this.row * height, width, height);

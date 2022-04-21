@@ -8,9 +8,18 @@ public class ClueGame extends JPanel {
 
 	private static Board board;
 	
-	public ClueGame() {
-		// TODO
-	}
+	public ClueGame() {};
+	
+	/*
+	 * TODO: C26A - Finishing Clue Overview
+	 * - finish the human/computer common suggestion code
+	 * - finish the computer's suggestion behavior
+	 * - finish the human's turn behavior
+	 * - finish the human's accusation behavior (accusation button)
+	 * - whatever else that hasn't been finished:
+	 * 		- Refactor: make Player updateSeen work with CardPanel addSeen
+	 * 		- Refactor: need to change the code to keep the same proportions when the panel is expanded
+	 */
 	
 	public static void main(String[] args) {
 		JFrame clueGame = new JFrame();

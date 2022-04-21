@@ -7,12 +7,10 @@ import java.util.*;
 public abstract class Player {
 	private String name;
 	private Color color;
-	private int row, column;
+	private int row, column, xOffset, yOffset;
 	private Set<Card> hand = new HashSet<Card>();
 	private Set<Card> seenCards = new HashSet<Card>();
 	private boolean moved; 
-	private int xOffset; 
-	private int yOffset; 
 	
 	/*
 	 * Hints:

@@ -179,7 +179,6 @@ public class Board extends JPanel implements MouseListener {
 		placePlayers();
 		deal();
 		
-		
 		fileScanner.close();
     }
     
@@ -496,13 +495,21 @@ public class Board extends JPanel implements MouseListener {
   	}
     
   	
+  	// CHANGE #3
   	/*
-  	 * 
+  	 * checkAccusation:
+  	 * - checking the Accusation with theAnswer
   	 */
   	public boolean checkAccusation(Solution accusation) {
   		return accusation.getPerson() == theAnswer.getPerson() && accusation.getRoom() == theAnswer.getRoom() && accusation.getWeapon() == theAnswer.getWeapon();
   	}
   	
+  	// CHANGE #4
+  	/*
+  	 * handleSuggestion:
+  	 * - loop through the players to see if any of the suggestions
+  	 * match up
+  	 */
 	public Card handleSuggestion(Solution suggestion, Player current) {
 		for (Player p: players) {
 			if (p.equals(current)) {
@@ -701,7 +708,9 @@ public class Board extends JPanel implements MouseListener {
     
     public Card getRandomItem(Player p, CardType ct) {
     	// return the item requested (ie. WEAPON or PERSON)
+    	shuffleArray(deck);
 		for (Card item: deck) {
+			// might have to change logic later, because you can make a suggestion with the cards in hand
 			if (p.getHand().contains(item) || p.getSeenCards().contains(item)) {
 				continue;
 			} else {
@@ -733,17 +742,20 @@ public class Board extends JPanel implements MouseListener {
         		target.setMarkedTarget(false);
         	}
         	this.repaint();
-        }
-        else if(getRoom(grid[row][col].getInitial()).getCenterCell().isMarkedTarget()) {
-        	players.get(0).setLocation(getRoom(grid[row][col].getInitial()).getCenterCell().getRow(), getRoom(grid[row][col].getInitial()).getCenterCell().getColumn());
-        	players.get(0).setMoved(true); 
-        	getCell(row, col).setOccupied(true); 
-        	for (BoardCell target: targets) {
-        		target.setMarkedTarget(false);
+        } else if (grid[row][col].isRoom()) {
+        	if(getRoom(grid[row][col].getInitial()).getCenterCell().isMarkedTarget()) {
+            	getCell(players.get(0).getRow(),players.get(0).getColumn()).setOccupied(false); 
+	        	players.get(0).setLocation(getRoom(grid[row][col].getInitial()).getCenterCell().getRow(), getRoom(grid[row][col].getInitial()).getCenterCell().getColumn());
+	        	players.get(0).setMoved(true); 
+	        	getCell(row, col).setOccupied(true); 
+	        	for (BoardCell target: targets) {
+	        		target.setMarkedTarget(false);
+	        	}
+        	} else {
+        		JOptionPane.showMessageDialog(null,"That is not a valid target.", "Message", JOptionPane.ERROR_MESSAGE);
         	}
         	this.repaint();
-        }
-        else {
+        } else {
         	JOptionPane.showMessageDialog(null, "That is not a valid target.", "Message", JOptionPane.ERROR_MESSAGE);
         }
 		
