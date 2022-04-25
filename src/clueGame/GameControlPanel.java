@@ -236,9 +236,11 @@ public class GameControlPanel extends JPanel implements ActionListener {
 				String p = personBox.getSelectedItem().toString();
 				for (Player pMatching : Board.getInstance().getPlayers()) {
 					if (pMatching.getPlayerName().equals(p)) {
-						Board.getInstance().getCell(pMatching.getRow(), pMatching.getColumn()).setOccupied(false);
-						pMatching.setLocation(row, col);
-						pMatching.setTranslocated(true);
+						if (Board.getInstance().getCell(row, col) != Board.getInstance().getCell(pMatching.getRow(), pMatching.getColumn())) {
+							Board.getInstance().getCell(pMatching.getRow(), pMatching.getColumn()).setOccupied(false);
+							pMatching.setLocation(row, col);
+							pMatching.setTranslocated(true);
+						}
 						Board.getInstance().repaint();
 					}
 				}
@@ -328,6 +330,7 @@ public class GameControlPanel extends JPanel implements ActionListener {
     	BoardCell c = board.getCell(row, col);
     	board.calcTargets(c, roll);
     	if (playerTurn != 0) {
+    		// board.calcTargets(c, roll);
     		ComputerPlayer pc = (ComputerPlayer) currentPlayer;
     		board.getCell(pc.getRow(), pc.getColumn()).setOccupied(false); 
     		BoardCell selected = pc.selectTarget(roll);
@@ -341,11 +344,7 @@ public class GameControlPanel extends JPanel implements ActionListener {
     			int handSize = currentPlayer.getHand().size();
     			int deckSize = board.getDeck().size();
     			int seenSize = currentPlayer.getSeenCards().size();
-    			System.out.println("Player: " + currentPlayer.getPlayerName());
-    			System.out.println("\tHand Size: " + handSize);
-    			System.out.println("\tDeck Size: " + deckSize);
-    			System.out.println("\tSeen Size: " + seenSize);
-    			if (handSize + seenSize == deckSize - 3) {
+       			if (handSize + seenSize == deckSize - 3) {
     				Card room = null;
     				Card person = null;
     				Card weapon = null;
@@ -375,14 +374,16 @@ public class GameControlPanel extends JPanel implements ActionListener {
     			String r = suggestion.getRoom().getCardName();
     			String w = suggestion.getWeapon().getCardName();
     			for (Player pMatching : board.getPlayers()) {
-					if (pMatching.getPlayerName().equals(w)) {
-						board.getCell(pMatching.getRow(), pMatching.getColumn()).setOccupied(false);
-						pMatching.setLocation(row, col);
-						pMatching.setTranslocated(true);
+					if (pMatching.getPlayerName().equals(p)) {
+						if (Board.getInstance().getCell(row, col) != Board.getInstance().getCell(pMatching.getRow(), pMatching.getColumn())) {
+							Board.getInstance().getCell(pMatching.getRow(), pMatching.getColumn()).setOccupied(false);
+							pMatching.setLocation(row, col);
+							pMatching.setTranslocated(true);
+						}
 						board.repaint();
 					}
 				}
-    			String printSuggestion = (w + ", " + r + ", " + p);
+    			String printSuggestion = (p + ", " + w + ", " + r);
     			setGuess(currentPlayer, printSuggestion);    			
     			// set guessResult
     			String textDisproven = ("Suggestion disproven!");
@@ -408,6 +409,7 @@ public class GameControlPanel extends JPanel implements ActionListener {
     	}
     	if(currentPlayer.getPlayerName() == board.getPlayers().get(0).getPlayerName() && board.getTargets().size() > 0) {
 			board.getPlayers().get(0).setMoved(false);
+			board.calcTargets(c, roll);
 		} else {
 			Board.getInstance().drawSinglePlayer(currentPlayer);
 		}

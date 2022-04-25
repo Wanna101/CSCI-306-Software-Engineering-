@@ -392,6 +392,10 @@ public class Board extends JPanel implements MouseListener {
  		targets.clear();
  		visited.add(startCell);
  		findAllTargets(startCell, pathlength);
+ 		if (getPlayers().get(0).getTranslocated() == true && getPlayers().get(0).hasMoved() == false) {
+ 			targets.add(startCell);
+ 			startCell.setMarkedTarget(true);
+ 		}
  	}
  	
  	/*
@@ -422,7 +426,6 @@ public class Board extends JPanel implements MouseListener {
      */
  	public void placePlayers() {
         for (int i = 0; i < players.size(); i++) {
-        //for (int i = 0; i < 6; i++) {
             switch(i) {
             case 0: 
                 players.get(i).setLocation(24, 8);
@@ -861,7 +864,8 @@ public class Board extends JPanel implements MouseListener {
         	if(getRoom(grid[row][col].getInitial()).getCenterCell().isMarkedTarget()) {
             	getCell(players.get(0).getRow(),players.get(0).getColumn()).setOccupied(false); 
 	        	players.get(0).setLocation(getRoom(grid[row][col].getInitial()).getCenterCell().getRow(), getRoom(grid[row][col].getInitial()).getCenterCell().getColumn());
-	        	players.get(0).setMoved(true); 
+	        	players.get(0).setMoved(true);
+	        	players.get(0).setTranslocated(false);
 	        	getCell(row, col).setOccupied(true); 
 	        	for (BoardCell target: targets) {
 	        		target.setMarkedTarget(false);

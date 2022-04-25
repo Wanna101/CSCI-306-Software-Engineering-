@@ -19,7 +19,7 @@ public class ComputerPlayer extends Player {
 	 */
 	public Solution createSuggestion() {
 		/*
-		 * TODO: AI routine - given a room, the computer player creates a suggestion composed
+		 * AI routine - given a room, the computer player creates a suggestion composed
 		 * of the room, a weapon, and a player from those cards the computer player has not 
 		 * seen
 		 */
@@ -50,14 +50,14 @@ public class ComputerPlayer extends Player {
 			if (r == null || w == null || p == null) {
 				return null;
 			}
-			return new Solution(r, w, p);
+			return new Solution(r, p, w);
 		} 
 		return null;
 	}
 	
 	public BoardCell selectTarget(int pathlength) {
 		/*
-		 * TODO: AI routine - computer player selects the location he or she wishes to move to
+		 * AI routine - computer player selects the location he or she wishes to move to
 		 * from the target list.
 		 * 
 		 * Guidelines:
