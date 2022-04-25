@@ -2,6 +2,7 @@ package clueGame;
 
 import java.awt.*;
 import java.awt.event.*;
+
 import javax.swing.*;
 import javax.swing.border.*;
 
@@ -160,41 +161,53 @@ public class GameControlPanel extends JPanel implements ActionListener {
 		
 		String action = isSuggestion ? "a suggestion" : "an accusation";
 		humanAction = new JDialog(f, "Make " + action, true);
+		Player currentPlayer = Board.getInstance().getPlayers().get(playerTurn);
+		int row = currentPlayer.getRow();
+		int col = currentPlayer.getColumn();
+		BoardCell bc = Board.getInstance().getCell(row, col);
+		Room currRoom = Board.getInstance().getRoom(bc.getInitial());
 
-		// System.out.println(action);
 		humanAction.setLayout(new GridLayout(4, 4));
 		humanAction.setSize(200, 200);
+		
+		// center the dialog box according to the board
+		humanAction.setLocationRelativeTo(Board.getInstance());
 		
 		if (isSuggestion) {
 			JLabel currentRoom = new JLabel("Current room");
 			humanAction.add(currentRoom);
-			JTextField currentRoomBox = new JTextField(Board.getInstance().getRoom(Board.getInstance().getCell(Board.getInstance().getPlayers().get(playerTurn).getRow(), Board.getInstance().getPlayers().get(playerTurn).getColumn()).getInitial()).getName());
+			JTextField currentRoomBox = new JTextField(currRoom.getName());
 			currentRoomBox.setEditable(false);
 			humanAction.add(currentRoomBox);
+			
+			BackgroundSounds mySound= new BackgroundSounds("Suggestion");
+	        Thread t = new Thread(mySound);
+	        t.start();
 		} else {
 			JLabel roomLabel = new JLabel("Room");
 			humanAction.add(roomLabel);
 			String[] rooms = new String[9];
 			int i = 0;
-			for (Card c : Board.getInstance().getDeck()) {
-				if (c.getCardType() == CardType.ROOM) {
-					rooms[i] = c.getCardName();
-					i++;
-				}
+			
+			for (String s : Board.getInstance().getSortedRoomNames()) {
+				rooms[i] = s;
+				i++;
 			}
 			roomBox = new JComboBox<>(rooms);
 			humanAction.add(roomBox);
+			
+			BackgroundSounds mySound = new BackgroundSounds("Accusation");
+		    Thread t = new Thread(mySound);
+		    t.start();
 		}
 			
 		JLabel person = new JLabel("Person");
 		humanAction.add(person);
 		String[] persons = new String[6];
 		int i = 0;
-		for (Card c : Board.getInstance().getDeck()) {
-			if (c.getCardType() == CardType.PERSON) {
-				persons[i] = c.getCardName();
-				i++;
-			}
+		for (String s : Board.getInstance().getSortedPersonNames()) {
+			persons[i] = s;
+			i++;
 		}
 		JComboBox<String> personBox = new JComboBox<>(persons);
 		humanAction.add(personBox);
@@ -203,11 +216,9 @@ public class GameControlPanel extends JPanel implements ActionListener {
 		humanAction.add(weapon);
 		String[] weapons = new String[6];
 		i = 0;
-		for (Card c : Board.getInstance().getDeck()) {
-			if (c.getCardType() == CardType.WEAPON) {
-				weapons[i] = c.getCardName();
-				i++;
-			}
+		for (String s : Board.getInstance().getSortedWeaponNames()) {
+			weapons[i] = s;
+			i++;
 		}
 		JComboBox<String> weaponBox = new JComboBox<>(weapons);
 		humanAction.add(weaponBox);
@@ -216,17 +227,36 @@ public class GameControlPanel extends JPanel implements ActionListener {
 		submit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String p = personBox.getSelectedItem().toString();
+				for (Player pMatching : Board.getInstance().getPlayers()) {
+					if (pMatching.getPlayerName().equals(p)) {
+						// System.out.println("HERE");
+						pMatching.setLocation(row, col);
+						Board.getInstance().repaint();
+					}
+				}
 				String w = weaponBox.getSelectedItem().toString();
 				Card person = Board.getInstance().getCardFromDeck(p);
 				Card weapon = Board.getInstance().getCardFromDeck(w);
 				if (isSuggestion) {
-					roomCard = Board.getInstance().getCardFromDeck(Board.getInstance().getRoom(Board.getInstance().getCell(Board.getInstance().getPlayers().get(playerTurn).getRow(), Board.getInstance().getPlayers().get(playerTurn).getColumn()).getInitial()).getName());
+					roomCard = Board.getInstance().getCardFromDeck(currRoom.getName());
 				} else {
 					String r = roomBox.getSelectedItem().toString();
 					roomCard = Board.getInstance().getCardFromDeck(r);
 				}
 				suggestion  = new Solution(roomCard, person, weapon);
-				// System.out.println(Board.getInstance().getRoom(Board.getInstance().getCell(Board.getInstance().getPlayers().get(playerTurn).getRow(), Board.getInstance().getPlayers().get(playerTurn).getColumn()).getInitial()).getName() + " " + p + " " + w);
+				
+				if(!isSuggestion) {
+					if (Board.getInstance().checkAccusation(suggestion)) {
+						JOptionPane.showMessageDialog(null, "Congratulations, you won!", "Game Won", JOptionPane.INFORMATION_MESSAGE);
+						f.dispose();
+						Board.getInstance().dispose();
+					} else {
+						JOptionPane.showMessageDialog(null, "You failed", "Game Lost", JOptionPane.INFORMATION_MESSAGE);
+						f.dispose();
+						Board.getInstance().dispose();
+					}
+				}
+				
 				f.dispose();
 			}
 		});
@@ -235,27 +265,31 @@ public class GameControlPanel extends JPanel implements ActionListener {
 		JButton cancel = new JButton("Cancel");
 		cancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				// System.out.println("HIIIIIIII");
 				f.dispose();
 			}
 		});
 		humanAction.add(cancel);
 		humanAction.setVisible(true);
 		
-		String printSuggestion = (personBox.getSelectedItem().toString() + ", " + Board.getInstance().getRoom(Board.getInstance().getCell(Board.getInstance().getPlayers().get(playerTurn).getRow(), Board.getInstance().getPlayers().get(playerTurn).getColumn()).getInitial()).getName() + ", " + weaponBox.getSelectedItem().toString());
-		setGuess(Board.getInstance().getPlayers().get(playerTurn), printSuggestion);
+		String printSuggestion = (personBox.getSelectedItem().toString() + ", " + currRoom.getName() + ", " + weaponBox.getSelectedItem().toString());
+		setGuess(currentPlayer, printSuggestion);
 		
 		String textDisproven = ("Suggestion disproven!");
 		String notDisproven = ("No new clue!");
-		if (Board.getInstance().handleSuggestion(suggestion, Board.getInstance().getPlayers().get(playerTurn)) == null) {
-			setGuessResult(Board.getInstance().getPlayers().get(playerTurn), notDisproven);
+		if (Board.getInstance().handleSuggestion(suggestion, currentPlayer) == null) {
+			setGuessResult(currentPlayer, notDisproven);
 			guessResultLabel.setBackground(UIManager.getColor("Panel.background"));
 		} else {
 			for (Player getPlayer: Board.getInstance().getPlayers()) {
-				if (getPlayer.getHand().contains(Board.getInstance().handleSuggestion(suggestion, Board.getInstance().getPlayers().get(playerTurn)))) {
+				if (getPlayer.getHand().contains(Board.getInstance().handleSuggestion(suggestion, currentPlayer))) {
 					setGuessResult(getPlayer, textDisproven);
 				}
 			}
-			Board.getInstance().getPlayers().get(playerTurn).getSeenCards().add(Board.getInstance().handleSuggestion(suggestion, Board.getInstance().getPlayers().get(playerTurn)));
+			Card disproveResult = Board.getInstance().handleSuggestion(suggestion, currentPlayer);
+			currentPlayer.updateSeen(disproveResult);
+			// System.out.println(disproveResult.getCardName());
+			Board.getInstance().addSeen(disproveResult);
 		}
 		Board.getInstance().repaint();
 	}
@@ -276,59 +310,104 @@ public class GameControlPanel extends JPanel implements ActionListener {
     	if (playerTurn > 5) {
     		playerTurn = 0;
     	}
-    	int row = Board.getInstance().getPlayers().get(playerTurn).getRow();
-    	int col = Board.getInstance().getPlayers().get(playerTurn).getColumn();
+    	Board board = Board.getInstance();
+    	Player currentPlayer = Board.getInstance().getPlayers().get(playerTurn);
+    	int row = currentPlayer.getRow();
+    	int col = currentPlayer.getColumn();
     	
     	rollDice();
-    	BoardCell c = Board.getInstance().getCell(row, col);
-    	Board.getInstance().calcTargets(c, roll);
+    	BoardCell c = board.getCell(row, col);
+    	board.calcTargets(c, roll);
     	if (playerTurn != 0) {
-    		ComputerPlayer pc = (ComputerPlayer) Board.getInstance().getPlayers().get(playerTurn);
-    		Board.getInstance().getCell(pc.getRow(), pc.getColumn()).setOccupied(false); 
+    		ComputerPlayer pc = (ComputerPlayer) currentPlayer;
+    		board.getCell(pc.getRow(), pc.getColumn()).setOccupied(false); 
     		BoardCell selected = pc.selectTarget(roll);
     		row = selected.getRow();
     		col = selected.getColumn();
     		pc.setLocation(row, col);
-    		if(!Board.getInstance().getCell(row,col).isRoom()) {
-    			Board.getInstance().getCell(row, col).setOccupied(true);
-    		} else if (Board.getInstance().getCell(row, col).isRoom()) {
+    		if(!board.getCell(row,col).isRoom()) {
+    			board.getCell(row, col).setOccupied(true);
+    		} else if (board.getCell(row, col).isRoom()) {
+    			int handSize = currentPlayer.getHand().size();
+    			int deckSize = board.getDeck().size();
+    			int seenSize = currentPlayer.getSeenCards().size();
+    			System.out.println("Player: " + currentPlayer.getPlayerName());
+    			System.out.println("\tHand Size: " + handSize);
+    			System.out.println("\tDeck Size: " + deckSize);
+    			System.out.println("\tSeen Size: " + seenSize);
+    			if (handSize + seenSize == deckSize - 3) {
+    				Card room = null;
+    				Card person = null;
+    				Card weapon = null;
+    				board.getDeck().removeAll(currentPlayer.getHand());
+    				board.getDeck().removeAll(currentPlayer.getSeenCards());
+    				
+    				Solution accusation;
+    				for (Card finalCard: board.getDeck()) {
+    					if (finalCard.getCardType() == CardType.ROOM) {
+    						room = finalCard;
+    					}
+    					if (finalCard.getCardType() == CardType.WEAPON) {
+    						weapon = finalCard;
+    					}
+    					if (finalCard.getCardType() == CardType.PERSON) {
+    						person = finalCard;
+    					}
+    				}
+    				accusation = new Solution(room, person, weapon);
+    				System.out.println(board.checkAccusation(accusation));
+    				JOptionPane.showMessageDialog(null, "The Computer has won!", "Game Lost", JOptionPane.INFORMATION_MESSAGE);
+    				System.exit(0);
+    			}
     			// set guess
-    			Solution suggestion = pc.createSuggestion();
+    			Solution suggestion = pc.createSuggestion();    			
     			String p = suggestion.getPerson().getCardName();
+    			//System.out.println(p);    			
     			String r = suggestion.getRoom().getCardName();
+    			//System.out.println(r);
     			String w = suggestion.getWeapon().getCardName();
-    			String printSuggestion = (p + ", " + r + ", " + w);
-    			setGuess(Board.getInstance().getPlayers().get(playerTurn), printSuggestion);
-    			
+    			//System.out.println(w);
+    			for (Player pMatching : board.getPlayers()) {
+    				//System.out.println("HI");
+    				//System.out.println(pMatching.getPlayerName());
+    				//System.out.println(p);
+					if (pMatching.getPlayerName().equals(w)) {
+						// System.out.println("HERE");
+						pMatching.setLocation(row, col);
+						board.repaint();
+					}
+				}
+    			String printSuggestion = (w + ", " + r + ", " + p);
+    			setGuess(currentPlayer, printSuggestion);    			
     			// set guessResult
     			String textDisproven = ("Suggestion disproven!");
     			String notDisproven = ("No new clue!");
-    			if (Board.getInstance().handleSuggestion(suggestion, pc) == null) {
-    				setGuessResult(Board.getInstance().getPlayers().get(playerTurn), notDisproven);
+    			if (board.handleSuggestion(suggestion, pc) == null) {
+    				setGuessResult(currentPlayer, notDisproven);
     				guessResultLabel.setBackground(color);
     			} else {
-    				for (Player person: Board.getInstance().getPlayers()) {
-    					if (person.getHand().contains(Board.getInstance().handleSuggestion(suggestion, pc))) {
+    				for (Player person: board.getPlayers()) {
+    					if (person.getHand().contains(board.handleSuggestion(suggestion, pc))) {
     						setGuessResult(person, textDisproven);
     					}
     				}
-    				Board.getInstance().getPlayers().get(playerTurn).getSeenCards().add(Board.getInstance().handleSuggestion(suggestion, pc));
+    				currentPlayer.getSeenCards().add(board.handleSuggestion(suggestion, pc));
     			}    			
     		}
-    		for (BoardCell target: Board.getInstance().getTargets()) {
+    		for (BoardCell target: board.getTargets()) {
     			target.setMarkedTarget(false);
     		}
-    	} else {
-    		if (c.isRoom()) {
-    			createHumanAction(true);
-    		}
-    		
+    		BackgroundSounds mySound= new BackgroundSounds("ComputerMove");
+	        Thread t = new Thread(mySound);
+	        t.start();
     	}
-    	if(Board.getInstance().getPlayers().get(playerTurn).getPlayerName() == Board.getInstance().getPlayers().get(0).getPlayerName()) {
-			Board.getInstance().getPlayers().get(0).setMoved(false);
+    	if(currentPlayer.getPlayerName() == board.getPlayers().get(0).getPlayerName()) {
+			board.getPlayers().get(0).setMoved(false);
+		} else {
+			Board.getInstance().drawSinglePlayer(currentPlayer);
 		}
-		setTurn(Board.getInstance().getPlayers().get(playerTurn), roll);
-		Board.getInstance().repaint();
+		setTurn(currentPlayer, roll);
+		board.repaint();
 		
     }
 	
@@ -351,20 +430,22 @@ public class GameControlPanel extends JPanel implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String s = e.getActionCommand();
-		System.out.println(s);
 		
 		if (s.equals("NEXT!") && Board.getInstance().getPlayers().get(0).hasMoved() == true) {
     		// leave this stuff
 			if (Board.getInstance() != null) {
+				//for (int i = 0; i < 5; i++ ) {
 				handleNextTurn();			
+				//}
 			}			
 		}
-		if (s.equals("Make Accusation")) {
-			System.out.println("HERE1");
+		if (s.equals("Make Accusation") && playerTurn == 0) {
 			if (Board.getInstance() != null) {
-				System.out.println("HERE2");
 				createHumanAction(false);
+				
 			}
+		} else if (s.equals("Make Accusation") && playerTurn != 0) {
+			JOptionPane.showMessageDialog(null, "It is not your turn yet...", "Please Wait", JOptionPane.ERROR_MESSAGE);
 		}
 		repaint();
 	}

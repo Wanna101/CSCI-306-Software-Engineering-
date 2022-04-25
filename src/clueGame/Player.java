@@ -10,7 +10,9 @@ public abstract class Player {
 	private int row, column, xOffset, yOffset;
 	private Set<Card> hand = new HashSet<Card>();
 	private Set<Card> seenCards = new HashSet<Card>();
-	private boolean moved; 
+	private boolean moved;
+	private int lastX = -1;
+	private int lastY = -1;
 	
 	/*
 	 * Hints:
@@ -44,6 +46,21 @@ public abstract class Player {
 		seenCards.add(seenCard);
 	}
 	
+	public void savePixelCoordinates(int x, int y) {
+		lastX = x;
+		lastY = y;
+	}
+	
+	public int getSavedPixelX() {
+		return lastX;
+	}
+	
+	public int getSavedPixelY() {
+		return lastY;
+	}
+	
+	
+	
 	/*
 	 * drawPlayer:
 	 * - draws the player
@@ -53,6 +70,7 @@ public abstract class Player {
 		g.fillOval(y, x, width, height);
 		g.setColor(Color.BLACK);
 		g.drawOval(y, x, width, height);
+		g.setColor(p.getColor());
 	}
 	
 	/*

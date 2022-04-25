@@ -40,15 +40,6 @@ public class KnownCardsPanel extends JPanel {
 		if(handWeapons.isEmpty()) {
 			handWeapons.add(new JTextField("None"));
 		}
-		if(seenPeople.isEmpty()) {
-			seenPeople.add(new JTextField("None"));
-		}
-		if(seenRooms.isEmpty()) {
-			seenRooms.add(new JTextField("None"));
-		}
-		if(seenWeapons.isEmpty()) {
-			seenWeapons.add(new JTextField("None"));
-		}
 		// 3 rows
 		setLayout(new GridLayout(1, 0));
 		
@@ -70,9 +61,7 @@ public class KnownCardsPanel extends JPanel {
 		}
 		JLabel peopleSeenLabel = new JLabel("Seen:");
 		people.add(peopleSeenLabel);
-		for(JTextField j:seenPeople) {
-			people.add(j); 
-		}
+		people.add(new JTextField("None"));
 		inside.add(people);
 		
 		// rooms panel
@@ -88,9 +77,7 @@ public class KnownCardsPanel extends JPanel {
 		}
 		JLabel roomsSeenLabel = new JLabel("Seen:");
 		rooms.add(roomsSeenLabel);
-		for(JTextField j:seenRooms) {
-			rooms.add(j); 
-		}
+		rooms.add(new JTextField("None"));
 		inside.add(rooms);
 		
 		// weapons panel
@@ -106,9 +93,7 @@ public class KnownCardsPanel extends JPanel {
 		}
 		JLabel weaponsSeenLabel = new JLabel("Seen:");
 		weapons.add(weaponsSeenLabel);
-		for(JTextField j:seenWeapons) {
-			weapons.add(j); 
-		}
+		weapons.add(new JTextField("None"));
 		inside.add(weapons);
 		
 		add(inside);
@@ -119,15 +104,37 @@ public class KnownCardsPanel extends JPanel {
 		newCard.setBackground(card.getColor());
 		newCard.setEditable(false);
 		if(card.getCardType() == CardType.PERSON) {
+			if(seenPeople.isEmpty()) {
+				for(Component c : people.getComponents()) {
+					if(c.getBackground().equals(Color.WHITE)) {
+						people.remove(c);
+					}
+				}
+			}
 			seenPeople.add(newCard); 
 			people.add(newCard); 
 		}else if(card.getCardType() == CardType.ROOM) {
+			if(seenRooms.isEmpty()) {
+				for(Component c : rooms.getComponents()) {
+					if(c.getBackground().equals(Color.WHITE)) {
+						rooms.remove(c);
+					}
+				}
+			}
 			seenRooms.add(newCard); 
 			rooms.add(newCard); 
 		}else {
+			if(seenWeapons.isEmpty()) {
+				for(Component c : weapons.getComponents()) {
+					if(c.getBackground().equals(Color.WHITE)) {
+						weapons.remove(c);
+					}
+				}
+			}
 			seenWeapons.add(newCard); 
 			weapons.add(newCard); 
 		}
+		//repaint(); 
 	}
 	
 	public static void main(String[] args) {

@@ -20,6 +20,8 @@ public class Board extends JPanel implements MouseListener {
 	private Set<BoardCell> visited = new HashSet<BoardCell>();
     private Map<Character, Room> roomMap = new HashMap<Character, Room>(); 
     private static Board theInstance = new Board();	
+    private GameControlPanel controlPanel = new GameControlPanel(); 
+    private KnownCardsPanel cardPanel; 
     
     // variables need for instantiating and setting up deck/players
     private ArrayList<Card> deck = new ArrayList<Card>();
@@ -42,6 +44,7 @@ public class Board extends JPanel implements MouseListener {
     	try {
     		loadSetupConfig();
     		loadLayoutConfig();
+    		cardPanel = new KnownCardsPanel(getPlayers().get(0)); 
     	} catch(BadConfigFormatException e) {
     		System.err.println(e.getMessage());
     	} catch(FileNotFoundException e) {
@@ -62,6 +65,7 @@ public class Board extends JPanel implements MouseListener {
     @SuppressWarnings("resource")
 	public void loadSetupConfig() throws BadConfigFormatException, FileNotFoundException {
     	FileReader setupConfig = new FileReader("data/" + setupConfigFile);
+    	//FileReader setupConfig = new FileReader("ClueGame/data/" + setupConfigFile);
     	Scanner fileScanner = new Scanner(setupConfig);
     	String nextLine;
     	
@@ -111,7 +115,7 @@ public class Board extends JPanel implements MouseListener {
         		roomMap.put(character, r);
     		}
     	}
-    	for(int i = 0; i < 6; i++) {
+    	for(int i = 0; i < this.players.size(); i++) {
     		switch(i) {
     		case 0: 
     			players.get(i).setXOffset(0); 
@@ -157,6 +161,7 @@ public class Board extends JPanel implements MouseListener {
 	public void loadLayoutConfig() throws BadConfigFormatException, FileNotFoundException {
     	Map<String, String> coordinates = new HashMap<String, String>();
     	FileReader layoutConfig = new FileReader("data/" + layoutConfigFile);
+    	//FileReader layoutConfig = new FileReader("ClueGame/data/" + layoutConfigFile);
     	Scanner fileScanner = new Scanner(layoutConfig);
     	String nextLine;
     	numColumns = 0;
@@ -417,6 +422,7 @@ public class Board extends JPanel implements MouseListener {
      */
  	public void placePlayers() {
         for (int i = 0; i < players.size(); i++) {
+        //for (int i = 0; i < 6; i++) {
             switch(i) {
             case 0: 
                 players.get(i).setLocation(24, 8);
@@ -453,19 +459,21 @@ public class Board extends JPanel implements MouseListener {
  		boolean roomAssign = false;
  		boolean personAssign = false;
  		boolean weaponAssign = false;
- 		
- 		shuffleArray(deck);
- 		
+ 		 		
  		for (int i = 0; i < deck.size(); i++) {
  			Card c = deck.get(i);
  			if (c.getCardType() == CardType.ROOM && !roomAssign) {
  				theAnswer.setRoom(c);
  				roomAssign = true;
+ 		  		// System.out.println("ASSIGN: " + theAnswer.getRoom().getCardName());
  			} else if (c.getCardType() == CardType.PERSON && !personAssign) {
  				theAnswer.setPerson(c);
+ 		  		// System.out.println("ASSIGN: " + theAnswer.getPerson().getCardName());
  				personAssign = true;
+ 				
  			} else if (c.getCardType() == CardType.WEAPON && !weaponAssign) {
  				theAnswer.setWeapon(c);
+ 				// System.out.println("ASSIGN: " + theAnswer.getWeapon().getCardName());
  				weaponAssign = true;
  			} else {
  				if (c == theAnswer.getRoom() || c == theAnswer.getPerson() || c == theAnswer.getWeapon()) {
@@ -501,7 +509,16 @@ public class Board extends JPanel implements MouseListener {
   	 * - checking the Accusation with theAnswer
   	 */
   	public boolean checkAccusation(Solution accusation) {
-  		return accusation.getPerson() == theAnswer.getPerson() && accusation.getRoom() == theAnswer.getRoom() && accusation.getWeapon() == theAnswer.getWeapon();
+  		//System.out.println(accusation.getPerson().getCardName());
+  		//System.out.println(accusation.getRoom().getCardName());
+  		//System.out.println(accusation.getWeapon().getCardName());
+  		//System.out.println(theAnswer.getPerson().getCardName());
+  		//System.out.println(theAnswer.getRoom().getCardName());
+  		//System.out.println(theAnswer.getWeapon().getCardName());
+  		
+  		return accusation.getPerson() == theAnswer.getPerson() && 
+  				accusation.getRoom() == theAnswer.getRoom() && 
+  				accusation.getWeapon() == theAnswer.getWeapon();
   	}
   	
   	// CHANGE #4
@@ -511,6 +528,9 @@ public class Board extends JPanel implements MouseListener {
   	 * match up
   	 */
 	public Card handleSuggestion(Solution suggestion, Player current) {
+		if (suggestion == null) {
+			return null;
+		}
 		for (Player p: players) {
 			if (p.equals(current)) {
 				continue;
@@ -569,16 +589,82 @@ public class Board extends JPanel implements MouseListener {
 	}
 	
 	
+	public void animatePlayer(Graphics g, Player p, int x, int y, int height, int width) {
+		// initialize if first time (ie. == -1 to destination) otherwise get saved / last coordinates
+		int currentX = p.getSavedPixelX() == -1 ? x : p.getSavedPixelX();
+		int currentY = p.getSavedPixelY() == -1 ? y : p.getSavedPixelY();
+		// advance saved coordinates to draw until we reach the final destination
+		while (true) {
+			// move x if needed
+			if (currentX > x) {
+				currentX--;
+			}
+			else if (currentX < x) {
+				currentX++;
+			}
+			// move x if needed
+			if (currentY > y) {
+				currentY--;
+			}
+			else if (currentY < y) {
+				currentY++;
+			}
+			p.drawPlayer(g, p, currentX, currentY, height, width);
+			p.savePixelCoordinates(currentX, currentY);
+			// let's leave a trail on our animation so call the thread sleep
+			// even though only 1 millisecond it makes a difference since
+			// the board has a lot of pixels :)
+            try {
+                Thread.sleep(1);
+            } catch (Exception e) {}
+            // we're done
+			if (currentX == x && currentY == y) {
+				break;
+			}
+		}
+        this.repaint();
+	}
+	
 	private void drawPlayers(Graphics g, int width, int height) {
 		for (Player p: players) {
 			int row = p.getRow();
 			int col = p.getColumn();
+			int newY;
+			int newX;
 			if(p.inRoom()) {
-				p.drawPlayer(g, p, (row+p.getYOffset()) * height, (col+p.getXOffset()) * width, height, width);
-			}else {
-				p.drawPlayer(g, p, row * height, col * width, height, width);
+				newY = (row + p.getYOffset()) * height;
+				newX = (col + p.getXOffset()) * width;
+			} else {
+				newY = row * height;
+				newX = col * width;
 			}
+			//animatePlayer(g, p, newY, newX, height, width);
+			p.drawPlayer(g, p, newY, newX, height, width);
 		}
+	}
+	
+	// this is needed instead of using the drawPlayers 
+	// because we don't want the sleep called on any
+	// repaint call which happens often. It is a big
+	// problem particularly when we resize the board
+	// where drawPlayers on animate would freeze
+	public void drawSinglePlayer(Player p) {
+		Graphics g = this.getGraphics();
+		int width = this.getWidth() / numColumns;
+		int height = this.getHeight() / numRows;
+		int row = p.getRow();
+		int col = p.getColumn();
+		int newY;
+		int newX;
+		if(p.inRoom()) {
+			newY = (row+p.getYOffset()) * height;
+			newX = (col+p.getXOffset()) * width;
+		} else {
+			newY = row * height;
+			newX = col * width;
+		}
+		//System.out.println(p.getPlayerName() + ": animate");
+		animatePlayer(g, p, newY, newX, height, width);
 	}
 	
 	private void drawDoorways(Graphics g, int width, int height) {
@@ -706,6 +792,18 @@ public class Board extends JPanel implements MouseListener {
     	return null;
     }
     
+    public GameControlPanel getControlPanel() {
+    	return this.controlPanel;
+    }
+    
+    public KnownCardsPanel getCardPanel() {
+    	return this.cardPanel; 
+    }
+    
+    public void addSeen(Card c) {
+    	this.cardPanel.addSeen(c);
+    }
+    
     public Card getRandomItem(Player p, CardType ct) {
     	// return the item requested (ie. WEAPON or PERSON)
     	shuffleArray(deck);
@@ -722,6 +820,44 @@ public class Board extends JPanel implements MouseListener {
 		return null;
     }
     
+    public void dispose() {
+		System.exit(0);
+	}
+    
+    public ArrayList<String> getSortedRoomNames() {
+    	ArrayList<String> sortedRoomNames = new ArrayList<String>();
+    	for (Card c : Board.getInstance().getDeck()) {
+    		if (c.getCardType() == CardType.ROOM) {
+        		sortedRoomNames.add(c.getCardName());
+    		}
+    	}
+    	Collections.sort(sortedRoomNames);
+    	return sortedRoomNames;
+    }
+    
+    public ArrayList<String> getSortedPersonNames() {
+    	ArrayList<String> sortedPersonNames = new ArrayList<String>();
+    	for (Card c : Board.getInstance().getDeck()) {
+    		if (c.getCardType() == CardType.PERSON) {
+        		sortedPersonNames.add(c.getCardName());
+    		}
+    	}
+    	Collections.sort(sortedPersonNames);
+    	return sortedPersonNames;
+    }
+    
+    public ArrayList<String> getSortedWeaponNames() {
+    	ArrayList<String> sortedWeaponNames = new ArrayList<String>();
+    	for (Card c : Board.getInstance().getDeck()) {
+    		if (c.getCardType() == CardType.WEAPON) {
+        		sortedWeaponNames.add(c.getCardName());
+    		}
+    	}
+    	Collections.sort(sortedWeaponNames);
+    	return sortedWeaponNames;
+    }
+    
+    
     /*
      * Mouse interactions
      */
@@ -733,6 +869,45 @@ public class Board extends JPanel implements MouseListener {
         int cellYSize = this.getHeight() / numColumns;
         int col = (x / cellXSize); 
         int row = (y / cellYSize);
+        
+        if (grid[row][col].isRoom()) {
+        	if(getRoom(grid[row][col].getInitial()).getCenterCell().isMarkedTarget()) {
+            	getCell(players.get(0).getRow(),players.get(0).getColumn()).setOccupied(false); 
+	        	players.get(0).setLocation(getRoom(grid[row][col].getInitial()).getCenterCell().getRow(), getRoom(grid[row][col].getInitial()).getCenterCell().getColumn());
+	        	players.get(0).setMoved(true); 
+	        	getCell(row, col).setOccupied(true); 
+	        	for (BoardCell target: targets) {
+	        		target.setMarkedTarget(false);
+	        	}
+	    		// NEW_CHANGE
+	        	this.repaint();
+	        	controlPanel.createHumanAction(true);
+		        BackgroundSounds mySound= new BackgroundSounds("DoorOpen");
+		        Thread t = new Thread(mySound);
+		        t.start();
+        	} else {
+        		JOptionPane.showMessageDialog(null,"That is not a valid target.", "Message", JOptionPane.ERROR_MESSAGE);
+        	}
+        	//this.repaint();
+        }
+        else if (grid[row][col].isMarkedTarget()) {
+        	getCell(players.get(0).getRow(),players.get(0).getColumn()).setOccupied(false); 
+        	players.get(0).setLocation(row, col);
+        	players.get(0).setMoved(true); 
+        	getCell(row, col).setOccupied(true); 
+        	for (BoardCell target: targets) {
+        		target.setMarkedTarget(false);
+        	}
+    		// NEW_CHANGE
+        	this.repaint();
+	        BackgroundSounds mySound= new BackgroundSounds("HumanMove");
+	        Thread t = new Thread(mySound);
+	        t.start();
+        } else {
+        	JOptionPane.showMessageDialog(null, "That is not a valid target.", "Message", JOptionPane.ERROR_MESSAGE);
+        }
+        
+        /*
         if (grid[row][col].isMarkedTarget()) {
         	getCell(players.get(0).getRow(),players.get(0).getColumn()).setOccupied(false); 
         	players.get(0).setLocation(row, col);
@@ -751,6 +926,8 @@ public class Board extends JPanel implements MouseListener {
 	        	for (BoardCell target: targets) {
 	        		target.setMarkedTarget(false);
 	        	}
+	        	this.repaint(); 
+	        	controlPanel.createHumanAction(true); 
         	} else {
         		JOptionPane.showMessageDialog(null,"That is not a valid target.", "Message", JOptionPane.ERROR_MESSAGE);
         	}
@@ -758,7 +935,7 @@ public class Board extends JPanel implements MouseListener {
         } else {
         	JOptionPane.showMessageDialog(null, "That is not a valid target.", "Message", JOptionPane.ERROR_MESSAGE);
         }
-		
+		*/
 	}
 
 	@Override
