@@ -52,16 +52,6 @@ public abstract class Player {
 		lastY = y;
 	}
 	
-	public int getSavedPixelX() {
-		return lastX;
-	}
-	
-	public int getSavedPixelY() {
-		return lastY;
-	}
-	
-	
-	
 	/*
 	 * drawPlayer:
 	 * - draws the player
@@ -122,6 +112,18 @@ public abstract class Player {
 		this.column = column;
 	}
 	
+	public void setMoved(boolean moved) {
+		this.moved = moved; 
+	}
+	
+	public void setXOffset(int xOffset) {
+		this.xOffset = xOffset; 
+	}
+	
+	public void setYOffset(int yOffset) {
+		this.yOffset = yOffset; 
+	}
+	
 	public void setTranslocated(boolean translocated) {
 		this.translocated = translocated;
 	}
@@ -150,24 +152,6 @@ public abstract class Player {
 		return seenCards;
 	}
 	
-	public abstract boolean isHuman();
-	
-	public boolean hasMoved() {
-		return this.moved; 
-	}
-	
-	public void setMoved(boolean moved) {
-		this.moved = moved; 
-	}
-	
-	public void setXOffset(int xOffset) {
-		this.xOffset = xOffset; 
-	}
-	
-	public void setYOffset(int yOffset) {
-		this.yOffset = yOffset; 
-	}
-	
 	public int getXOffset() {
 		return this.xOffset;
 	}
@@ -176,8 +160,22 @@ public abstract class Player {
 		return this.yOffset; 
 	}
 	
+	public int getSavedPixelX() {
+		return lastX;
+	}
+	
+	public int getSavedPixelY() {
+		return lastY;
+	}
+	
 	public boolean getTranslocated() {
 		return this.translocated;
+	}
+	
+	public abstract boolean isHuman();
+	
+	public boolean hasMoved() {
+		return this.moved; 
 	}
 	
 	public boolean inRoom() {

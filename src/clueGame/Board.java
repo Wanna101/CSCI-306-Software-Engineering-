@@ -467,15 +467,11 @@ public class Board extends JPanel implements MouseListener {
  			if (c.getCardType() == CardType.ROOM && !roomAssign) {
  				theAnswer.setRoom(c);
  				roomAssign = true;
- 		  		// System.out.println("ASSIGN: " + theAnswer.getRoom().getCardName());
  			} else if (c.getCardType() == CardType.PERSON && !personAssign) {
  				theAnswer.setPerson(c);
- 		  		// System.out.println("ASSIGN: " + theAnswer.getPerson().getCardName());
  				personAssign = true;
- 				
  			} else if (c.getCardType() == CardType.WEAPON && !weaponAssign) {
  				theAnswer.setWeapon(c);
- 				// System.out.println("ASSIGN: " + theAnswer.getWeapon().getCardName());
  				weaponAssign = true;
  			} else {
  				if (c == theAnswer.getRoom() || c == theAnswer.getPerson() || c == theAnswer.getWeapon()) {
@@ -505,25 +501,16 @@ public class Board extends JPanel implements MouseListener {
   	}
     
   	
-  	// CHANGE #3
   	/*
   	 * checkAccusation:
   	 * - checking the Accusation with theAnswer
   	 */
   	public boolean checkAccusation(Solution accusation) {
-  		//System.out.println(accusation.getPerson().getCardName());
-  		//System.out.println(accusation.getRoom().getCardName());
-  		//System.out.println(accusation.getWeapon().getCardName());
-  		//System.out.println(theAnswer.getPerson().getCardName());
-  		//System.out.println(theAnswer.getRoom().getCardName());
-  		//System.out.println(theAnswer.getWeapon().getCardName());
-  		
   		return accusation.getPerson() == theAnswer.getPerson() && 
   				accusation.getRoom() == theAnswer.getRoom() && 
   				accusation.getWeapon() == theAnswer.getWeapon();
   	}
   	
-  	// CHANGE #4
   	/*
   	 * handleSuggestion:
   	 * - loop through the players to see if any of the suggestions
@@ -550,6 +537,11 @@ public class Board extends JPanel implements MouseListener {
   		return null;
 	}
 	
+	// calls the function from known cards panel
+	public void addSeen(Card c) {
+    	this.cardPanel.addSeen(c);
+    }
+	
 	// used for testing purposes only
 	public void overwriteSolution(Solution newAnswer) {
   		theAnswer = newAnswer;
@@ -560,8 +552,9 @@ public class Board extends JPanel implements MouseListener {
 		players.add(p);
 	}
 	
-	
 	/*
+	 * Drawing the components of the board
+	 * 
 	 * paintComponent:
 	 * - paints the players, board, rooms
 	 */
@@ -645,11 +638,13 @@ public class Board extends JPanel implements MouseListener {
 		}
 	}
 	
-	// this is needed instead of using the drawPlayers 
-	// because we don't want the sleep called on any
-	// repaint call which happens often. It is a big
-	// problem particularly when we resize the board
-	// where drawPlayers on animate would freeze
+	/*
+	 * this is needed instead of using the drawPlayers 
+	 * because we don't want the sleep called on any
+	 * repaint call which happens often. It is a big
+	 * problem particularly when we resize the board
+	 * where drawPlayers on animate would freeze
+	 */
 	public void drawSinglePlayer(Player p) {
 		Graphics g = this.getGraphics();
 		int width = this.getWidth() / numColumns;
@@ -665,7 +660,6 @@ public class Board extends JPanel implements MouseListener {
 			newY = row * height;
 			newX = col * width;
 		}
-		//System.out.println(p.getPlayerName() + ": animate");
 		animatePlayer(g, p, newY, newX, height, width);
 	}
 	
@@ -714,7 +708,6 @@ public class Board extends JPanel implements MouseListener {
 			}
 		}
 	}
-	
 	
  	/*
  	 * Setters:
@@ -802,10 +795,6 @@ public class Board extends JPanel implements MouseListener {
     	return this.cardPanel; 
     }
     
-    public void addSeen(Card c) {
-    	this.cardPanel.addSeen(c);
-    }
-    
     public Card getRandomItem(Player p, CardType ct) {
     	// return the item requested (ie. WEAPON or PERSON)
     	shuffleArray(deck);
@@ -821,10 +810,6 @@ public class Board extends JPanel implements MouseListener {
 		}
 		return null;
     }
-    
-    public void dispose() {
-		System.exit(0);
-	}
     
     public ArrayList<String> getSortedRoomNames() {
     	ArrayList<String> sortedRoomNames = new ArrayList<String>();
@@ -881,7 +866,6 @@ public class Board extends JPanel implements MouseListener {
 	        	for (BoardCell target: targets) {
 	        		target.setMarkedTarget(false);
 	        	}
-	    		// NEW_CHANGE
 	        	this.repaint();
 	        	controlPanel.createHumanAction(true);
 		        BackgroundSounds mySound= new BackgroundSounds("DoorOpen");
@@ -901,7 +885,6 @@ public class Board extends JPanel implements MouseListener {
         	for (BoardCell target: targets) {
         		target.setMarkedTarget(false);
         	}
-    		// NEW_CHANGE
         	this.repaint();
 	        BackgroundSounds mySound= new BackgroundSounds("HumanMove");
 	        Thread t = new Thread(mySound);
@@ -909,59 +892,30 @@ public class Board extends JPanel implements MouseListener {
         } else {
         	JOptionPane.showMessageDialog(null, "That is not a valid target.", "Message", JOptionPane.ERROR_MESSAGE);
         }
-        
-        /*
-        if (grid[row][col].isMarkedTarget()) {
-        	getCell(players.get(0).getRow(),players.get(0).getColumn()).setOccupied(false); 
-        	players.get(0).setLocation(row, col);
-        	players.get(0).setMoved(true); 
-        	getCell(row, col).setOccupied(true); 
-        	for (BoardCell target: targets) {
-        		target.setMarkedTarget(false);
-        	}
-        	this.repaint();
-        } else if (grid[row][col].isRoom()) {
-        	if(getRoom(grid[row][col].getInitial()).getCenterCell().isMarkedTarget()) {
-            	getCell(players.get(0).getRow(),players.get(0).getColumn()).setOccupied(false); 
-	        	players.get(0).setLocation(getRoom(grid[row][col].getInitial()).getCenterCell().getRow(), getRoom(grid[row][col].getInitial()).getCenterCell().getColumn());
-	        	players.get(0).setMoved(true); 
-	        	getCell(row, col).setOccupied(true); 
-	        	for (BoardCell target: targets) {
-	        		target.setMarkedTarget(false);
-	        	}
-	        	this.repaint(); 
-	        	controlPanel.createHumanAction(true); 
-        	} else {
-        		JOptionPane.showMessageDialog(null,"That is not a valid target.", "Message", JOptionPane.ERROR_MESSAGE);
-        	}
-        	this.repaint();
-        } else {
-        	JOptionPane.showMessageDialog(null, "That is not a valid target.", "Message", JOptionPane.ERROR_MESSAGE);
-        }
-		*/
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+		// TODO Auto-generated method stub		
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+	}
+	
+	// EXIT the program
+	public void dispose() {
+		System.exit(0);
 	}
 }

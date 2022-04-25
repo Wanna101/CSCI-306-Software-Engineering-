@@ -81,7 +81,6 @@ public class BoardCell {
 			g.setColor(Color.decode("#FFE699"));
 			g.fillRect(this.col * width, this.row * height, width, height);
 			g.setColor(Color.BLACK);
-			// CHANGE
 			g.setFont(new Font("Helvetica Neue", Font.BOLD, 12));
 			g.drawString("S",this.col * width + (width / 2), this.row * height + height - (height / 2));
 			g.setColor(Color.BLACK);

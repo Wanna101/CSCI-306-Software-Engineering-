@@ -67,6 +67,7 @@ public class GameControlPanel extends JPanel implements ActionListener {
         add(bottomPanel);
 		
 	}
+	
 	private JPanel createTurnPanel() {
 		// first panel in the top panel (2 rows)
         JPanel turnPanel = new JPanel(new GridLayout(2, 0));
@@ -229,7 +230,6 @@ public class GameControlPanel extends JPanel implements ActionListener {
 				String p = personBox.getSelectedItem().toString();
 				for (Player pMatching : Board.getInstance().getPlayers()) {
 					if (pMatching.getPlayerName().equals(p)) {
-						// System.out.println("HERE");
 						Board.getInstance().getCell(pMatching.getRow(), pMatching.getColumn()).setOccupied(false);
 						pMatching.setLocation(row, col);
 						pMatching.setTranslocated(true);
@@ -267,7 +267,6 @@ public class GameControlPanel extends JPanel implements ActionListener {
 		JButton cancel = new JButton("Cancel");
 		cancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// System.out.println("HIIIIIIII");
 				f.dispose();
 			}
 		});
@@ -367,17 +366,10 @@ public class GameControlPanel extends JPanel implements ActionListener {
     			// set guess
     			Solution suggestion = pc.createSuggestion();    			
     			String p = suggestion.getPerson().getCardName();
-    			//System.out.println(p);    			
     			String r = suggestion.getRoom().getCardName();
-    			//System.out.println(r);
     			String w = suggestion.getWeapon().getCardName();
-    			//System.out.println(w);
     			for (Player pMatching : board.getPlayers()) {
-    				//System.out.println("HI");
-    				//System.out.println(pMatching.getPlayerName());
-    				//System.out.println(p);
 					if (pMatching.getPlayerName().equals(w)) {
-						// System.out.println("HERE");
 						board.getCell(pMatching.getRow(), pMatching.getColumn()).setOccupied(false);
 						pMatching.setLocation(row, col);
 						pMatching.setTranslocated(true);
@@ -439,11 +431,8 @@ public class GameControlPanel extends JPanel implements ActionListener {
 		String s = e.getActionCommand();
 		
 		if (s.equals("NEXT!") && Board.getInstance().getPlayers().get(0).hasMoved() == true) {
-    		// leave this stuff
 			if (Board.getInstance() != null) {
-				//for (int i = 0; i < 5; i++ ) {
 				handleNextTurn();			
-				//}
 			}			
 		}
 		if (s.equals("Make Accusation") && playerTurn == 0) {

@@ -15,7 +15,6 @@ public class Room {
 	
 	public void drawRoomName(Graphics g, int x, int y, int height, int width) {
 		g.setColor(Color.decode("#202020"));
-		// CHANGE
 		g.setFont(new Font("Helvetica Neue", Font.BOLD, 12));
 		g.drawString(this.getName(), x * width, y * height);	
 	}
