@@ -97,9 +97,11 @@ public class KnownCardsPanel extends JPanel {
 		inside.add(weapons);
 		
 		add(inside);
+		// this.repaint();
 	}
 	
 	public void addSeen(Card card) {
+		this.repaint();
 		JTextField newCard = new JTextField(card.getCardName()); 
 		newCard.setBackground(card.getColor());
 		newCard.setEditable(false);
@@ -134,7 +136,8 @@ public class KnownCardsPanel extends JPanel {
 			seenWeapons.add(newCard); 
 			weapons.add(newCard); 
 		}
-		repaint(); 
+		this.validate();
+		this.repaint(); 
 	}
 	
 	public static void main(String[] args) {
