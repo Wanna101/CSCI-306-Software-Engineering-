@@ -16,7 +16,6 @@ public class GameControlPanel extends JPanel implements ActionListener {
 	private Solution suggestion;
 	private Card roomCard;
 	private JComboBox<String> roomBox;
-
 	
 	public GameControlPanel() {
 		super();
@@ -157,6 +156,13 @@ public class GameControlPanel extends JPanel implements ActionListener {
 		roll = (int)Math.floor(Math.random() * (max - min + 1) + min);
 	}
 	
+	
+	/*
+	 * - finished the human/computer common suggestion code
+	 * - finished the computer's suggestion behavior
+	 * - finished the human's turn behavior
+	 * - finished the human's accusation behavior (accusation button)
+	 */
 	public void createHumanAction(boolean isSuggestion) {
 		f = new JFrame();
 		
@@ -433,7 +439,9 @@ public class GameControlPanel extends JPanel implements ActionListener {
 		if (s.equals("NEXT!") && Board.getInstance().getPlayers().get(0).hasMoved() == true) {
 			if (Board.getInstance() != null) {
 				handleNextTurn();			
-			}			
+			} 
+		} else if (s.equals("NEXT!") && Board.getInstance().getPlayers().get(0).hasMoved() == false) {
+			JOptionPane.showMessageDialog(null, "Please complete your turn...", "Complete Turn", JOptionPane.ERROR_MESSAGE);
 		}
 		if (s.equals("Make Accusation") && playerTurn == 0) {
 			if (Board.getInstance() != null) {

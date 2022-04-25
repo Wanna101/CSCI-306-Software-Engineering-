@@ -102,12 +102,9 @@ public class ComputerPlayer extends Player {
 			 * Add each room to arraylist and add randomization
 			 */
 		}
-		System.out.println("################");
-		System.out.println("POSSIBLE TARGETS SIZE: ");
-		System.out.println(possibleTargets.size());
-		System.out.println("################");
+		
 		if (possibleTargets.size() <= 0) {
-			return null; 
+			return board.getCell(getRow(), getColumn()); 
 		}
 		Random rand = new Random(); 
 		int selection = rand.nextInt(possibleTargets.size());
