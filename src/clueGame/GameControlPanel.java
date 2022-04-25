@@ -230,7 +230,9 @@ public class GameControlPanel extends JPanel implements ActionListener {
 				for (Player pMatching : Board.getInstance().getPlayers()) {
 					if (pMatching.getPlayerName().equals(p)) {
 						// System.out.println("HERE");
+						Board.getInstance().getCell(pMatching.getRow(), pMatching.getColumn()).setOccupied(false);
 						pMatching.setLocation(row, col);
+						pMatching.setTranslocated(true);
 						Board.getInstance().repaint();
 					}
 				}
@@ -287,9 +289,11 @@ public class GameControlPanel extends JPanel implements ActionListener {
 				}
 			}
 			Card disproveResult = Board.getInstance().handleSuggestion(suggestion, currentPlayer);
+			if (!(currentPlayer.getSeenCards().contains(disproveResult))) {
+				Board.getInstance().addSeen(disproveResult);
+			}
 			currentPlayer.updateSeen(disproveResult);
 			// System.out.println(disproveResult.getCardName());
-			Board.getInstance().addSeen(disproveResult);
 		}
 		Board.getInstance().repaint();
 	}
@@ -325,6 +329,7 @@ public class GameControlPanel extends JPanel implements ActionListener {
     		row = selected.getRow();
     		col = selected.getColumn();
     		pc.setLocation(row, col);
+    		pc.setTranslocated(false);
     		if(!board.getCell(row,col).isRoom()) {
     			board.getCell(row, col).setOccupied(true);
     		} else if (board.getCell(row, col).isRoom()) {
@@ -373,7 +378,9 @@ public class GameControlPanel extends JPanel implements ActionListener {
     				//System.out.println(p);
 					if (pMatching.getPlayerName().equals(w)) {
 						// System.out.println("HERE");
+						board.getCell(pMatching.getRow(), pMatching.getColumn()).setOccupied(false);
 						pMatching.setLocation(row, col);
+						pMatching.setTranslocated(true);
 						board.repaint();
 					}
 				}
@@ -401,7 +408,7 @@ public class GameControlPanel extends JPanel implements ActionListener {
 	        Thread t = new Thread(mySound);
 	        t.start();
     	}
-    	if(currentPlayer.getPlayerName() == board.getPlayers().get(0).getPlayerName()) {
+    	if(currentPlayer.getPlayerName() == board.getPlayers().get(0).getPlayerName() && board.getTargets().size() > 0) {
 			board.getPlayers().get(0).setMoved(false);
 		} else {
 			Board.getInstance().drawSinglePlayer(currentPlayer);

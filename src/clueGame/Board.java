@@ -460,6 +460,8 @@ public class Board extends JPanel implements MouseListener {
  		boolean personAssign = false;
  		boolean weaponAssign = false;
  		 		
+ 		shuffleArray(deck);
+ 		
  		for (int i = 0; i < deck.size(); i++) {
  			Card c = deck.get(i);
  			if (c.getCardType() == CardType.ROOM && !roomAssign) {
@@ -893,7 +895,8 @@ public class Board extends JPanel implements MouseListener {
         else if (grid[row][col].isMarkedTarget()) {
         	getCell(players.get(0).getRow(),players.get(0).getColumn()).setOccupied(false); 
         	players.get(0).setLocation(row, col);
-        	players.get(0).setMoved(true); 
+        	players.get(0).setMoved(true);
+        	players.get(0).setTranslocated(false);
         	getCell(row, col).setOccupied(true); 
         	for (BoardCell target: targets) {
         		target.setMarkedTarget(false);

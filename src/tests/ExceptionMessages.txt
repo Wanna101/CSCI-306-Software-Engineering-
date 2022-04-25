@@ -180,3 +180,6 @@
 2022-04-25T15:13:59.557920900Z GMT: BadConfigFormatException(): In layout file, Config has incorrect number of values at line: 3
 2022-04-25T15:13:59.813909800Z GMT: BadConfigFormatException(): In layout file, Single character 'Y' is not a valid room at line: 1
 2022-04-25T15:13:59.912646400Z GMT: BadConfigFormatException(): In setup file, Type is not equal to 'Room' or 'Space' or 'Person' or 'Weapon'
+2022-04-25T16:58:12.651386600Z GMT: BadConfigFormatException(): In layout file, Config has incorrect number of values at line: 3
+2022-04-25T16:58:13.135745Z GMT: BadConfigFormatException(): In layout file, Single character 'Y' is not a valid room at line: 1
+2022-04-25T16:58:13.242996400Z GMT: BadConfigFormatException(): In setup file, Type is not equal to 'Room' or 'Space' or 'Person' or 'Weapon'

@@ -134,7 +134,7 @@ public class KnownCardsPanel extends JPanel {
 			seenWeapons.add(newCard); 
 			weapons.add(newCard); 
 		}
-		//repaint(); 
+		repaint(); 
 	}
 	
 	public static void main(String[] args) {

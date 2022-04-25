@@ -70,10 +70,13 @@ public class ComputerPlayer extends Player {
 		 */
 		Board board = Board.getInstance();
 		
-		
 		board.calcTargets(board.getCell(getRow(), getColumn()), pathlength);
 		
 		ArrayList<BoardCell> possibleTargets = new ArrayList<BoardCell>(); 
+		
+		if (getTranslocated()) {
+			possibleTargets.add(board.getCell(getRow(), getColumn()));
+		}
 		
 		for (BoardCell target: board.getTargets()) {
 			// BoardCell b = board.getRoomMap().get(target.getInitial()).getLabelCell();
@@ -107,7 +110,7 @@ public class ComputerPlayer extends Player {
 		System.out.println("POSSIBLE TARGETS SIZE: ");
 		System.out.println(possibleTargets.size());
 		System.out.println("################");
-		if (possibleTargets.size() < 0) {
+		if (possibleTargets.size() <= 0) {
 			return null; 
 		}
 		Random rand = new Random(); 

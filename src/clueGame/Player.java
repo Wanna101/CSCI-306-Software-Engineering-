@@ -10,7 +10,7 @@ public abstract class Player {
 	private int row, column, xOffset, yOffset;
 	private Set<Card> hand = new HashSet<Card>();
 	private Set<Card> seenCards = new HashSet<Card>();
-	private boolean moved;
+	private boolean moved, translocated;
 	private int lastX = -1;
 	private int lastY = -1;
 	
@@ -34,6 +34,7 @@ public abstract class Player {
 		this.row = row;
 		this.column = column;
 		this.moved = true; 
+		this.translocated = false;
 	}
 	
 	public Player() {};
@@ -68,9 +69,9 @@ public abstract class Player {
 	public void drawPlayer(Graphics g, Player p, int x, int y, int height, int width) {
 		g.setColor(p.getColor());
 		g.fillOval(y, x, width, height);
-		g.setColor(Color.BLACK);
+		// g.setColor(Color.BLACK);
 		g.drawOval(y, x, width, height);
-		g.setColor(p.getColor());
+		// g.setColor(p.getColor());
 	}
 	
 	/*
@@ -121,6 +122,10 @@ public abstract class Player {
 		this.column = column;
 	}
 	
+	public void setTranslocated(boolean translocated) {
+		this.translocated = translocated;
+	}
+	
 	public String getPlayerName() {
 		return name;
 	}
@@ -169,6 +174,10 @@ public abstract class Player {
 	
 	public int getYOffset() {
 		return this.yOffset; 
+	}
+	
+	public boolean getTranslocated() {
+		return this.translocated;
 	}
 	
 	public boolean inRoom() {
