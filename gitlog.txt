@@ -1,0 +1,584 @@
+I, David Young, certify that I participated equitably in the creation of assignment C26A, dated 4/25/2022.
+I, Isabelle Neckel, certify that I participated equitably in the creation of this assignment C26A, dated 4/25/2022.
+
+C26A commits
+
+commit 583d7ce95144385c29dad260e7b65d3c32cf2b67
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Mon Apr 25 12:27:49 2022 -0600
+
+    made sure tests run (Driver, Navigator: Isabelle Neckel, David Young)
+
+commit e9f854be2d45c2693dfc596e29cbee04cd392180
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Mon Apr 25 12:26:36 2022 -0600
+
+    fixed minor errors with the location and targets (Driver, Navigator: David Young, Isabelle Neckel)
+
+commit 4aaf280c5e1fbca748873085f534254af525cf2b
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Mon Apr 25 11:49:27 2022 -0600
+
+    fixed an error of returning null for the selected targets for the computer player (Driver, Navigator: Isabelle Neckel)
+
+commit 65f744e2665e97229da872ceee7c4459c647b25e
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Mon Apr 25 11:30:41 2022 -0600
+
+    cleaned up comments and organized getters and setters for each file (Driver: David Young, Navigator: David Young)
+
+commit 983467528e47115a0b570348391b83cf2182f730
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Mon Apr 25 11:18:12 2022 -0600
+
+    the gui for the knownCardsPanel updates properly now (Driver: Isabelle Neckel, Navigator: Isabelle Neckel)
+
+commit e577b76f79f65bf9e9e0753ded157195abdc4aa0
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Mon Apr 25 11:00:19 2022 -0600
+
+    fixed errors relating to the random function, knownCardsPanel updates correctly, fixed smaller bugs within running the game (Driver: Isabelle Neckel, Navigator: Isabelle Neckel, David Young)
+
+commit c1f95806b5481553b6eef3220503a787ad1a59ab
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Mon Apr 25 09:28:15 2022 -0600
+
+    added sounds and some animation to the project, checks the accusations for the computer and the human, still need to debug the marked targets, the random error, etc (Driver: David Young, Navigator: David Young)
+
+commit a38423ddf47ad491fe7a7ea4c6100b0a389b931b
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Thu Apr 21 10:03:46 2022 -0600
+
+    when computer player enters room, it makes suggestion, finished guis for suggestion/accusation for human player, still have to debug so that the gui shows up when a player enters a room, when human player enters a suggestion, it is shown on the control panel (Driver: David Young, Navigator: David Young)
+
+commit 428bfb52256a29e24289d4ef5962228545277266
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Tue Apr 19 13:28:41 2022 -0600
+
+    If a room is a possible target, the whole room lights up and the user can now click anywhere in the room to move to that room. Driver: Isabelle Neckel Navigator: Isabelle Neckel
+
+commit f989a577d0652a9471a191aaa9615e3543c2703c
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Tue Apr 19 10:22:06 2022 -0600
+
+    updated .gitignore file (Driver: David Young, Navigator: Isabelle Neckel)
+
+C25A-2 commits
+
+commit 729b47d3efb5a094e14864d209e053173be4dc2a
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Tue Apr 19 10:12:44 2022 -0600
+
+    REFACTOR 7: cleaned up getters and setters at the bottom of Board.java (Driver: David Young, Navigator: Isabelle Neckel)
+
+commit 1f1c96bc180fdc961b1bb495d839400a212931f5
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Tue Apr 19 10:11:22 2022 -0600
+
+    REFACTOR 6: cleaned up constructors in each file (Driver: David Young, Navigator: David Young, Isabelle Neckel)
+
+commit ced7f32e2db95299106ff6cf3b7b4abde8517bda
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Tue Apr 19 10:04:07 2022 -0600
+
+    REFACTOR 5: implemented the setTurn function in the ClueGame instead of manually setting the text boxes (Driver: David Young, Navigator: David Young)
+
+commit 0d9cee1ac36bc8c86d7176a92b59eed8d91cffc4
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Tue Apr 19 09:59:13 2022 -0600
+
+    REFACTOR 4: refactored the redundant handleNextTurn from the Board and put it in the handleNextTurn in the GameControlPanel (Driver: David Young, Navigator: David Young)
+
+commit c37f8c9b9ec783037c9748ba8e94f6bb638b5c5e
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Tue Apr 19 09:49:13 2022 -0600
+
+    REFACTOR 3: for the drawPlayer function in Player, fixed the redundancy of the code in drawing the player (Driver: David Young, Navigator: David Young, Isabelle Neckel)
+
+commit 73ab2be9d5de99e20bc0119f8693fa9a23eadeb8
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Tue Apr 19 09:46:56 2022 -0600
+
+    REFACTOR 2: in GameControlPanel, replaced ambiguous variable names with more specific ones (Driver: David Young, Navigator: Isabelle Neckel, David Young)
+
+commit ad238a281fd1d1fd47630c9c7def7c4450a42b9c
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Tue Apr 19 09:40:52 2022 -0600
+
+    REFACTOR 1: replaced any instances of board being passes into a function with Board.getInstance() (Driver: David Young, Navigator: Isabelle Neckel, David Young)
+
+commit 1755031d375e215d0c0d1d8e3c78d4d05f6874d6
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Tue Apr 19 09:33:21 2022 -0600
+
+    REFACTOR 0: added appropriate commenting to several classes namely Board, BoardCell, Player, GameControlPanel (Driver: David Young, Navigator: David Young, Isabelle Neckel)
+
+C24A commits
+
+commit ff8f197f11a126d4d1f2d7c4a1ffcc7d27312c0c
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Fri Apr 15 11:44:37 2022 -0600
+
+    made sure movement was correct (selectTargets and findAllTargets), did not let human player choose next before making a move (Driver: Isabelle Neckel, Navigator: Isabelle Neckel)
+
+commit 3f2c415217c90d3f2f0249727615b4a1c17fdfea
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Fri Apr 15 11:25:51 2022 -0600
+
+    created splash screen, made next player work, display control panel, possible targets indicated, when human picks target, piece is moved (Driver: David Young, Navigator: Isabelle Neckel)
+
+commit 7b1b5c6b296d0695255e4ff0fdbba87769e2cb3c
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Fri Apr 15 10:13:09 2022 -0600
+
+    added Mouselistener to Board.java and implemented method appropriate method stubs (Driver: David Young, Navigator: David Young)
+
+C23A commits
+
+commit 6249bf14e2da3d346f18ba42e8e076fda97a3e20
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Tue Apr 12 13:31:55 2022 -0600
+
+    modified colors for the board (Driver: Isabelle Neckel, Navigator: Isabelle Neckel)
+
+commit 3cba0ecb90c2a06fa3e841e989d00f902f8969ed
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Tue Apr 12 12:40:27 2022 -0600
+
+    drew the board, players, rooms and room name, still need to fix the lines between the walkways, created appropriate setters and getters in the board, boardcell, room, and player classes, made sure to check that all tests still run (Driver: David Young, Navigator: David Young)
+
+commit 4924dcdde7900a9c58b9ffdeb50a7dce82c23d4c
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Tue Apr 12 10:33:11 2022 -0600
+
+    renamed GameBoardPanel to GamePanel, created format for the GUI, setup the proper variables in the GamePanel (Driver: David Young, Navigator: David Young)
+
+commit a83e748959b31a9ad4233db43634982e880b97f5
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Mon Apr 11 11:40:27 2022 -0600
+
+    renamed CardPanel to KnownCardsPanel, created GameBoardPanel (Driver: David Young, Navigator: David Young)
+
+C22A-2 commits
+
+commit dca2a96bedb2d404a444b93f550c9ed73987b5c6
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Fri Apr 8 11:59:56 2022 -0600
+
+    fixed errors and bugs with the tests, fixed tests for CardPanel (Driver: David Young, Isabelle Neckel, Navigator: David Young, Isabelle Neckel)
+
+commit c0dbd87c70c65b0b9c004d17eb0559340e8de9b5
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Fri Apr 8 11:36:14 2022 -0600
+
+    fixed some issues in GameControlPanel, created methods and added data to CardPanel.java (Driver: Isabelle Neckel, Navigator: Isabelle Neckel)
+
+commit 86469fa634678ea07db53422c908abfd4247e496
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Fri Apr 8 10:37:55 2022 -0600
+
+    created GUI format for CardPanel.java (Driver: David Young, Navigator: David Young)
+
+C22A-1 commits
+
+commit c7594cd2556e870e54e1dcc13b1ba5f9c2d985c8
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Thu Apr 7 13:39:51 2022 -0600
+
+    finished creating GUI in GameControPanel.java, updated setters in GameControlPanel.java, updated ComputerPlayer.java for testing purposes, refactor GameControlPanel.java for readability (Driver: David Young, Isabelle Neckel, Navigator: David Young, Isabelle Neckel)
+
+commit bec95287087aedf0720f9ebda4b77a427dc92a7f
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Wed Apr 6 16:39:05 2022 -0600
+
+    Formatted layout for the GameControlPanel (Driver: David Young, Navigator: David Young, Isabelle Neckel)
+
+commit 2ba667440cb2998cde972867b80fac512bfe6787
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Tue Apr 5 12:41:39 2022 -0600
+
+    reorganized comments (Driver: David Young, Navigator: David Young)
+
+C21A commits
+
+commit 19fbaa0a5976dd41fafbd57c7e986fe3f8cbd4be
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Mon Apr 4 11:36:17 2022 -0600
+
+    created and passed tests for selectTargets (Driver: Isabelle Neckel, Navigator: Isabelle Neckel, David Young)
+
+commit c312dba2fa399ba175a1279f7913076486555e7b
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Mon Apr 4 10:39:01 2022 -0600
+
+    wrote and passed tests for handleSuggestions and disproveSuggestions (Driver: Isabelle Neckel, Navigator: Isabelle Neckel, David Young)
+
+commit e5fc3af0b42d3538834d945110dcfc76d89aeb80
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Mon Apr 4 09:22:19 2022 -0600
+
+    passed test for checkAccusation (Driver: David Young, Navigator: David Young)
+
+commit 97fa3f4245dce20908310399c4b9bcc8d262ba8d
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Mon Apr 4 09:20:15 2022 -0600
+
+    wrote test for CheckAccusation in Board.java (Driver: David Young, Navigator: David Young)
+
+commit 7ccf430c728c515e3f76f7413cd098986549ae93
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Mon Apr 4 09:18:00 2022 -0600
+
+    passed test for createSuggestion (Driver: David Young, Navigator: David Young)
+
+commit 4a7a552ead7622d9f7c42363a8353658a9b536da
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Mon Apr 4 09:14:54 2022 -0600
+
+    wrote test for CreateSuggestion function in ComputerPlayer.java (Driver: David Young, Navigator: Isabelle Neckel)
+
+commit acc81bc24d687cb2a9211d1435c5213dc405a65a
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Mon Apr 4 09:10:12 2022 -0600
+
+    created the two test classes, ComputerAITest and GameSolutionTest (Driver: David Young, Navigator: Isabelle Neckel)
+
+commit c532b039a8859330166e5b50a78efeeb29e37e10
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Mon Apr 4 09:06:05 2022 -0600
+
+    edited the Constructors for Card.java, Player.java, and Solution.java, added stubs from the UML to Board.java, Player.java, and ComputerPlayer.java (Driver: David Young, Navigator: David Young)
+
+commit 359ce31be28831713fb7c4a9db6a7fbd32814191
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Mon Apr 4 08:55:00 2022 -0600
+
+    updated .gitignore to ignore files in project (Driver: David Young, Navigator: David Young)
+
+C20A commits
+
+commit 3934a2983137d3d9500c81e13385366833417aad
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Thu Mar 31 13:47:07 2022 -0600
+
+    passed tests (Driver: David Young, Navigator: Isabelle Neckel)
+
+commit 70f3422793b20c74941173a5338cc813628c7e24
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Thu Mar 31 13:46:03 2022 -0600
+
+    added setup tests for the cards and players (Driver: Isabelle Neckel, Navigator: Isabelle Neckel)
+
+commit 0a9867a09bc3a3f49237d6c4937056acbd45ddbe
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Thu Mar 31 10:42:32 2022 -0600
+
+    resolved errors of prior tests by fixing the Setup files in the data folder (Driver: David Young, Navigator: David Young)
+
+commit 62cdf978d55c57362a0837a041193a5fd7989108
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Thu Mar 31 10:21:55 2022 -0600
+
+    created setters and getters for Solution.java (Driver: David Young, Navigator: Isabelle Neckel)
+
+commit 0a7afdab0b97e4471bd673fd38ec847810f645f0
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Thu Mar 31 10:18:41 2022 -0600
+
+    updated ComputerPlayer.java and HumanPlayer.java with super() (Driver: David Young, Navigator: Isabelle Neckel)
+
+commit 3763d6ae05934b190a1489d918d7e0273e644145
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Thu Mar 31 10:16:20 2022 -0600
+
+    updated Player.java to hold the hand of Cards, updated the updateHand method, created getters and setters (Driver: David Young, Navigator: David Young, Isabelle Neckel)
+
+commit c793e81f86a21a8e89c9674efcea41a3eea15dd4
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Thu Mar 31 10:13:08 2022 -0600
+
+    updated Card.java with setters and getters, updated the equals method (Driver: David Young, Navigator: David Young, Isabelle Neckel)
+
+commit 39c51df7ce3d5e4fd027807af3fb609fef8fe6eb
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Thu Mar 31 10:10:42 2022 -0600
+
+    created deal, placePlayers, shuffleArray, and updated loadSetup functions on Board.java (Driver: David Young, Navigator: David Young, Isabelle Neckel)
+
+commit ecb8c44096bd889ff62a162b8b0ba77cd824ae46
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Tue Mar 29 13:30:18 2022 -0600
+
+    created method stubs and new Classes (Card, CardType, ComputerPlayer, HumanPlayer, Player, and Solution) (Driver: David Young, Navigator: Isabelle Neckel)
+
+C17A-2 commits
+
+commit 7f2f6b70afb577801fdc83c95aaa94cca182926c
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Mon Mar 14 11:37:11 2022 -0600
+
+    Refactor 7: Major Commit done, split loadLayoutConfig into two functions: validateLayout and createBoard, reformatted the if conditions in createBoard into switch case which was more readable than the if statements (Driver: Isabelle Neckel, Navigator(s): David Young, Isabelle Neckel)
+
+commit f69234686e9af942b211515ac84dcdb77db7a53b
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Mon Mar 14 11:21:28 2022 -0600
+
+    Refactor 6: replaced unnecessary variables in loadLayoutConfig (Board.java) referring to numColumns and numRows (used to be lineNumber and columnCount) (Driver: David Young, Navigator: Isabelle Neckel)
+
+commit a86add85bff66398a7d0fccf88f9d9231df824a6
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Mon Mar 14 11:00:25 2022 -0600
+
+    Refactor 5: reorganized formatting of code so that functions that related to each other could be read more easily, getters and setters put at bottom of the code (taken from peer review) (Driver: David Young, Navigator: Isabelle Neckel)
+
+commit fe523ba377149292d54e90589c07c4e20a603e01
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Mon Mar 14 10:42:52 2022 -0600
+
+    Refactor 4: edited and cleaned the error messages to make more sense to the user in Board.java and BadConfigFormatException.java (taken from peer review) (Driver: David Young, Navigator: Isabelle Neckel)
+
+commit b4d93c275c5f8414e0e3c378763dcbeea8c13d87
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Mon Mar 14 10:33:32 2022 -0600
+
+    Refactor 3: added code to loadSetupConfig (Board.java) to check for blank or lines with just spaces (taken from peer review), removed a setter from Room.java and did the initialization for the String variable in the Room constructor (Driver: David Young, Navigator(s): David Young, Isabelle Neckel)
+
+commit becf9f3ca3219275b3b84cb70bb4bd3e654b717e
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Mon Mar 14 10:27:09 2022 -0600
+
+    Refactor 2: reformatted the variables being declared in order to use less space (taken from peer review) (Driver: David Young, Navigator: Isabelle Neckel)
+
+commit 92b8395534587d4e02d886ff425f41771f637316
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Mon Mar 14 10:14:19 2022 -0600
+
+    Refactor 1: removed useless comments and organized comments in a meaningful way (taken from peer review) (Driver: David Young, Navigator: Isabelle Neckel)
+
+commit 6a58dc8d03a6396b43bbd00dd886c209ca331160
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Thu Mar 10 10:21:15 2022 -0700
+
+    Refactor 0: added additional tests to BoardAdjTargetTest (Driver: Isabelle Neckel, Navigator: Isabelle Neckel)
+
+C16A commits
+
+commit 6e7b2bbfc61eb8d82d6800ddcf4fb9ff23c2782c
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Tue Mar 8 12:52:15 2022 -0700
+
+    added a few messages explaining the handleRoom/handleWalkway functions (Driver: David Young, Navigator: Isabelle Neckel)
+
+commit b8893532b914c33fe07c87d9ab8660fdabb645de
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Mon Mar 7 10:23:00 2022 -0700
+
+    edited findAllTargets to make sure although a room is occupied, a player can still go in the room (Driver: Isabelle Neckel, Navigator: David Young)
+
+commit d5061ec99ec88594550153cafce079488b436c31
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Mon Mar 7 10:20:36 2022 -0700
+
+    set secretPassage variable to ! so there is a way to compare the secretPassage variable (BoardCell.java), expanded on handleRooms to handle the secret passages, ran BoardAdjTargetTest306.java and BoardAdjTargetTest both fail the testTargetsOccupied test (Driver: Isabelle Neckel, Navigators: David Young, Isabelle Neckel)
+
+commit 262d733c0147a9173c72fbcb690da351368911b6
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Mon Mar 7 10:15:05 2022 -0700
+
+    expanded on handleWalkways, it will handle the adjacent walkways and the walkways with doors that connect to the room center, it also handles the relationship of the room center to the doorways (Driver: David Young, Navigators: David Young, Isabelle Neckel)
+
+commit 6806c471178dcd4428cde9b90dd9a8120d298012
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Mon Mar 7 10:07:54 2022 -0700
+
+    edited calcAdj to have public functions handle the adjacent walkways and the walkways with doors that connect to the room center and also handle the relationship of the room center to the doorways as well as the secret passages (Driver: David Young, Navigators: David Young, Isabelle Neckel)
+
+C15A-2 commits
+
+commit d0978843b92a810162f46486a44e8d0a1f6b1006
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Mon Mar 7 09:53:54 2022 -0700
+
+    created BoardAdjTargetTest.txt which documents the tests BoardAdjTargetTest.java runs (Drivers: David Young, Isabelle Neckel, Navigators: David Young, Isabelle Neckel)
+
+commit bb13c41b358d6a6b2ca700ab0a5c9f9c98d906f5
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Mon Mar 7 09:32:28 2022 -0700
+
+    created BoardAdjTargetTest.java which tests our .csv and .txt files (Driver: David Young, Navigators: Isabelle Neckel, David Young)
+
+commit df5d319695789b0bbbf7f629d4eda29f186fbe8a
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Mon Mar 7 09:28:30 2022 -0700
+
+    made sure all tests in BoardAdjTest306.java fail and not error (Driver: Isabelle Neckel, Navigator: David Young)
+
+commit 208b697ae754a65652f1bbd212a2759748b98a47
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Mon Mar 7 09:26:34 2022 -0700
+
+    added a getAdjList in Board.java, created more setters and getters in BoardCell.java to resolve errors in Board.java, fixed errors in BoardCell.java for the functions getAdjList, addAdj (Driver: Isabelle Neckel, Navigator: David Young)
+
+commit a8e8e9021563cf250fc2c023c4b9cb999d6b6582
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Mon Mar 7 09:19:18 2022 -0700
+
+    edited Board.java to resolve most of the errors it was causing(changing TestBoardCell -> BoardCell, etc.) (Driver: David Young, Navigator: Isabelle Neckel)
+
+commit b87414588b47417246a29cb24bb618a74b2b1e93
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Mon Mar 7 09:12:36 2022 -0700
+
+    uncommented the previous functions from TestBoard.java and TestBoardCell.java (Driver: Isabelle Neckel, Navigator: David Young)
+
+C15A-1 commits
+
+commit 8c4a27152238332dd6c0c23bdbcc530de5d8a556
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Mon Mar 7 08:56:26 2022 -0700
+
+    cleaned up print statements (Driver: David Young, Navigator: David Young)
+
+commit 15eabb08bcad792971f4cf93857ea6f763d41539
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Mon Mar 7 08:50:52 2022 -0700
+
+    created FileInitTests.java which tests our .csv and .txt files, edited FileInitTests.java to test our .csv and .txt files (Driver: Isabelle Neckel, Navigator(s): Isabelle Neckel, David Young)
+
+commit 2d0257cff57e1bb5c1ba4d42be0cca8223314aeb
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Mon Mar 7 08:48:01 2022 -0700
+
+    added the file to which messages are outputted, added Test.txt which states the differences in our tests vs. the given tests (Driver: Isabelle Neckel, Navigator: David Young)
+
+commit e9e6977dff4da6d056bb4a9777b9400453a94a72
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Mon Mar 7 08:45:53 2022 -0700
+
+    fixed failed tests of ExceptionTests306.java, created EC in which the BadConfigFormatExceptions will append to a file in the tests package, edited the BadConfigFormatException.java appropriately to pass the tests of ExceptionTests306.java (Driver: David Young, Navigator(s): David Young, Isabelle Neckel)
+
+commit f2531e0a9bf0ce0155d40add1a0d25c2b1bdf67a
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Mon Mar 7 08:41:36 2022 -0700
+
+    fixed errors in Board.java, reformatted DoorDirection.java so it was clear as what each of the enums were, passed all the tests of FileInitTests306.java (Driver: David Young, Navigator: Isabelle Neckel)
+
+commit 82d20cb4259cde9415dca9350df92a2d9e786158
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Mon Mar 7 08:36:54 2022 -0700
+
+    resoved the errors in Board.java by completing the setters and getters in Room.java and BoardCell.java, pasted the addAdjacency. getAdjList, printAdjList from TestBoardCell.java (Driver: David Young, Navigator(s): David Young, Isabelle Neckel)
+
+commit bd93b67bf34bef6ddb0a6c2adcb31deff47a7fc3
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Mon Mar 7 08:25:40 2022 -0700
+
+    Board.java: setup initialize function to perform a try/catch statement for loadSetupConfig and loadLayoutConfig to catch BadConfigFormatExceptions and FileNotFoundExceptions (also made sure to print approprate messages in red to the console using System.err.println()), setup loadSetupConfig to throw BadConfigFormatException and FileNotFoundException and reads Setup.txt files to check for BadConfigFormatExceptions, setup loadLayoutConfig to throw BadConfigFormatException and FileNotFoundException and reads Layout.csv files to check for BadConfigExceptions (also it stores coordinates of cell and any other information such as door direction, setting label cell, center cell, etc.), created private functions characterIsValid and getRoomChars to assist loadLayoutConfig in obtaining more data for the cell, pasted calcAdj, calcTargets, findAllTargets from TestBoard.java and commented it out for C15A-2, corrected the getters at the end of the file to return right values (Driver: David Young, Navigator: David Young)
+
+commit ced667e0f0f01004f7e4ad4e95fb83fd50dff954
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Mon Mar 7 08:10:45 2022 -0700
+
+    added ClueLayout.xlsx for future referencing (edited one of the buildings, Coorstek, because it had a wrong letter associated to it), added BoardAdjTargetTest306 for C15A-2, setup the setConfigFiles in Board.java (Driver: David Young, Navigator: David Young)
+
+C14A-2 commits
+
+commit 17eb21a9c64fe58a7f49b4d1ff2faa84110347d9
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Fri Mar 4 13:03:28 2022 -0700
+
+    reedited the ClueLayout.csv file because it had the wrong formatting and the wrong room association (Driver: David Young, Navigator: Isabelle Neckel)
+
+commit f0969208c8fa7a5135f4cd7ab02a2b0064203ca7
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Fri Mar 4 12:58:11 2022 -0700
+
+    added FileInitTests.java and Tests.txt (Driver: David Young, Navigator: Isabelle Neckel)
+
+commit 84ed9cce78a56aace6dd6c195fc4e8db243172b6
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Fri Mar 4 12:53:24 2022 -0700
+
+    added Room, getName, getLabelCell, getCenterCell to Room.java (Driver: David Young, Navigator: Isabell Neckel)
+
+commit dccd29f6941837c212b885bd3c7a29f146f130f3
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Fri Mar 4 12:50:45 2022 -0700
+
+    added methods BoardCell, isDoorway, getDoorDirection, isLabel, isRoomCenter, getSecretPassage to BoardCell.java (Driver: David Young, Navigator: Isabelle Neckel)
+
+commit 95f59262c50d94eed57878c9b7d7a06e6799260c
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Fri Mar 4 12:47:41 2022 -0700
+
+    added methods getRoom(char c), getNumRows, getNumColumns, getCell, getRoom(BoardCell cell) (Driver: David Young, Navigator: Isabelle Neckel)
+
+commit 564c0d1ab10f76328a0f299c191398c677e43fe7
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Thu Mar 3 13:29:51 2022 -0700
+
+    created DoorDirection as enum, initialized Room variables (Driver: Isabelle Neckel, Driver: David Young)
+
+commit f45101eeb6ff79d668991d175e27af6c71e54055
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Thu Mar 3 13:21:40 2022 -0700
+
+    added src/clueGame (Driver: Isabelle Neckel, Navigator: David Young)
+
+commit d9762fb339ba77ef2eb619a8772c2525788af408
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Thu Mar 3 13:20:27 2022 -0700
+
+    added BoardCell, Board, Room, BadConfigFormatException, DoorDirection classes to the newly added package clueGame; added the file data and copied over files from ClueInitFiles.zip and added our ClueLayout and ClueSetup (Driver: Isabelle Neckel, Navigator: David Young)
+
+C14A-1 commits
+
+commit cda014c69d7ea7b14f9ab9d9bd0cc9da2cf5716a
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Thu Mar 3 12:45:49 2022 -0700
+
+    edited findAllTargets to test for occupied spaces and if the cell is a room, passed testTargetsMixed (Driver: David Young, Navigator: Isabelle Neckel)
+
+commit a8352d8216b20960867e2402a3f7d08220c7b7d5
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Thu Mar 3 12:44:08 2022 -0700
+
+    filled in body for calcTargets, created recursive function findAllTargets, passed testTargetsNormal test (Driver: David Young, Navigator: Isabelle Neckel)
+
+commit f80499e0180580a862288857c88ed19f39f280ef
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Thu Mar 3 12:40:46 2022 -0700
+
+    fixed adjacency tests and failures, corrected getCell, addAdjacency, getAdjList functions to work properly, created calcAdj function, initialized 4x4 testBoard, added an adjacency test for a middle cell (Driver: David Young, Navigator: Isabelle Neckel)
+
+C13A-2 commits
+
+commit d5e48bf8060847f41b779a64de5fcb77d4bc3190
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Mon Feb 28 10:21:26 2022 -0700
+
+    put labels on top of file stating the authors of the project (Driver: David Young, Navigator: Isabelle Neckel)
+
+commit 1596b369b8b4ef84c2d13b05446dce7fe72f8088
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Mon Feb 28 10:14:04 2022 -0700
+
+    created methods in BoardTestsExp, methods test if adjacency list is correct size and has exactly the right elements, tests top left corner and bottom right corner, tests right edge and left edge, tests targets with several rolls and start locations, tests occupied cells (Driver: David Young, Navigator: Isabelle Neckel)
+
+commit e897e14108610c8fad60fc874f0ee32697ba05f6
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Mon Feb 28 10:08:04 2022 -0700
+
+    created methods in TestBoardCell, namely the constructor, addAdjacency, getAdjList, isRoom, setIsRoom, getOccupied, setOccupied (Driver: David Young, Navigator: Isabelle Neckel)
+
+commit 9e858afc33bfc61b465db159b7f2073b6f1385a4
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Mon Feb 28 10:05:53 2022 -0700
+
+    created methods in TestBoard, namely the constructor, calcTargets, getTargets, and getCell (Driver: David Young, Navigator: Isabelle Neckel)
+
+commit fd04e651715e104aaada1909b2da11b5ec3cad41
+Author: davidyoung@mines.edu <davidyoung@mines.edu>
+Date:   Mon Feb 28 10:02:08 2022 -0700
+
+    created .gitignore file, created TestBoard.java, TestBoardCell.java, and BoardTestsExp.java (Driver: David Young, Navigator: Isabell Neckel)
